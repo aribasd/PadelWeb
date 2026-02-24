@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Pista extends Controller
+use App\Models\PerfilEstadistica;
+
+class PerfilEstadisticaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $perfil_estadistiques = PerfilEstadistica::all();
+        return view ('perfil_estadistiques.index', compact('perfil_estadistiques'));
     }
 
     /**
@@ -19,7 +22,8 @@ class Pista extends Controller
      */
     public function create()
     {
-        //
+        $perfil_estadistiques = PerfilEstadistica::all();
+        return view('perfil_estadistiques.index', compact('perfil_estadistiques'));
     }
 
     /**

@@ -23,6 +23,25 @@ class User extends Authenticatable
         'password',
     ];
 
+    /*------Relacions Taules--------*/
+
+
+    
+    public function reserves()
+    {
+        return $this->hasMany(Reserva::class);
+    }
+
+        public function perfil_estadistiques()
+    {
+        return $this->hasOne(PerfilEstadistica::class);
+    }
+
+
+
+    /*------------------------------*/
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
