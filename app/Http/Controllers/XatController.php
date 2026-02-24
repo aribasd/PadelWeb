@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Xat;
 
 class XatController extends Controller
 {
@@ -11,7 +12,8 @@ class XatController extends Controller
      */
     public function index()
     {
-        //
+        $xats = Xat::all();
+        return view('xats.index', compact('xats'));
     }
 
     /**
@@ -19,7 +21,7 @@ class XatController extends Controller
      */
     public function create()
     {
-        //
+        return view('xats.create');
     }
 
     /**
@@ -27,7 +29,12 @@ class XatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Aquí pots afegir validació si afegeixes camps al model
+        Xat::create($request->only([
+            // omple amb els camps que afegeixis després
+        ]));
+
+        return redirect()->route('xats.index');
     }
 
     /**
@@ -35,7 +42,8 @@ class XatController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $xat = Xat::findOrFail($id);
+        return view('xats.show', compact('xat'));
     }
 
     /**
@@ -43,7 +51,8 @@ class XatController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $xat = Xat::findOrFail($id);
+        return view('xats.edit', compact('xat'));
     }
 
     /**
@@ -51,7 +60,14 @@ class XatController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $xat = Xat::findOrFail($id);
+
+        // Aquí pots afegir validació si afegeixes camps
+        $xat->update($request->only([
+            // omple amb els camps que afegeixis després
+        ]));
+
+        return redirect()->route('xats.index');
     }
 
     /**
@@ -59,6 +75,9 @@ class XatController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $xat = Xat::findOrFail($id);
+        $xat->delete();
+
+        return redirect()->route('xats.index');
     }
 }

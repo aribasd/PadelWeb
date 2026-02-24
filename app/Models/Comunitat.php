@@ -21,3 +21,4 @@ class Comunitat extends Model
         return $this->belongTo(PerfilEstadistica::class);
     }
 }
+    

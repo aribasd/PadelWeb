@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\PerfilEstadistica;
 
 class PerfilEstadisticaController extends Controller
@@ -14,7 +13,7 @@ class PerfilEstadisticaController extends Controller
     public function index()
     {
         $perfil_estadistiques = PerfilEstadistica::all();
-        return view ('perfil_estadistiques.index', compact('perfil_estadistiques'));
+        return view('perfil_estadistiques.index', compact('perfil_estadistiques'));
     }
 
     /**
@@ -22,8 +21,7 @@ class PerfilEstadisticaController extends Controller
      */
     public function create()
     {
-        $perfil_estadistiques = PerfilEstadistica::all();
-        return view('perfil_estadistiques.index', compact('perfil_estadistiques'));
+        return view('perfil_estadistiques.create');
     }
 
     /**
@@ -31,15 +29,23 @@ class PerfilEstadisticaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'partits_jugats' => 'required|integer|min:0',
+            'win_rate' => 'required|numeric|min:0|max:100',
+            'nivell' => 'required|integer|min:1|max:10',
+            'data_naixament' => 'required|date',
+            'foto_perfil' => 'nullable|string',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        PerfilEstadistica::create($request->only([
+            'partits_jugats',
+            'win_rate',
+            'nivell',
+            'data_naixament',
+            'foto_perfil',
+        ]));
+
+        return redirect()->route('perfil_estadistiques.index');
     }
 
     /**
@@ -47,7 +53,8 @@ class PerfilEstadisticaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $perfil_estadistiques = PerfilEstadistica::findOrFail($id);
+        return view('perfil_estadistiques.edit', compact('perfil_estadistiques'));
     }
 
     /**
@@ -55,7 +62,25 @@ class PerfilEstadisticaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'partits_jugats' => 'required|integer|min:0',
+            'win_rate' => 'required|numeric|min:0|max:100',
+            'nivell' => 'required|integer|min:1|max:10',
+            'data_naixament' => 'required|date',
+            'foto_perfil' => 'nullable|string',
+        ]);
+
+        $perfil_estadistiques = PerfilEstadistica::findOrFail($id);
+
+        $perfil_estadistiques->update($request->only([
+            'partits_jugats',
+            'win_rate',
+            'nivell',
+            'data_naixament',
+            'foto_perfil',
+        ]));
+
+        return redirect()->route('perfil_estadistiques.index');
     }
 
     /**
@@ -63,6 +88,9 @@ class PerfilEstadisticaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $perfil_estadistiques = PerfilEstadistica::findOrFail($id);
+        $perfil_estadistiques->delete();
+
+        return redirect()->route('perfil_estadistiques.index');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Insignia;
 
 class InsigniaController extends Controller
 {
@@ -11,7 +12,8 @@ class InsigniaController extends Controller
      */
     public function index()
     {
-        //
+        $insignies = Insignia::all();
+        return view('insignies.index', compact('insignies'));
     }
 
     /**
@@ -19,7 +21,7 @@ class InsigniaController extends Controller
      */
     public function create()
     {
-        //
+        return view('insignies.create');
     }
 
     /**
@@ -27,15 +29,17 @@ class InsigniaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'dificultat' => 'required|in:baixa,mitjana,dificil',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        Insignia::create($request->only([
+            'nom',
+            'dificultat',
+        ]));
+
+        return redirect()->route('insignies.index');
     }
 
     /**
@@ -43,7 +47,8 @@ class InsigniaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $insignia = Insignia::findOrFail($id);
+        return view('insignies.edit', compact('insignia'));
     }
 
     /**
@@ -51,7 +56,18 @@ class InsigniaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'dificultat' => 'required|in:baixa,mitjana,dificil',
+        ]);
+
+        $insignia = Insignia::findOrFail($id);
+        $insignia->update($request->only([
+            'nom',
+            'dificultat',
+        ]));
+
+        return redirect()->route('insignies.index');
     }
 
     /**
@@ -59,6 +75,9 @@ class InsigniaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $insignia = Insignia::findOrFail($id);
+        $insignia->delete();
+
+        return redirect()->route('insignies.index');
     }
 }

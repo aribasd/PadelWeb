@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -11,7 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -19,7 +21,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -27,7 +29,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed', // password_confirmation
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password, // Laravel hash automàtic si tens cast 'hashed'
+        ]);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -35,7 +49,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -43,7 +58,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -51,7 +67,21 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => "required|email|unique:users,email,{$user->id}",
+            'password' => 'nullable|string|min:6|confirmed',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password ?? $user->password,
+        ]);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -59,6 +89,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('users.index');
     }
 }

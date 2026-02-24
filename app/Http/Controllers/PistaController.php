@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Pista;
 
 class PistaController extends Controller
 {
@@ -12,7 +12,8 @@ class PistaController extends Controller
      */
     public function index()
     {
-        //
+        $pistes = Pista::all();
+        return view('pistes.index', compact('pistes'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PistaController extends Controller
      */
     public function create()
     {
-        //
+        return view('pistes.create');
     }
 
     /**
@@ -28,15 +29,28 @@ class PistaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'activa' => 'required|boolean',
+            'doble_vidre' => 'required|boolean',
+        ]);
+
+        Pista::create($request->only([
+            'nom',
+            'activa',
+            'doble_vidre',
+        ]));
+
+        return redirect()->route('pistes.index');
     }
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $pista = Pista::findOrFail($id);
+        return view('pistes.show', compact('pista'));
     }
 
     /**
@@ -44,7 +58,8 @@ class PistaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pista = Pista::findOrFail($id);
+        return view('pistes.edit', compact('pista'));
     }
 
     /**
@@ -52,7 +67,20 @@ class PistaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'activa' => 'required|boolean',
+            'doble_vidre' => 'required|boolean',
+        ]);
+
+        $pista = Pista::findOrFail($id);
+        $pista->update($request->only([
+            'nom',
+            'activa',
+            'doble_vidre',
+        ]));
+
+        return redirect()->route('pistes.index');
     }
 
     /**
@@ -60,6 +88,9 @@ class PistaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pista = Pista::findOrFail($id);
+        $pista->delete();
+
+        return redirect()->route('pistes.index');
     }
 }

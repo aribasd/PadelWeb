@@ -1,28 +1,84 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Http\Controllers;
 
-return new class extends Migration
+use Illuminate\Http\Request;
+use App\Models\Comunitat;
+
+class ComunitatController extends Controller
 {
     /**
-     * Run the migrations.
+     * Display a listing of the resource.
      */
-    public function up(): void
+    public function index()
     {
-        Schema::create('comunitats', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('nom');
-        });
+        $comunitats = Comunitat::all();
+        return view('comunitats.index', compact('comunitats'));
     }
 
     /**
-     * Reverse the migrations.
+     * Show the form for creating a new resource.
      */
-    public function down(): void
+    public function create()
     {
-        Schema::dropIfExists('comunitats');
+        return view('comunitats.create');
     }
-};
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+
+        Comunitat::create($request->only('nom'));
+
+        return redirect()->route('comunitats.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $comunitat = Comunitat::findOrFail($id);
+        return view('comunitats.show', compact('comunitat'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $comunitat = Comunitat::findOrFail($id);
+        return view('comunitats.edit', compact('comunitat'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+
+        $comunitat = Comunitat::findOrFail($id);
+        $comunitat->update($request->only('nom'));
+
+        return redirect()->route('comunitats.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $comunitat = Comunitat::findOrFail($id);
+        $comunitat->delete();
+
+        return redirect()->route('comunitats.index');
+    }
+}
