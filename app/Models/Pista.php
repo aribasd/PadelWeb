@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Pista extends Model
 {
 
+ protected $table = 'pistes';
+
    use HasFactory;
 
         protected $fillable = [
