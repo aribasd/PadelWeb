@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nom');
             $table->boolean('activa');
             $table->boolean('doble_vidre');
+            $table->string('imatge')->nullable();
         });
     }
 

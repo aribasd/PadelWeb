@@ -2,88 +2,169 @@
 
 @section('content')
 
-<h1>Llista de Pistes</h1>
+<h1 class="titol">Llista de pistes</h1>
 
-   <a href="{{ route('pistes.create') }}" class = "afegirpistes">Afegir Pistes</a>
+<a href="{{ route('pistes.create') }}" class="btn-afegir">Afegir pista</a>
+
 
 <br><br>
 
-<ul>
-@foreach($pistes as $pista)
-    <li class="pista-item">
-        <strong class="pista-nom">{{ $pista->nom }}</strong> <br>
+<ul class="llista-pistes">
+    @foreach($pistes as $pista)
+    <li class="pista-targeta">
 
-        <p><strong>Activa:</strong> <span class="{{ $pista->activa ? 'activo' : 'inactivo' }}">
-            {{ $pista->activa ? 'Sí' : 'No' }}
-        </span></p>
+        <div class="pista-contingut">
 
-        <p><strong>Doble Vidre:</strong> <span class="{{ $pista->doble_vidre ? 'activo' : 'inactivo' }}">
-            {{ $pista->doble_vidre ? 'Sí' : 'No' }}
-        </span></p>
+            <!-- ESQUERRA -->
+            <div class="pista-info">
+                <h2 class="pista-nom">{{ $pista->nom }}</h2>
 
-        <div class="acciones">
-            <a href="{{ route('pistes.edit', $pista->id) }}" class="btn-editar">Editar</a>
+                <p class="pista-descripcio">
+                    {{ $pista->descripcio ?? 'Aquesta pista encara no té descripció.' }}
+                </p>
 
-            <form action="{{ route('pistes.destroy', $pista->id) }}" method="POST" class="form-eliminar">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn-eliminar">Eliminar</button>
-            </form>
+                <p><strong>Activa:</strong>
+                    <span class="{{ $pista->activa ? 'activa' : 'inactiva' }}">
+                        {{ $pista->activa ? 'Sí' : 'No' }}
+                    </span>
+                </p>
+
+                <p><strong>Doble vidre:</strong>
+                    <span class="{{ $pista->doble_vidre ? 'activa' : 'inactiva' }}">
+                        {{ $pista->doble_vidre ? 'Sí' : 'No' }}
+                    </span>
+                </p>
+
+                <div class="accions">
+                    <a href="{{ route('pistes.edit', $pista->id) }}" class="btn-editar">Editar</a>
+
+                    <br>
+                    <br>
+
+                    <form action="{{ route('pistes.destroy', $pista->id) }}" method="POST" class="formulari-eliminar">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-eliminar">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- --------------------------------------------------------------------------------- -->
+
+            <!-- DRETA -->
+            <div class="pista-imatge">
+                <img src="{{ $pista->imatge ?? 'https://via.placeholder.com/250x180' }}" alt="Imatge de la pista">
+            </div>
+
+            <!-- --------------------------------------------------------------------------------- -->
+
+
         </div>
 
-        <hr>
     </li>
-@endforeach
+    @endforeach
 </ul>
 
 <style>
-    .titulo {
-        font-size: 2rem;
-        color: #2c3e50;
-        margin-bottom: 1rem;
+    
+    body {
+    background-color: rgb(10, 10, 10);       
+    }
+
+    .titol {
         text-align: center;
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        color: black;
+    }
+
+    .btn-afegir {
+        display: inline-block;
+        padding: 10px 18px;
+        background-color: #27ae60;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
         font-weight: bold;
     }
 
-    .lista-pistes {
+    .btn-afegir:hover {
+        background-color: #1e8449;
+    }
+
+    .llista-pistes {
         list-style: none;
         padding: 0;
-        max-width: 800px;
+        max-width: 1000px;
         margin: 0 auto;
     }
 
-    .pista-item {
-        background-color: #f7f7f7;
-        padding: 15px 20px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    .pista-targeta {
+    background: radial-gradient(circle at center, rgb(32, 32, 32), rgb(20, 20, 20));
+    width: 800px;
+    height: 300px;
+    border-radius: 20px;
+    border: 2px solid #727171; /* borde blanco fijo */
+    box-shadow: 15px 15px 30px rgb(25, 25, 25),
+                -15px -15px 30px rgb(60, 60, 60);
+}
+
+    .pista-targeta:hover {
+        transform: scale(1.02);
+    }
+
+    .pista-contingut {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .pista-info {
+        width: 65%;
     }
 
     .pista-nom {
-        font-size: 1.5rem;
-        color: #34495e;
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #2c3e50;
     }
 
-    .activo {
+    .pista-descripcio {
+        font-size: 1rem;
+        margin-bottom: 15px;
+        color: #555;
+    }
+
+    .pista-imatge {
+        width: 30%;
+        text-align: right;
+    }
+
+    .pista-imatge img {
+        width: 100%;
+        max-width: 250px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .activa {
         color: green;
         font-weight: bold;
     }
 
-    .inactivo {
+    .inactiva {
         color: red;
         font-weight: bold;
     }
 
-    .acciones {
-        margin-top: 10px;
+    .accions {
+        margin-top: 15px;
     }
 
-    .acciones a,
-    .acciones button {
-        display: inline-block;
-        padding: 6px 12px;
-        border-radius: 5px;
+    .accions a,
+    .accions button {
+        padding: 8px 14px;
+        border-radius: 6px;
         text-decoration: none;
         font-size: 0.9rem;
         margin-right: 5px;
@@ -108,9 +189,6 @@
     .btn-eliminar:hover {
         background-color: #c0392b;
     }
-
-
-    </style>
-
+</style>
 
 @endsection

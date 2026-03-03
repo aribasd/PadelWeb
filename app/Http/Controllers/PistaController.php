@@ -33,12 +33,14 @@ class PistaController extends Controller
             'nom' => 'required|string|max:255',
             'activa' => 'required|boolean',
             'doble_vidre' => 'required|boolean',
+            'imatge' => 'nullable|url',
         ]);
 
         Pista::create($request->only([
             'nom',
             'activa',
             'doble_vidre',
+            'imatge',
         ]));
 
         return redirect()->route('pistes.index');
@@ -71,6 +73,7 @@ class PistaController extends Controller
             'nom' => 'required|string|max:255',
             'activa' => 'required|boolean',
             'doble_vidre' => 'required|boolean',
+            'imatge' => 'nullable|url',
         ]);
 
         $pista = Pista::findOrFail($id);
@@ -78,6 +81,7 @@ class PistaController extends Controller
             'nom',
             'activa',
             'doble_vidre',
+            'imatge',
         ]));
 
         return redirect()->route('pistes.index');
