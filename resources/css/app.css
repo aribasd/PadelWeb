@@ -3,3 +3,8 @@
 @source "../../storage/framework/views/*.php";
 @source "../**/*.blade.php";
 @source "../**/*.js";
+
+body {
+    @apply font-sans; /* Esto aplicará Lato en todo el body */
+}
+

@@ -2,65 +2,116 @@
 
 @section('content')
 
-
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-
-<h1 class="titol">Llista de pistes</h1>
+  <h1 class="titol">Llista de pistes</h1>
 
 <a href="{{ route('pistes.create') }}" class="btn-afegir">Afegir pista</a>
 
-
 <br><br>
-
-<h1 class="text-white">A</h1>
 
 <ul class="llista-pistes">
     @foreach($pistes as $pista)
+
     <li class="pista-targeta">
 
         <div class="pista-contingut">
 
             <!-- ESQUERRA -->
-            <div class="pista-info">
+
+            <div class="pista-info flex flex-col gap-4 ml-2">
                 <h2 class="pista-nom">{{ $pista->nom }}</h2>
+
 
                 <p class="pista-descripcio">
                     {{ $pista->descripcio ?? 'Aquesta pista encara no té descripció.' }}
                 </p>
 
-                <p><strong>Activa:</strong>
-                    <span class="{{ $pista->activa ? 'activa' : 'inactiva' }}">
-                        {{ $pista->activa ? 'Sí' : 'No' }}
-                    </span>
-                </p>
+                <div class="doble">
 
-                <p><strong>Doble vidre:</strong>
+                <p>Doble vidre:
                     <span class="{{ $pista->doble_vidre ? 'activa' : 'inactiva' }}">
                         {{ $pista->doble_vidre ? 'Sí' : 'No' }}
                     </span>
                 </p>
 
-                <div class="accions">
-                    <a href="{{ route('pistes.edit', $pista->id) }}" class="btn-editar">Editar</a>
+                </div>
 
-                    <br>
-                    <br>
+                <div class="accions flex items-center gap-2">
+
+                    <div>
+                        <a href="{{ route('pistes.edit', $pista->id) }}"  class="btn-editar ml-2">Editar</a>
+                    </div>
 
                     <form action="{{ route('pistes.destroy', $pista->id) }}" method="POST" class="formulari-eliminar">
                         @csrf
+                   
                         @method('DELETE')
-                        <button type="submit" class="btn-eliminar">Eliminar</button>
+
+                  
+                    <button
+                        class="group relative flex h-15 w-12 flex-col items-center ml-2 justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-400 hover:bg-red-600"
+                        >
+                        <!-- Paper Basura  -->
+                        <svg
+                            viewBox="0 0 1.625 1.625"
+                            class="absolute -top-7 fill-white delay-100 group-hover:top-6 group-hover:animate-[spin_1.4s] group-hover:duration-1000"
+                            height="5"
+                            width="10"
+                        >
+                            <path
+                            d="M.471 1.024v-.52a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099h-.39c-.107 0-.195 0-.195-.195"
+                            ></path>
+                            <path
+                            d="M1.219.601h-.163A.1.1 0 0 1 .959.504V.341A.033.033 0 0 0 .926.309h-.26a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099v-.39a.033.033 0 0 0-.032-.033"
+                            ></path>
+                            <path
+                            d="m1.245.465-.15-.15a.02.02 0 0 0-.016-.006.023.023 0 0 0-.023.022v.108c0 .036.029.065.065.065h.107a.023.023 0 0 0 .023-.023.02.02 0 0 0-.007-.016"
+                            ></path>
+                        </svg>
+                        <!-- Tapa Basura -->
+                        <svg
+                            width="15"
+                            fill="none"
+                            viewBox="0 0 39 7"
+                            class="origin-right duration-500 group-hover:rotate-90"
+                        >
+                            <line stroke-width="4" stroke="white" y2="5" x2="39" y1="5"></line>
+                            <line
+                            stroke-width="3"
+                            stroke="white"
+                            y2="1.5"
+                            x2="26.0357"
+                            y1="1.5"
+                            x1="12"
+                            ></line>
+                        </svg>
+
+                        <!-- Basura Cubell  -->
+                        <svg width="15" fill="none" viewBox="0 0 33 39" class="">
+                            <mask fill="white" id="path-1-inside-1_8_19">
+                            <path
+                                d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                            ></path>
+                            </mask>
+                            <path
+                            mask="url(#path-1-inside-1_8_19)"
+                            fill="white"
+                            d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                            ></path>
+                            <path stroke-width="4" stroke="white" d="M12 6L12 29"></path>
+                            <path stroke-width="4" stroke="white" d="M21 6V29"></path>
+                    </svg>
+                    </button>
+                    <!-- ----------------------------------------------------------------- -->
+             
                     </form>
                 </div>
             </div>
 
             <!-- --------------------------------------------------------------------------------- -->
 
-            <!-- DRETA -->
-            <div class="pista-imatge">
                 <img src="{{ $pista->imatge ?? 'https://via.placeholder.com/250x180' }}" alt="Imatge de la pista">
-            </div>
 
             <!-- --------------------------------------------------------------------------------- -->
 
@@ -73,15 +124,16 @@
 
 <style>
     
-    body {
-    background-color: rgb(10, 10, 10);       
-    }
 
     .titol {
-        text-align: center;
-        font-size: 2.2rem;
-        margin-bottom: 20px;
-        color: black;
+    color: white;
+    text-align: center;
+    font-size: 32px;
+    }
+    
+    body {
+    background-color:  rgb(35, 35, 35); 
+          
     }
 
     .btn-afegir {
@@ -106,15 +158,13 @@
     }
 
     .pista-targeta {
-    background: radial-gradient(circle at center, rgb(32, 32, 32), rgb(20, 20, 20));
-    width: 800px;
-    height: 300px;
-    border-radius: 20px;
-    border: 2px solid #727171; /* borde blanco fijo */
-    box-shadow: 15px 15px 30px rgb(25, 25, 25),
-                -15px -15px 30px rgb(60, 60, 60);
-}
-
+    background: rgb(65, 65, 65);
+    width: 1000px;
+    height: 320px;
+    border-radius: 30px;
+    margin: 0 auto; /* CENTRA horizontalmente */
+    }
+    
     .pista-targeta:hover {
         transform: scale(1.02);
     }
@@ -125,20 +175,25 @@
         align-items: center;
     }
 
-    .pista-info {
-        width: 65%;
+    .doble {
+
+    color: black;
+    font-weight: 700px;
     }
 
+
+
     .pista-nom {
-        font-size: 2rem;
+        font-size: 50px;
         margin-bottom: 10px;
-        color: #2c3e50;
+        color:  rgb(230, 241, 88);
+        font-weight: 700;
     }
 
     .pista-descripcio {
         font-size: 1rem;
         margin-bottom: 15px;
-        color: #555;
+        color: rgb(221, 225, 163);
     }
 
     .pista-imatge {
@@ -153,15 +208,6 @@
         object-fit: cover;
     }
 
-    .activa {
-        color: green;
-        font-weight: bold;
-    }
-
-    .inactiva {
-        color: red;
-        font-weight: bold;
-    }
 
     .accions {
         margin-top: 15px;
@@ -195,6 +241,36 @@
     .btn-eliminar:hover {
         background-color: #c0392b;
     }
+
+
+    .Btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100px;
+  height: 40px;
+  border: none;
+  padding: 0px 20px;
+  background-color: black;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px black;
+  transition-duration: 0.3s;
+}
+
+.svg {
+  width: 13px;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  fill: white;
+  transition-duration: 0.3s;
+}
+
+
 </style>
 
 @endsection

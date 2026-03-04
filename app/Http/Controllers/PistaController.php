@@ -29,19 +29,19 @@ class PistaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'activa' => 'required|boolean',
             'doble_vidre' => 'required|boolean',
-            'imatge' => 'nullable|url',
+            'imatge' => 'nullable|image|max:2048', // max 2MB
         ]);
 
-        Pista::create($request->only([
-            'nom',
-            'activa',
-            'doble_vidre',
-            'imatge',
-        ]));
+        if($request->hasFile('imatge')) {
+            $path = $request->file('imatge')->store('pistes', 'public');
+            $validated['imatge'] = '/storage/' . $path;
+        }
+
+        Pista::create($validated);
 
         return redirect()->route('pistes.index');
     }
