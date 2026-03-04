@@ -2,12 +2,18 @@
 
 @section('content')
 
+
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
 <h1 class="titol">Llista de pistes</h1>
 
 <a href="{{ route('pistes.create') }}" class="btn-afegir">Afegir pista</a>
 
 
 <br><br>
+
+<h1 class="text-white">A</h1>
 
 <ul class="llista-pistes">
     @foreach($pistes as $pista)
