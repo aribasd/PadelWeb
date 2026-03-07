@@ -13,7 +13,7 @@
 
 
     <!-- Linkejem css de app.css -->
-    @vite('resources/css/app.css')
+        @vite('resources/css/app.css')
 
 
 
