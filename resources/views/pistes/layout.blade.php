@@ -12,10 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 
-    <!-- Linkejem css de app.css -->
-        @vite('resources/css/app.css')
+    <!-- Linkejem css de app.css *-->
+        @vite('resources/css/app.css') 
 
-        
+
     <!-- Lato Lletra -->
 
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
@@ -25,6 +25,8 @@
 <body>
     <nav>    
         <a href= "{{ route('pistes.index') }}">Pistes</a>
+        <a href="{{ route('reserves.index') }}">Reserves</a>
+        <a href="{{ (route('partits.index')) }}">Partits</a>
     </nav>
 
     <div>

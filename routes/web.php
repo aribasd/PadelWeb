@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\PartitController;
 use App\Http\Controllers\ProfileController;
-
-
 use App\Http\Controllers\PistaController;
-
-
-
+use App\Http\Controllers\ReservaController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +17,10 @@ Route::get('/dashboard', function () {
 
 
 Route::resource('pistes', PistaController::class);
+
+Route::resource('reserves', ReservaController::class);
+
+Route::resource('partits', PartitController::class);
 
 Route::middleware('auth')->group(function () {      
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
