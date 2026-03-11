@@ -35,7 +35,7 @@
       </div>
 
       <div class=" flex gap-5 ml-auto mr-0">
-          <a href="{{ route('perfils.index') }}" class="flex items-center gap-2 hover:text-blue-200 transition ml-auto">@svg('eva-message-circle-outline', ['class' => 'w-6 h-6 text-white'])</a>
+          <a href="{{ route('perfils.index') }}" class="flex items-center gap-2 hover:text-blue-200 transition ml-auto">Missatges<!-- @svg('eva-message-circle-outline', ['class' => 'w-6 h-6 text-white']) --></a>
           <a class="hover:text-blue-200 transition" href="{{ route('perfils.index') }}"><x-css-profile /></a>
       </div>
 
