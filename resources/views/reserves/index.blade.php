@@ -1,10 +1,19 @@
-@extends('pistes.layout')
+@extends('layouts.layout')
 
 
 @section('content')
 
 
-<h1>reserves</h1>
+
+<div class="flex flex-col min-h-screen">
+
+      <div class="flex items-center h-20 bg-gray-700">    
+        <h1 class="text-white text-2xl font-bold ml-10">Reserves</h1>
+    </div>
+
+    
+
+</div>
 
 
 

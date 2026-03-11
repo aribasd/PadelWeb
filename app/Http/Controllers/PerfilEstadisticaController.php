@@ -13,7 +13,7 @@ class PerfilEstadisticaController extends Controller
     public function index()
     {
         $perfil_estadistiques = PerfilEstadistica::all();
-        return view('perfil_estadistiques.index', compact('perfil_estadistiques'));
+        return view('perfils_estadistiques.index', compact('perfil_estadistiques'));
     }
 
     /**
@@ -21,7 +21,7 @@ class PerfilEstadisticaController extends Controller
      */
     public function create()
     {
-        return view('perfil_estadistiques.create');
+        return view('perfils_estadistiques.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class PerfilEstadisticaController extends Controller
             'win_rate',
             'nivell',
             'data_naixament',
-            'foto_perfil',
+            'foto_perfil',  
         ]));
 
         return redirect()->route('perfil_estadistiques.index');
@@ -54,7 +54,7 @@ class PerfilEstadisticaController extends Controller
     public function edit(string $id)
     {
         $perfil_estadistiques = PerfilEstadistica::findOrFail($id);
-        return view('perfil_estadistiques.edit', compact('perfil_estadistiques'));
+        return view('perfils_estadistiques.edit', compact('perfil_estadistiques'));
     }
 
     /**

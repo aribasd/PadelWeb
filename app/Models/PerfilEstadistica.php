@@ -12,6 +12,9 @@ class PerfilEstadistica extends Model
 
     use HasFactory;
 
+        protected $table = 'perfil_estadistiques';
+
+
         protected $fillable = [
         'partits_jugats',
         'win_rate',

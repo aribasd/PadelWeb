@@ -8,8 +8,12 @@
     "require": {
         "php": "^8.2",
         "codeat3/blade-phosphor-icons": "^2.3",
+        "hasnayeen/blade-eva-icons": "^2.1",
+        "khatabwedaa/blade-css-icons": "^1.5",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "mckenziearts/blade-untitledui-icons": "^1.5",
+        "secondnetwork/blade-tabler-icons": "^3.40"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

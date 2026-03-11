@@ -4,6 +4,7 @@ use App\Http\Controllers\PartitController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PistaController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\PerfilEstadisticaController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,6 +22,8 @@ Route::resource('pistes', PistaController::class);
 Route::resource('reserves', ReservaController::class);
 
 Route::resource('partits', PartitController::class);
+
+Route::resource('perfils_estadistiques', PerfilEstadisticaController::class);
 
 Route::middleware('auth')->group(function () {      
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
