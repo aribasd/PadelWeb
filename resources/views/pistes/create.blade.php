@@ -6,15 +6,17 @@
 <div class="flex flex-col min-h-screen">
 
     <!-- Header -->
-    <div class="flex items-center h-20 bg-gray-700">    
+    <div class="flex items-center h-20 bg-gray-700">
 
 
         <h1 class="text-white text-2xl font-bold ml-10">Afegir Nova Pista</h1>
+
     </div>
 
     <div class="bg-gray-300 flex-1 p-5">
         <div class="max-w-lg mx-auto bg-gray-800 p-8 rounded-xl shadow-lg mt-10">
-            <form action="{{ route('pistes.store') }}" method="POST" class="space-y-6">
+
+            <form action="{{ route('pistes.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Nom de la pista -->
@@ -33,9 +35,9 @@
                         <option value="0" {{ old('doble_vidre') == "0" ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
-
+                <input type="file" name="imatge">
                 <div>
-                    <button type="submit"
+                    <button type="submit" onclick=""
                         class="w-full bg-black hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors duration-200">
                         Desar
                     </button>

@@ -2,15 +2,11 @@
 
 @section('content')
 
-<div class="flex flex-col min-h-screen">
 
-      <div class="flex items-center h-20 bg-gray-700">    
-        <h1 class="text-white text-2xl font-bold ml-10">Pistes</h1>
-    </div>
+@include('components.propis.subheader', ['titol' => 'Pistes'])
 
 
-  <div class="bg-white flex-1 p-5">
-
+<div class="bg-white flex-1 p-5">
 
     <div class="mt-5 ml-10">
         <a href="{{ route('pistes.create') }}" class="btn-afegir"><button
@@ -31,8 +27,46 @@
             </button></a>
     </div>
 
-</div>
+    <div class="flex flex-col items-center space-y-12 mt-8 min-h-64">
 
+        @foreach ($pistes as $pista)
+        <div class="flex flex-row bg-gray-300 py-4 px-4 rounded-lg gap-6 w-2/3  border border-gray-200 h-80">
+
+            <div class="flex-1 flex flex-col justify-between">
+                <div>
+                    <strong class="text-2xl font-bold">{{ $pista->nom }}</strong>
+
+                    <div class="mt-4 text-left">
+                        <p><strong>Descripcio:</strong> Hola hola</p>
+                        <p><strong>Doble Vidre:</strong> {{ $pista->doble_vidre ? 'Sí' : 'No' }}</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap mt-4">
+                    @include('components.propis.boto-eliminar', [
+                    'action' => route('pistes.destroy', $pista->id),
+                    'text' => 'Borrar pista'
+                    ])
+
+                      @include('components.propis.boto-editar', [
+                    'action' => route('pistes.edit', $pista->id),
+                    'text' => 'Editar pista'
+                    ])
+
+                </div>
+            </div>
+
+            @if($pista->imatge)
+            <div class="flex-shrink-0 mr-2 w-72 h-72">
+                <img src="{{ asset('storage/' . $pista->imatge) }}"
+                    alt="{{ $pista->nom }}"
+                    class="w-full h-full rounded">
+            </div>
+            @endif
+
+        </div>
+        @endforeach
+    </div>
 </div>
 
 @endsection

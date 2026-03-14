@@ -31,14 +31,14 @@ class PistaController extends Controller
     {
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
-            'activa' => 'required|boolean',
             'doble_vidre' => 'required|boolean',
-            'imatge' => 'nullable|image|max:2048', // max 2MB
+            'imatge' => 'nullable|image',
         ]);
 
+        $validated['activa'] = true; // per defecte activa
+
         if($request->hasFile('imatge')) {
-            $path = $request->file('imatge')->store('pistes', 'public');
-            $validated['imatge'] = '/storage/' . $path;
+            $validated['imatge'] = $request->file('imatge')->store('pistes', 'public');
         }
 
         Pista::create($validated);
@@ -73,7 +73,7 @@ class PistaController extends Controller
             'nom' => 'required|string|max:255',
             'activa' => 'required|boolean',
             'doble_vidre' => 'required|boolean',
-            'imatge' => 'nullable|url',
+            'imatge' => 'nullable|image',
         ]);
 
         $pista = Pista::findOrFail($id);
@@ -86,7 +86,7 @@ class PistaController extends Controller
 
         return redirect()->route('pistes.index');
     }
-
+        
     /**
      * Remove the specified resource from storage.
      */

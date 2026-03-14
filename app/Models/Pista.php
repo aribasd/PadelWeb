@@ -20,6 +20,7 @@ class Pista extends Model
         'nom',
         'activa',
         'doble_vidre',
+        'imatge',
     ];
     
 

@@ -4,20 +4,7 @@
 @section('content')
 
 
-
-
-<div class="flex flex-col min-h-screen">
-
-      <div class="flex items-center h-20 bg-gray-700">    
-        <h1 class="text-white text-2xl font-bold ml-10">Partits</h1>
-    </div>
-
-    
-
-</div>
-
-
-
+@include('components.propis.subheader', ['titol' => 'Partits'])
 
 
 @endsection

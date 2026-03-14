@@ -16,16 +16,21 @@
     @vite('resources/css/app.css') 
 
 
+    <!-- daisyUI -->
+    <script type="module" src="https://unpkg.com/cally"></script>
+    
+
     <!-- Lato Lletra -->
 
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 
 </head> 
-<body>
+<body class="flex flex-col min-h-screen">
+
 <nav class="bg-blue-700 text-white">
   <div class="max-w-7xl mx-auto flex items-center px-2 py-3">
 
-      <h1 class="font-bold text-lg">Padel<span class="text-yellow-500">App</span></h1>
+      <h1 class="font-bold text-lg">Social<span class="text-yellow-500">Padel</span></h1>
 
       <div class="flex items-center gap-8 ml-20">
           <a class="hover:text-blue-200 transition" href="{{ route('pistes.index') }}">Pistes</a>
@@ -34,15 +39,25 @@
           <a class="hover:text-blue-200 transition" href="{{ route('partits.index') }}">Galeria</a>
       </div>
 
-      <div class=" flex gap-5 ml-auto mr-0">
-           <a href="{{ route('perfils_estadistiques.index') }}" class="flex items-center gap-2 hover:text-blue-200 transition ml-auto">@svg('eva-message-circle-outline', ['class' => 'w-6 h-6 text-white'])</a>
-          <a class="hover:text-blue-200 transition" href="{{ route('perfils_estadistiques.index') }}"><x-css-profile/></a>
+      <div class="flex gap-5 ml-auto">
+          <a href="{{ route('perfils_estadistiques.index') }}" class="flex items-center gap-2 hover:text-blue-200 transition">
+              @svg('eva-message-circle-outline', ['class' => 'w-6 h-6 text-white'])
+          </a>
+
+          <a class="hover:text-blue-200 transition" href="{{ route('perfils_estadistiques.index') }}">
+              <x-css-profile/>
+          </a>
       </div>
 
   </div>
 </nav>
-    <div>
-        @yield('content')
-    </div>
-</body> 
+
+<!-- CONTENIDO -->
+<main class="flex-1">
+    @yield('content')
+</main>
+
+@include('components.propis.footer')
+
+</body>
 </html>

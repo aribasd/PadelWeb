@@ -12,12 +12,14 @@ body {
 }
 
 button {
-  padding: 10px 20px;
+  padding: 40px 50px;
+  width: 200px;
+  height: 60px;
   text-transform: uppercase;
   border-radius: 8px;
-  font-size: 17px;
+  font-size: 24px;
   font-weight: 500;
-  color: #ffffff80;
+  background: rgba(128, 128, 128, 0.5);
   text-shadow: none;
   background: transparent;
   cursor: pointer;
@@ -37,19 +39,34 @@ button {
     0 0 100px #008cff;
 }
 
-.botons {
-}
-
 </style>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4/dist/full.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-<div class=".botons">
 
-  <a href= "{{ route('login') }}">  <button id="btn">Login</button></a>
-    <a href= "{{ route('login') }}">  <button id="btn">Register*</button></a>
-
+<div
+  class="hero min-h-screen"
+  style="background-image: url(https://images.unsplash.com/photo-1646649853703-7645147474ba?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGlzdGElMjBkZSUyMHAlQzMlQTFkZWx8ZW58MHx8MHx8fDA%3D);"
+>
+  <div class="hero-overlay"></div>
+  <div class="hero-content text-neutral-content text-center">
+    <div class="max-w-md">
+      <h1 class="mb-5 text-5xl font-bold">SocialPadel</h1>
+      <p class="mb-5">
+        Reserva pistes, comparteix amb amics i segueix el teu progrés en la teva comunitat de pàdel.
+      </p>
+      <a href= "{{ route('login') }}">  <button id="btn">Login</button></a>
+    <a href= "{{ route('login') }}">  <button id="btn">Register</button></a>
+    </div>
+  </div>
 </div>
+
+
+ 
 </body>
 
 
