@@ -64,8 +64,6 @@ button {
     </div>
   </div>
 </div>
-
-<h1 class="bg-red-500">Asd</h1>
  
 </body>
 

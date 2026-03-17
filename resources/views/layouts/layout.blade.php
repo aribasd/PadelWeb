@@ -17,6 +17,9 @@
     <script src="{{ asset('build/assets/app.abc123.js') }}" defer></script>
 
 
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
     <!-- daisyUI -->
     <script type="module" src="https://unpkg.com/cally"></script>
     
