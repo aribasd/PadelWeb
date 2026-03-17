@@ -17,6 +17,7 @@
     <script src="{{ asset('build/assets/app.abc123.js') }}" defer></script>
 
 
+    <!-- Tailwind necessari per mostrar-ho en el servidor -->
     <script src="https://cdn.tailwindcss.com"></script>
 
 
@@ -25,7 +26,6 @@
     
 
     <!-- Lato-Lletra -->
-
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 
 </head> 
