@@ -13,7 +13,8 @@
 
 
     <!-- Linkejem css de app.css *-->
-    @vite('resources/css/app.css') 
+    <link rel="stylesheet" href="{{ asset('build/assets/app.abc123.css') }}">
+    <script src="{{ asset('build/assets/app.abc123.js') }}" defer></script>
 
 
     <!-- daisyUI -->
