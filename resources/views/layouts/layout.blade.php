@@ -34,7 +34,7 @@
 <nav class="bg-blue-700 text-white">
   <div class="max-w-7xl mx-auto flex items-center px-2 py-3">
 
-      <h1 class="font-bold text-lg">Social<span class="text-yellow-500">Padel</span></h1>
+      <a href="inici"><h1 class="font-bold text-lg">Social<span class="text-yellow-500">Padel</span></h1></a>
 
       <div class="flex items-center gap-8 ml-20">
           <a class="hover:text-blue-200 transition" href="{{ route('pistes.index') }}">Pistes</a>

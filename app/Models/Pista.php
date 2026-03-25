@@ -23,12 +23,6 @@ class Pista extends Model
         'imatge',
     ];
     
-
-
-  public function reserves()
-  {
-    return $this->belongsTo(Reserva::class);
-  }
 }
 
 

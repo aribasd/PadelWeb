@@ -5,10 +5,7 @@
 
 <div class="flex flex-col min-h-screen">
 
-    <!-- Header -->
-    <div class="flex items-center h-20 bg-gray-700">
-        <h1 class="text-white text-2xl font-bold ml-10">Afegir Nova Pista</h1>
-    </div>
+    @include('components.propis.subheader', ['titol' => 'Afegir Nova Pista' ])
 
     <div class="flex-1 p-5">
 

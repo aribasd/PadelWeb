@@ -5,6 +5,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PistaController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\PerfilEstadisticaController;
+
+use App\Http\Controllers\IniciController;
+
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,7 +23,12 @@ Route::get('/dashboard', function () {
 
 Route::resource('pistes', PistaController::class);
 
+
 Route::resource('reserves', ReservaController::class);
+
+
+Route::resource('inici', IniciController::class);
+
 
 Route::resource('partits', PartitController::class);
 

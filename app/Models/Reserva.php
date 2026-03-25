@@ -9,14 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reserva extends Model
 {
+       protected $table = 'reserves';
+
        use HasFactory;
 
-        protected $fillable = [
-        'data',
-        'hora_inici',
-        'hora_fi',
-        'preu',
-    ];
+       protected $fillable = ['pista_id', 'data', 'hora_inici', 'hora_fi', 'preu'];
     
 
     public function users()
@@ -31,6 +28,6 @@ class Reserva extends Model
 
     public function pistes()
     {
-        return $this->hasOne(Pista::class);
+        return $this->belongsTo(Pista::class);
     }
 }

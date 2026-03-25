@@ -19,9 +19,15 @@ class PistaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('pistes.create');
+
+        $pista = $request->query('pista'); 
+        $hora  = $request->query('hora');
+        $data  = $request->query('data');
+
+        
+        return view('pistes.create', compact('pista', 'hora' , 'data'));    
     }
 
     /**
@@ -97,4 +103,5 @@ class PistaController extends Controller
 
         return redirect()->route('pistes.index');
     }
+    
 }

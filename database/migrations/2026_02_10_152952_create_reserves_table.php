@@ -18,6 +18,7 @@ return new class extends Migration
             $table->time('hora_inici');
             $table->time('hora_fi');
             $table->integer('preu');
+            $table->foreignId('pista_id')->constrained('pistes')->cascadeOnDelete();
         });
     }
 
@@ -27,5 +28,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('reserves');
-    }
+    } 
 };

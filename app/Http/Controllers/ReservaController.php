@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reserva;
 
+use App\Models\Pista;
+
+use Carbon\Carbon;
+
+
 class ReservaController extends Controller
 {
     /**
@@ -12,16 +17,34 @@ class ReservaController extends Controller
      */
     public function index()
     {
-        $reserves = Reserva::all();
-        return view('reserves.index', compact('reserves'));
+        $hores = range(9, 21);
+        $pistes = Pista::all();
+
+        $reserves = Reserva::where('data', date('Y-m-d'))->get();
+
+        return view('reserves.index', compact('hores', 'pistes', 'reserves'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('reserves.create');
+
+    $pista = Pista::findOrFail($request->pista_id);
+
+    $hora_inici  = $request->hora;
+    $hora_fi     = date('H:i', strtotime($hora_inici . ' +1 hour'));
+    $data        = $request->data;
+    
+    // Precio base
+    $preu = 7;
+    if ($pista->doble_vidre) {
+        $preu += 1; // sumar 1 si tiene doble vidre
+    }
+
+     return view('reserves.create', compact('pista', 'hora_inici', 'hora_fi', 'data', 'preu'));
+
     }
 
     /**
@@ -29,7 +52,9 @@ class ReservaController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
+            'pista_id' => 'required|string',
             'data' => 'required|date',
             'hora_inici' => 'required|date_format:H:i',
             'hora_fi' => 'required|date_format:H:i|after:hora_inici',
@@ -37,6 +62,7 @@ class ReservaController extends Controller
         ]);
 
         Reserva::create($request->only([
+            'pista_id',
             'data',
             'hora_inici',
             'hora_fi',
