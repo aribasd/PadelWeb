@@ -1,6 +1,10 @@
 {
+  "_client-Ah1pgjPn.js": {
+    "file": "assets/client-Ah1pgjPn.js",
+    "name": "client"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-BAn83e6o.css",
+    "file": "assets/app-B52k3Mid.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -13,5 +17,23 @@
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
+  },
+  "resources/js/galeria-app.jsx": {
+    "file": "assets/galeria-app-LIDDwod0.js",
+    "name": "galeria-app",
+    "src": "resources/js/galeria-app.jsx",
+    "isEntry": true,
+    "imports": [
+      "_client-Ah1pgjPn.js"
+    ]
+  },
+  "resources/js/react-app.jsx": {
+    "file": "assets/react-app-D04Fuf1q.js",
+    "name": "react-app",
+    "src": "resources/js/react-app.jsx",
+    "isEntry": true,
+    "imports": [
+      "_client-Ah1pgjPn.js"
+    ]
   }
 }

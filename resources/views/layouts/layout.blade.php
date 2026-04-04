@@ -44,7 +44,7 @@
           <a class="hover:text-blue-200 transition" href="{{ route('pistes.index') }}">Pistes</a>
           <a class="hover:text-blue-200 transition" href="{{ route('reserves.index') }}">Reserves</a>
           <a class="hover:text-blue-200 transition" href="{{ route('partits.index') }}">Partits</a>
-          <a class="hover:text-blue-200 transition" href="{{ route('partits.index') }}">Galeria</a>
+          <a class="hover:text-blue-200 transition" href="{{ route('galeria.index') }}">Galeria</a>
           <a class="hover:text-blue-200 transition" href="{{ route('comunitats.index') }}">Comunitats</a>
       </div>
 
@@ -67,6 +67,15 @@
 </main>
 
 @include('components.propis.footer')
+
+{{-- Vite + React: @push des de la vista filla (després del @yield del content) --}}
+
+{{-- COMENTARI PROPI: Serveix per poder utilitzar React a la vista Blade  exemple : @push('vite-react')
+    @vite(['resources/js/react-app.jsx'])
+@endpush--}}
+
+
+@stack('vite-react')
 
 </body>
 </html>

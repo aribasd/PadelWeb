@@ -8,6 +8,7 @@ use App\Http\Controllers\PerfilEstadisticaController;
 
 use App\Http\Controllers\IniciController;
 use App\Http\Controllers\ComunitatController;
+use App\Http\Controllers\GaleriaController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,8 @@ Route::resource('inici', IniciController::class);
 
 
 Route::resource('partits', PartitController::class);
+
+Route::get('/galeria', [GaleriaController::class, 'index'])->name('galeria.index');
 
 Route::resource('perfils_estadistiques', PerfilEstadisticaController::class);
 
