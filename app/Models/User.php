@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Comunitat;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,6 +40,11 @@ class User extends Authenticatable
         public function perfil_estadistiques()
     {
         return $this->hasOne(PerfilEstadistica::class);
+    }
+
+    public function comunitats()
+    {
+        return $this->belongsToMany(Comunitat::class)->withPivot('rol')->withTimestamps();
     }
 
 

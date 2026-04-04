@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Http\Request;
 use App\Models\Comunitat;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComunitatController extends Controller
 
@@ -14,9 +16,30 @@ class ComunitatController extends Controller
      */
     public function index()
     {
-        $comunitats = Comunitat::all();
+        $comunitats = Comunitat::orderBy('nom')->get();
 
-        return view('comunitats.index', compact('comunitats'));
+        return view('comunitats.index', [
+            'comunitats' => $comunitats,
+            'subheaderTitol' => 'Comunitats',
+            'esLlistaMeves' => false,
+        ]);
+    }
+
+    /**
+     * Comunitats on l'usuari autenticat és membre (taula pivot comunitat_user).
+     */
+    public function meves()
+    {
+        $user = Auth::user();
+        abort_unless($user instanceof User, 403);
+
+        $comunitats = $user->comunitats()->orderBy('nom')->get();
+
+        return view('comunitats.index', [
+            'comunitats' => $comunitats,
+            'subheaderTitol' => 'Les meves comunitats',
+            'esLlistaMeves' => true,
+        ]);
     }
 
     /**
@@ -32,13 +55,24 @@ class ComunitatController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nom' => 'required|string|max:255',
+            'descripcio' => 'required|string|max:255',
+            'imatge' => 'required|image|max:5120',
+            'rol' => 'required|in:admin,moderador,usuari',
         ]);
 
-        Comunitat::create($request->only([
-            'nom',
-        ]));
+        $validated['imatge'] = $request->file('imatge')->store('comunitats', 'public');
+
+        $validated['membres'] = $validated['membres'] ?? '0';
+
+        $comunitat = Comunitat::create($validated);
+
+        if ($user = $request->user()) {
+            $comunitat->users()->syncWithoutDetaching([
+                $user->id => ['rol' => $validated['rol']],
+            ]);
+        }
 
         return redirect()->route('comunitats.index');
     }

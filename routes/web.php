@@ -32,6 +32,8 @@ Route::resource('pistes', PistaController::class);
 
 Route::resource('reserves', ReservaController::class);
 
+Route::middleware('auth')->get('comunitats/meves', [ComunitatController::class, 'meves'])->name('comunitats.meves');
+
 Route::resource('comunitats', ComunitatController::class);
 
 

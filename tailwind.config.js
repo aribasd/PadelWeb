@@ -13,8 +13,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                // Font Principal
-                sans: ['Lato', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
         },  
     },

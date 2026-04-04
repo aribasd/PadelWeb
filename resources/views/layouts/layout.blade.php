@@ -12,19 +12,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 
+    <!-- Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- Tailwind necessari per mostrar-ho en el servidor -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
 
     <!-- daisyUI -->
     <script type="module" src="https://unpkg.com/cally"></script>
-    
 
-    <!-- Lato-Lletra -->
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
-
-</head> 
-<body class="flex flex-col min-h-screen">
+</head>
+<body class="flex min-h-screen flex-col font-sans antialiased">
 
 <nav class="bg-blue-700 text-white">
   <div class="max-w-7xl mx-auto flex items-center px-2 py-3">

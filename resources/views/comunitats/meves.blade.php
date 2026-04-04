@@ -3,7 +3,6 @@
 @section('content')
 
 
-<h1>Editar Comunitat</h1>
-
+<h1>Les meves comunitats</h1>
 
 @endsection
