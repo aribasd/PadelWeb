@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use App\Models\Comunitat;
 
 class ComunitatController extends Controller
+
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $comunitats = Comunitat::all();
+
+        return view('comunitats.index', compact('comunitats'));
     }
 
     /**
@@ -19,7 +24,7 @@ class ComunitatController extends Controller
      */
     public function create()
     {
-        //
+        return view('comunitats.create');
     }
 
     /**
@@ -27,7 +32,15 @@ class ComunitatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+
+        Comunitat::create($request->only([
+            'nom',
+        ]));
+
+        return redirect()->route('comunitats.index');
     }
 
     /**
@@ -35,7 +48,6 @@ class ComunitatController extends Controller
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
@@ -43,7 +55,8 @@ class ComunitatController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $comunitat = Comunitat::findOrFail($id);
+        return view('comunitats.edit', compact('comunitat'));
     }
 
     /**
@@ -51,7 +64,16 @@ class ComunitatController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+
+        $comunitat = Comunitat::findOrFail($id);
+        $comunitat->update($request->only([
+            'nom',
+        ]));
+
+        return redirect()->route('comunitats.index');
     }
 
     /**
@@ -59,6 +81,9 @@ class ComunitatController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $comunitat = Comunitat::findOrFail($id);
+        $comunitat->delete();
+
+        return redirect()->route('comunitats.index');
     }
 }

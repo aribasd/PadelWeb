@@ -33,14 +33,15 @@ class ReservaController extends Controller
 
     $pista = Pista::findOrFail($request->pista_id);
 
-    $hora_inici  = $request->hora;
-    $hora_fi     = date('H:i', strtotime($hora_inici . ' +1 hour'));
-    $data        = $request->data;
+    $data = $request->data;
+    $inici = Carbon::parse($data.' '.$request->hora);
+    $hora_inici = $inici->format('H:i');
+    $hora_fi = $inici->copy()->addHour()->format('H:i');
     
-    // Precio base
+    // Preu base
     $preu = 7;
     if ($pista->doble_vidre) {
-        $preu += 1; // sumar 1 si tiene doble vidre
+        $preu += 1; // sumar 1 si té doble vidre
     }
 
      return view('reserves.create', compact('pista', 'hora_inici', 'hora_fi', 'data', 'preu'));
@@ -54,7 +55,7 @@ class ReservaController extends Controller
     {
 
         $request->validate([
-            'pista_id' => 'required|string',
+            'pista_id' => 'required|exists:pistes,id',
             'data' => 'required|date',
             'hora_inici' => 'required|date_format:H:i',
             'hora_fi' => 'required|date_format:H:i|after:hora_inici',

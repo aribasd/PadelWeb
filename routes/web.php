@@ -7,9 +7,15 @@ use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\PerfilEstadisticaController;
 
 use App\Http\Controllers\IniciController;
-
+use App\Http\Controllers\ComunitatController;
 
 use Illuminate\Support\Facades\Route;
+
+
+
+Route::get('/test', function () {
+    return view('test');
+});
 
 
 Route::get('/', function () {
@@ -25,6 +31,8 @@ Route::resource('pistes', PistaController::class);
 
 
 Route::resource('reserves', ReservaController::class);
+
+Route::resource('comunitats', ComunitatController::class);
 
 
 Route::resource('inici', IniciController::class);

@@ -10,9 +10,9 @@
     <h2 class="text-2xl font-bold mb-4">Confirmar Reserva</h2>
 
     <p><strong>Pista:</strong> {{ $pista->nom }}</p>
-    <p><strong>Fecha:</strong> {{ $data }}</p>
-    <p><strong>Hora inicio:</strong> {{ $hora_inici }}</p>
-    <p><strong>Hora fin:</strong> {{ $hora_fi }}</p>
+    <p><strong>Data:</strong> {{ $data }}</p>
+    <p><strong>Hora inici:</strong> {{ $hora_inici }}</p>
+    <p><strong>Hora final:</strong> {{ $hora_fi }}</p>
     <p><strong>Precio:</strong> €{{ $preu }}</p>
 
     <form action="{{ route('reserves.store') }}" method="POST" class="mt-6">

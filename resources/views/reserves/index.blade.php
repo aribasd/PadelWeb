@@ -4,6 +4,7 @@
 @section('content')
 
 <div>
+
     @include('components.propis.subheader', ['titol' => 'Reserva el teu partit de Pàdel'])
 
     @php
@@ -33,7 +34,9 @@
                         @php
                                         $existeix = $reserves->where('pista_id', $pista->id)
                         ->filter(function($r) use ($hora) {
-                            return \Carbon\Carbon::parse($r->hora_inici)->format('H:i') === $hora.':00';
+                            $horaText =  sprintf('%02d:00', (int) $hora);
+
+                            return \Carbon\Carbon::parse($r->hora_inici)->format('H:i') === $horaText;
                         })
                         ->count() > 0;
                         @endphp

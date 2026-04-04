@@ -12,11 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 
-    <!-- Linkejem css de app.css *-->
-    <link rel="stylesheet" href="{{ asset('build/assets/app.abc123.css') }}">
-    <script src="{{ asset('build/assets/app.abc123.js') }}" defer></script>
-
-
     <!-- Tailwind necessari per mostrar-ho en el servidor -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -41,15 +36,16 @@
           <a class="hover:text-blue-200 transition" href="{{ route('reserves.index') }}">Reserves</a>
           <a class="hover:text-blue-200 transition" href="{{ route('partits.index') }}">Partits</a>
           <a class="hover:text-blue-200 transition" href="{{ route('partits.index') }}">Galeria</a>
+          <a class="hover:text-blue-200 transition" href="{{ route('comunitats.index') }}">Comunitats</a>
       </div>
 
       <div class="flex gap-5 ml-auto">
           <a href="{{ route('perfils_estadistiques.index') }}" class="flex items-center gap-2 hover:text-blue-200 transition">
-              @svg('eva-message-circle-outline', ['class' => 'w-6 h-6 text-white'])
+              {{-- @svg('eva-message-circle-outline', ['class' => 'w-6 h-6 text-white']) --}}
           </a>
 
           <a class="hover:text-blue-200 transition" href="{{ route('perfils_estadistiques.index') }}">
-              <x-css-profile/>
+              {{-- <x-css-profile/> --}}
           </a>
       </div>
 

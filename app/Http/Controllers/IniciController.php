@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Comunitat;
 
 class IniciController extends Controller
 {
@@ -11,7 +12,8 @@ class IniciController extends Controller
      */
     public function index()
     {
-        return view ('inici.index');
+        $comunitats = Comunitat::all();
+        return view ('inici.index', compact('comunitats'));
     }
 
     /**
