@@ -60,7 +60,7 @@ button {
         Reserva pistes, comparteix amb amics i segueix el teu progrés en la teva comunitat de pàdel.
       </p>
       <a href= "{{ route('login') }}">  <button id="btn">Login</button></a>
-    <a href= "{{ route('login') }}">  <button id="btn">Register</button></a>
+    <a href= "{{ route('register') }}">  <button id="btn">Register</button></a>
     </div>
   </div>
 </div>

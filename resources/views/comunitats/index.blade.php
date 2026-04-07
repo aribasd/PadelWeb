@@ -4,44 +4,47 @@
 
     @include('components.propis.subheader', ['titol' => $subheaderTitol ?? 'Comunitats'])
 
-    <section class="bg-white lg:grid lg:h-screen lg:place-content-center dark:bg-gray-900">
+    <section class="bg-white lg:grid lg:min-h-0 lg:place-content-center dark:bg-gray-900">
 
-        <div
-            class="grid grid-cols-2 mx-auto w-screen max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8 lg:py-32">
+        <div class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 px-4 py-16 sm:px-6 sm:py-24 md:grid-cols-2 md:items-center md:gap-11 lg:px-8 lg:py-32">
 
-            <div class="max-w-prose w-full text-left">
+            <div class="relative min-h-[40vh] w-full overflow-hidden rounded-xl md:min-h-[50vh] lg:min-h-0 lg:h-[min(70vh,36rem)]">
                 <img src="https://i.pinimg.com/1200x/a9/cc/4b/a9cc4b35ec84dfe571af79e85d22ac9f.jpg" alt="Comunitat 1"
-                    class="w-full h-full object-cover">
-
+                    class="absolute inset-0 h-full w-full object-cover">
             </div>
-
 
             <div class="max-w-prose text-left">
                 <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">
-                    Understand user flow and
-                    <strong class="text-indigo-600"> increase </strong>
-                    conversions
+                    Troba la teva 
+                    <strong class="text-indigo-600"> comunitat </strong>
+                     de pàdel
                 </h1>
 
                 <p class="mt-4 text-base text-pretty text-gray-700 sm:text-lg/relaxed dark:text-gray-200">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, nisi. Natus, provident
-                    accusamus impedit minima harum corporis iusto.
+                    Descobreix jugadors a prop teu, uneix-te a comunitats 
+                    actives o crea la teva pròpia per organitzar partits i esdeveniments fàcilment.
                 </p>
 
                 <div class="mt-4 flex gap-4 sm:mt-6">
-                    <a class="inline-block rounded border border-indigo-600 bg-indigo-600 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-indigo-700"
-                        href="#">
-                        Get Started
-                    </a>
+                    <button type="submit"
+                    class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Crear comunitat
+                </button>
 
-                    <a class="inline-block rounded border border-gray-200 px-5 py-3 font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
+                 {{--    <a class="inline-block rounded border border-gray-200 px-5 py-3 font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
                         href="#">
                         Learn More
-                    </a>
+                    </a> --}}
+
+                    <a href="{{ route('comunitats.meves') }}"><button type="button"
+                        class="inline-block rounded border border-gray-200 px-5 py-3 font-medium rounded-lg  text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white">Les
+                        meves comunitats</button></a>
                 </div>
             </div>
         </div>
     </section>
+
+      
 
     <div class="mx-auto mt-16 max-w-5xl overflow-auto rounded p-1">
         <div class="flex flex-row flex-wrap items-center justify-start gap-2">
@@ -50,12 +53,14 @@
                         class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Crear
                         Comunitat</button></a>
                 <a href="{{ route('comunitats.meves') }}"><button type="button"
-                        class="rounded-lg border border-slate-500 bg-slate-100 px-4 py-2 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-200">Les
+                        class="rounded-lg border border-slate-500 bg-slate-100 px-4 py-2 text-center 
+                        text-sm font-semibold text-slate-700 transition hover:bg-slate-200">Les
                         meves comunitats</button></a>
             @endauth
             @if(($esLlistaMeves ?? false))
                 <a href="{{ route('comunitats.index') }}"><button type="button"
-                        class="rounded-lg border border-blue-600 bg-white px-4 py-2 text-center text-sm font-semibold text-blue-700 transition hover:bg-blue-50">Totes
+                        class="rounded-lg border border-blue-600 bg-white px-4 py-2 text-center 
+                        text-sm font-semibold text-blue-700 transition hover:bg-blue-50">Totes
                         les comunitats</button></a>
             @endif
         </div>

@@ -1,13 +1,14 @@
 @extends('layouts.layout')
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    
 @section('content')
 
-@include('components.propis.subheader', ['titol' => 'Inici'])
+    @push('vite-react')
+        @vite(['resources/js/project-showcase-app.jsx'])
+    @endpush
 
+    @include('components.propis.subheader', ['titol' => 'Inici'])
 
-
+    <script type="application/json" id="project-showcase-data">@json($projectShowcaseItems)</script>
+    <div id="project-showcase-root" class="w-full" data-heading="Les nostres pistes"></div>
 
 @endsection

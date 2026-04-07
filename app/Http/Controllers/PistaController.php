@@ -12,8 +12,11 @@ class PistaController extends Controller
      */
     public function index()
     {
-        $pistes = Pista::all();
-        return view('pistes.index', compact('pistes'));
+        $pistes = Pista::query()->orderBy('nom')->get();
+        // A la pàgina de pistes mostrem totes al showcase (gestió); a inici només les actives.
+        $projectShowcaseItems = $pistes->map->toProjectShowcaseItem()->values()->all();
+
+        return view('pistes.index', compact('pistes', 'projectShowcaseItems'));
     }
 
     /**

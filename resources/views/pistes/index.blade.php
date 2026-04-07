@@ -2,34 +2,27 @@
 
 @section('content')
 
+@push('vite-react')
+    @vite(['resources/js/project-showcase-app.jsx'])
+@endpush
 
 @include('components.propis.subheader', ['titol' => 'Pistes'])
 
+<div class="flex-1 bg-white p-5">
 
-<div class="bg-white flex-1 p-5">
-
-    <div class="mt-5 ml-10">
-        <a href="{{ route('pistes.create') }}" class="btn-afegir"><button
-                title="Add New"
-                class="flex group cursor-pointer outline-none hover:rotate-90 duration-300">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="50px"
-                    height="50px"
-                    viewBox="0 0 24 24"
-                    class="stroke-zinc-400 fill-none group-hover:fill-zinc-800 group-active:stroke-zinc-200 group-active:fill-zinc-600 group-active:duration-0 duration-300">
-                    <path
-                        d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                        stroke-width="1.5"></path>
-                    <path d="M8 12H16" stroke-width="1.5"></path>
-                    <path d="M12 16V8" stroke-width="1.5"></path>
-                </svg>
-            </button></a>
+    <div class="ml-10 mt-5 flex flex-row gap-4">
+        
+        <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
+            <a href="{{  route('pistes.index') }}" class="text-sm font-medium text-slate-700">Crear Pistes</a>
+        </div>
     </div>
 
-    <div class="flex flex-col items-center space-y-12 mt-8 min-h-64">
+    <script type="application/json" id="project-showcase-data">@json($projectShowcaseItems)</script>
+    <div id="project-showcase-root" class="w-full" data-heading="Pistes"></div>
 
-        @foreach ($pistes as $pista)
+    <div class="mt-8 flex min-h-64 flex-col items-center space-y-12">
+
+        @forelse ($pistes as $pista)
         <div class="flex flex-row bg-gray-300 py-4 px-4 rounded-lg gap-6 w-2/3  border border-gray-200 h-80">
 
             <div class="flex-1 flex flex-col justify-between">
@@ -42,7 +35,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap mt-4">
+                <div class="flex flex-wrap mt-4 gap-2">
                     @include('components.propis.boto-eliminar', [
                     'action' => route('pistes.destroy', $pista->id),
                     'text' => 'Borrar pista'
@@ -65,7 +58,9 @@
             @endif
 
         </div>
-        @endforeach
+        @empty
+            <p class="text-center text-slate-500">No hi ha cap pista encara. Crea&apos;n una amb el botó +.</p>
+        @endforelse
     </div>
 </div>
 

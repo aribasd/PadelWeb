@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/react-app.jsx',
                 'resources/js/galeria-app.jsx',
+                'resources/js/project-showcase-app.jsx',
             ],
             refresh: true,
         }),

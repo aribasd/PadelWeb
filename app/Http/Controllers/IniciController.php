@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comunitat;
+use App\Models\Pista;
 
 class IniciController extends Controller
 {
@@ -13,7 +14,15 @@ class IniciController extends Controller
     public function index()
     {
         $comunitats = Comunitat::all();
-        return view ('inici.index', compact('comunitats'));
+        $projectShowcaseItems = Pista::query()
+            ->where('activa', true)
+            ->orderBy('nom')
+            ->get()
+            ->map(fn (Pista $p) => $p->toProjectShowcaseItem())
+            ->values()
+            ->all();
+
+        return view('inici.index', compact('comunitats', 'projectShowcaseItems'));
     }
 
     /**

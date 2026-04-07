@@ -32,13 +32,18 @@
     <!-- daisyUI -->
     <script type="module" src="https://unpkg.com/cally"></script>
 
+    {{-- Necessari per React (Vite) en mode dev/HMR --}}
+    @viteReactRefresh
+    @stack('vite-react')
+
 </head>
+
 <body class="flex min-h-screen flex-col font-sans antialiased">
 
-<nav class="bg-blue-700 text-white">
-  <div class="max-w-7xl mx-auto flex items-center px-2 py-3">
+<nav class="relative z-50 bg-blue-700 text-white shadow-md">
+  <div class="mx-auto flex max-w-7xl items-center px-2 py-3">
 
-      <a href="inici"><h1 class="font-bold text-lg">Social<span class="text-yellow-500">Padel</span></h1></a>
+      <a href="{{ route('inici.index') }}"><h1 class="text-lg font-bold">Social<span class="text-yellow-500">Padel</span></h1></a>
 
       <div class="flex items-center gap-8 ml-20">
           <a class="hover:text-blue-200 transition" href="{{ route('pistes.index') }}">Pistes</a>
@@ -54,7 +59,10 @@
           </a>
 
           <a class="hover:text-blue-200 transition" href="{{ route('perfils_estadistiques.index') }}">
-              {{-- <x-css-profile/> --}}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              
           </a>
       </div>
 
@@ -68,14 +76,11 @@
 
 @include('components.propis.footer')
 
-{{-- Vite + React: @push des de la vista filla (després del @yield del content) --}}
+{{-- Estaves carregant els entrypoints de React amb @stack('vite-react') al final del <body>.
+En mode desenvolupament, React amb Vite necessita que es carregui abans 
+el preamble de React Refresh (@viteReactRefresh) perquè el HMR i React funcionin correctament. --}}
 
-{{-- COMENTARI PROPI: Serveix per poder utilitzar React a la vista Blade  exemple : @push('vite-react')
-    @vite(['resources/js/react-app.jsx'])
-@endpush--}}
-
-
-@stack('vite-react')
+@stack('scripts')
 
 </body>
 </html>

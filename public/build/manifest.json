@@ -4,7 +4,7 @@
     "name": "client"
   },
   "resources/css/app.css": {
-    "file": "assets/app-B52k3Mid.css",
+    "file": "assets/app-C4IRGTPE.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -22,6 +22,15 @@
     "file": "assets/galeria-app-LIDDwod0.js",
     "name": "galeria-app",
     "src": "resources/js/galeria-app.jsx",
+    "isEntry": true,
+    "imports": [
+      "_client-Ah1pgjPn.js"
+    ]
+  },
+  "resources/js/project-showcase-app.jsx": {
+    "file": "assets/project-showcase-app-BIrhT3FU.js",
+    "name": "project-showcase-app",
+    "src": "resources/js/project-showcase-app.jsx",
     "isEntry": true,
     "imports": [
       "_client-Ah1pgjPn.js"
