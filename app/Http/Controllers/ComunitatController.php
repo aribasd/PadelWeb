@@ -16,12 +16,16 @@ class ComunitatController extends Controller
      */
     public function index()
     {
-        $comunitats = Comunitat::orderBy('nom')->get();
+        $comunitats = Comunitat::withCount('users')->orderBy('nom')->get();
+        $mevesIds = Auth::check()
+            ? Auth::user()->comunitats()->pluck('comunitats.id')->all()
+            : [];
 
         return view('comunitats.index', [
             'comunitats' => $comunitats,
             'subheaderTitol' => 'Comunitats',
             'esLlistaMeves' => false,
+            'mevesIds' => $mevesIds,
         ]);
     }
 
@@ -33,13 +37,43 @@ class ComunitatController extends Controller
         $user = Auth::user();
         abort_unless($user instanceof User, 403);
 
-        $comunitats = $user->comunitats()->orderBy('nom')->get();
+        $comunitats = $user->comunitats()->withCount('users')->orderBy('nom')->get();
+        $mevesIds = $comunitats->pluck('id')->all();
 
         return view('comunitats.index', [
             'comunitats' => $comunitats,
             'subheaderTitol' => 'Les meves comunitats',
             'esLlistaMeves' => true,
+            'mevesIds' => $mevesIds,
         ]);
+    }
+
+    /**
+     * L'usuari autenticat s'uneix a una comunitat.
+     */
+    public function join(Request $request, Comunitat $comunitat)
+    {
+        $user = $request->user();
+        abort_unless($user instanceof User, 403);
+
+        $comunitat->users()->syncWithoutDetaching([
+            $user->id => ['rol' => 'usuari'],
+        ]);
+
+        return back();
+    }
+
+    /**
+     * L'usuari autenticat surt d'una comunitat.
+     */
+    public function leave(Request $request, Comunitat $comunitat)
+    {
+        $user = $request->user();
+        abort_unless($user instanceof User, 403);
+
+        $comunitat->users()->detach($user->id);
+
+        return back();
     }
 
     /**
@@ -82,6 +116,8 @@ class ComunitatController extends Controller
      */
     public function show(string $id)
     {
+        $comunitat = Comunitat::findOrFail($id);
+        return view('comunitats.show', compact('comunitat'));
     }
 
     /**

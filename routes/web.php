@@ -33,7 +33,15 @@ Route::resource('pistes', PistaController::class);
 
 Route::resource('reserves', ReservaController::class);
 
+
+/* Auth Comunitat */
+
 Route::middleware('auth')->get('comunitats/meves', [ComunitatController::class, 'meves'])->name('comunitats.meves');
+
+Route::middleware('auth')->group(function () {
+    Route::post('comunitats/{comunitat}/join', [ComunitatController::class, 'join'])->name('comunitats.join');
+    Route::delete('comunitats/{comunitat}/leave', [ComunitatController::class, 'leave'])->name('comunitats.leave');
+});
 
 Route::resource('comunitats', ComunitatController::class);
 

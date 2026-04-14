@@ -21,8 +21,9 @@ return new class extends Migration
             $table->boolean('set1');
             $table->boolean('set2');
             $table->boolean('set3');
+            $table->enum('rating', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])->nullable();
         });
-    }
+    }   
 
     /**
      * Reverse the migrations.

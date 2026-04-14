@@ -13,7 +13,7 @@
     <div class="ml-10 mt-5 flex flex-row gap-4">
         
         <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
-            <a href="{{  route('pistes.index') }}" class="text-sm font-medium text-slate-700">Crear Pistes</a>
+            <a href="{{  route('pistes.create') }}" class="hover:text-slate-600 text-sm font-medium text-slate-700">Crear Pistes</a>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
 
     <div class="mt-8 flex min-h-64 flex-col items-center space-y-12">
 
-        @forelse ($pistes as $pista)
+      {{--   @forelse ($pistes as $pista)
         <div class="flex flex-row bg-gray-300 py-4 px-4 rounded-lg gap-6 w-2/3  border border-gray-200 h-80">
 
             <div class="flex-1 flex flex-col justify-between">
@@ -60,7 +60,7 @@
         </div>
         @empty
             <p class="text-center text-slate-500">No hi ha cap pista encara. Crea&apos;n una amb el botó +.</p>
-        @endforelse
+        @endforelse --}}
     </div>
 </div>
 

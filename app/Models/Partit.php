@@ -28,4 +28,9 @@ class Partit extends Model
     {
         return $this->belongsTo(Reserva::class);
     }
+
+    public function pistes()
+    {
+        return $this->belongsTo(Pista::class);
+    }
 }

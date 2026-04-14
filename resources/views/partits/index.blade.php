@@ -4,7 +4,8 @@
 @section('content')
 
 
-@include('components.propis.subheader', ['titol' => 'Partits'])
+@include('components.propis.subheader', ['titol' => 'Historial de partits'])
+
 
 
 @endsection

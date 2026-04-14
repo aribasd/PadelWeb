@@ -41,6 +41,8 @@ class Pista extends Model
                 : 'Pista sense doble vidre.',
             'year' => $this->created_at?->format('Y') ?? '',
             'link' => route('pistes.show', $this),
+            'editLink' => route('pistes.edit', $this),
+            'editor' => 'Editar',
             'image' => $this->imatge ? asset('storage/'.$this->imatge) : '',
         ];
     }

@@ -182,9 +182,8 @@ export default function ProjectShowcase({ projects: projectsProp, heading = 'Sel
 
             <div className="space-y-0">
                 {projects.map((project, index) => (
-                    <a
+                    <div
                         key={project.id ?? project.title}
-                        href={project.link}
                         className="group block"
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
@@ -199,16 +198,18 @@ export default function ProjectShowcase({ projects: projectsProp, heading = 'Sel
                             <div className="relative flex items-start justify-between gap-4">
                                 <div className="min-w-0 flex-1">
                                     <div className="inline-flex items-center gap-2">
-                                        <h3 className="text-lg font-medium tracking-tight text-slate-900">
-                                            <span className="relative">
-                                                {project.title}
-                                                <span
-                                                    className={`absolute -bottom-0.5 left-0 h-px bg-slate-900 transition-all duration-300 ease-out ${
-                                                        hoveredIndex === index ? 'w-full' : 'w-0'
-                                                    }`}
-                                                />
-                                            </span>
-                                        </h3>
+                                        <a href={project.link} className="min-w-0">
+                                            <h3 className="text-lg font-medium tracking-tight text-slate-900">
+                                                <span className="relative">
+                                                    {project.title}
+                                                    <span
+                                                        className={`absolute -bottom-0.5 left-0 h-px bg-slate-900 transition-all duration-300 ease-out ${
+                                                            hoveredIndex === index ? 'w-full' : 'w-0'
+                                                        }`}
+                                                    />
+                                                </span>
+                                            </h3>
+                                        </a>
 
                                         <ArrowUpRight
                                             className={`h-4 w-4 text-slate-500 transition-all duration-300 ease-out ${
@@ -235,9 +236,28 @@ export default function ProjectShowcase({ projects: projectsProp, heading = 'Sel
                                 >
                                     {project.year}
                                 </span>
+
+                                {project.editLink ? (
+                                    <a
+                                        href={project.editLink}
+                                        className={`font-mono text-xs tabular-nums text-slate-500 underline-offset-2 transition-all duration-300 ease-out hover:underline ${
+                                            hoveredIndex === index ? 'text-slate-600' : ''
+                                        }`}
+                                    >
+                                        {project.editor ?? 'Editar'}
+                                    </a>
+                                ) : (
+                                    <span
+                                        className={`font-mono text-xs tabular-nums text-slate-500 transition-all duration-300 ease-out ${
+                                            hoveredIndex === index ? 'text-slate-600' : ''
+                                        }`}
+                                    >
+                                        {project.editor}
+                                    </span>
+                                )}
                             </div>
                         </div>
-                    </a>
+                    </div>
                 ))}
 
                 <div className="border-t border-slate-200" />
