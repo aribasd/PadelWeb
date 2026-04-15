@@ -6,7 +6,7 @@
     <div class="flex min-h-screen flex-col">
         @include('components.propis.subheader', ['titol' => 'Nova comunitat'])
 
-        <div class="flex-1 p-5">
+        <div class="flex-1 mt-6">
             <div class="mx-auto flex max-w-lg p-2 justify-start">
                 <a
                     href="{{ route('comunitats.index') }}"
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="flex-1 p-5">
+        <div class="flex-1 p-2">
             <div class="mx-auto max-w-lg rounded-xl bg-gray-100 p-6 shadow-lg">
 
                 <form action="{{ route('comunitats.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
