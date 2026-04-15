@@ -4,7 +4,7 @@
     "name": "client"
   },
   "resources/css/app.css": {
-    "file": "assets/app-C4IRGTPE.css",
+    "file": "assets/app-BvSvEcgJ.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -28,7 +28,7 @@
     ]
   },
   "resources/js/project-showcase-app.jsx": {
-    "file": "assets/project-showcase-app-BIrhT3FU.js",
+    "file": "assets/project-showcase-app-CRUktvL2.js",
     "name": "project-showcase-app",
     "src": "resources/js/project-showcase-app.jsx",
     "isEntry": true,

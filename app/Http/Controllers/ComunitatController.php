@@ -117,7 +117,9 @@ class ComunitatController extends Controller
     public function show(string $id)
     {
         $comunitat = Comunitat::findOrFail($id);
-        return view('comunitats.show', compact('comunitat'));
+        $usuaris = $comunitat->users;
+
+        return view('comunitats.show', compact('comunitat', 'usuaris'));
     }
 
     /**
