@@ -77,7 +77,7 @@ class PerfilEstadisticaController extends Controller
             'win_rate',
             'nivell',
             'data_naixament',
-            'foto_perfil',
+            'foto_perfil',  
         ]));
 
         return redirect()->route('perfil_estadistiques.index');
