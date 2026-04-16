@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Missatge;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -29,6 +30,11 @@ class Comunitat extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('rol')->withTimestamps();
+    }
+
+    public function missatges()
+    {
+        return $this->hasMany(Missatge::class);
     }
 }
     

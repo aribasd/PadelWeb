@@ -15,35 +15,36 @@ class PistaController extends Controller
      */
     public function index()
     {
-
-        $dataClima = Cache::get('clima_barcelona_v2');
-        if (!$dataClima) {
+        $dataClima = Cache::remember('clima_barcelona_v2', 1800, function () {
             try {
-                $resp = Http::timeout(8)->get('https://api.openweathermap.org/data/2.5/weather', [
-                    'lat' => 41.38,
-                    'lon' => 2.17,
-                    'appid' => config('services.openweather.key'),
-                    'units' => 'metric',
-                    'lang' => 'es',
-                ]);
+                $resp = Http::connectTimeout(1)
+                    ->timeout(2)
+                    ->get('https://api.openweathermap.org/data/2.5/weather', [
+                        'lat' => 41.38,
+                        'lon' => 2.17,
+                        'appid' => config('services.openweather.key'),
+                        'units' => 'metric',
+                        'lang' => 'es',
+                    ]);
 
                 if ($resp->successful()) {
-                    $dataClima = $resp->json();
-                    Cache::put('clima_barcelona_v2', $dataClima, 1800);
-                } else {
-                    $dataClima = $resp->json();
-                    Log::warning('OpenWeather error', [
-                        'status' => $resp->status(),
-                        'body' => $dataClima,
-                    ]);
+                    return $resp->json();
                 }
+
+                Log::warning('OpenWeather error', [
+                    'status' => $resp->status(),
+                    'body' => $resp->json(),
+                ]);
+
+                return ['_unavailable' => true];
             } catch (\Throwable $e) {
-                $dataClima = null;
                 Log::warning('OpenWeather exception', [
                     'message' => $e->getMessage(),
                 ]);
+
+                return ['_unavailable' => true];
             }
-        }
+        });
 
         $temp = data_get($dataClima, 'main.temp');
         $descripcion = data_get($dataClima, 'weather.0.description');

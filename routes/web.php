@@ -10,6 +10,8 @@ use App\Http\Controllers\IniciController;
 use App\Http\Controllers\ComunitatController;
 use App\Http\Controllers\GaleriaController;
 
+use App\Http\Controllers\MissatgeController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -45,9 +47,10 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('comunitats', ComunitatController::class);
 
+Route::get('comunitats/{comunitat}/missatges', [MissatgeController::class, 'index'])->name('comunitats.missatges');
+Route::middleware('auth')->post('comunitats/{comunitat}/missatges', [MissatgeController::class, 'store'])->name('comunitats.missatges.store');
 
 Route::resource('inici', IniciController::class);
-
 
 Route::resource('partits', PartitController::class);
 

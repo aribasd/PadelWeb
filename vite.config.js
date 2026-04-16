@@ -8,11 +8,12 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/js/react-app.jsx',
-                'resources/js/galeria-app.jsx',
-                'resources/js/project-showcase-app.jsx',
+                'resources/js/react-entry.jsx',
             ],
-            refresh: true,
+            refresh: [
+                'resources/views/**',
+                'routes/**',
+            ],
         }),
         react(),
     ],

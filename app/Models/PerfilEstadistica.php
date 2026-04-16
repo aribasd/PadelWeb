@@ -23,14 +23,14 @@ class PerfilEstadistica extends Model
         'foto_perfil',
     ];
     
-        public function users()
+        public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
         public function insignies()
     {
-        return $this->hasMany(Insignia::class);
+        return $this->hasMany(Insignia::class, 'perfil_estadistica_id');
     }
     
     public function comunitats()

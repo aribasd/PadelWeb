@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('galeria', function (Blueprint $table) {
+        Schema::create('missatges', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->foreignId('partit_id')->constrained('partits')->cascadeOnDelete();
+            $table->foreignId('comunitat_id')->constrained('comunitats')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->unique(['partit_id', 'user_id']);
+            $table->text('missatge');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('galeria');
+        Schema::dropIfExists('missatges');
     }
 };

@@ -12,7 +12,7 @@
             </div>
         </a>
 
-        <a href="{{ route('comunitats.index') }}">
+        <a href="{{ route('comunitats.missatges', $comunitat) }}">
             <div
                 class="flex flex-row p-2 gap-2 justify-start items-center border border-gray-300 shadow-lg  hover:text-gray-00 rounded-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -66,9 +66,11 @@
                         <tr class="border-t border-slate-100">
                             <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">{{ $usuari->name }}</td>
                             <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">
-                                {{ ($usuari->insignies?->count() ?? 0) > 0 ? $usuari->insignies->count() : '--' }}
+                                {{ $usuari->perfil_estadistiques?->nivell ?? '--' }}
                             </td>
-                            <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700"></td>
+                            <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">
+                                {{ $usuari->perfil_estadistiques?->insignies_count ?? '--' }}
+                            </td>
                         </tr>
                     @empty
                         <tr>

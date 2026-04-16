@@ -22,34 +22,36 @@ class ReservaController extends Controller
         $hores = range(9, 21);
         $pistes = Pista::all();
 
-        $dataClima = Cache::get('clima_barcelona_v2');
-        if (!$dataClima) {
+        $dataClima = Cache::remember('clima_barcelona_v2', 1800, function () {
             try {
-                $resp = Http::timeout(8)->get('https://api.openweathermap.org/data/2.5/weather', [
-                    'lat' => 41.38,
-                    'lon' => 2.17,
-                    'appid' => config('services.openweather.key'),
-                    'units' => 'metric',
-                    'lang' => 'es',
-                ]);
+                $resp = Http::connectTimeout(1)
+                    ->timeout(2)
+                    ->get('https://api.openweathermap.org/data/2.5/weather', [
+                        'lat' => 41.38,
+                        'lon' => 2.17,
+                        'appid' => config('services.openweather.key'),
+                        'units' => 'metric',
+                        'lang' => 'es',
+                    ]);
 
                 if ($resp->successful()) {
-                    $dataClima = $resp->json();
-                    Cache::put('clima_barcelona_v2', $dataClima, 1800);
-                } else {
-                    $dataClima = $resp->json();
-                    Log::warning('OpenWeather error', [
-                        'status' => $resp->status(),
-                        'body' => $dataClima,
-                    ]);
+                    return $resp->json();
                 }
+
+                Log::warning('OpenWeather error', [
+                    'status' => $resp->status(),
+                    'body' => $resp->json(),
+                ]);
+
+                return ['_unavailable' => true];
             } catch (\Throwable $e) {
-                $dataClima = null;
                 Log::warning('OpenWeather exception', [
                     'message' => $e->getMessage(),
                 ]);
+
+                return ['_unavailable' => true];
             }
-        }
+        });
 
         $temp = data_get($dataClima, 'main.temp');
         $descripcion = data_get($dataClima, 'weather.0.description');
@@ -64,9 +66,19 @@ class ReservaController extends Controller
         $diaIso = $dia->format('Y-m-d');
         $diaText = $dia->translatedFormat('l d F Y');
 
-        $reserves = Reserva::where('data', $diaIso)->get();
+        $reserves = Reserva::query()
+            ->where('data', $diaIso)
+            ->get(['pista_id', 'hora_inici']);
 
-        return view('reserves.index', compact('hores', 'pistes', 'reserves', 'dia', 'diaIso', 'diaText', 'temp', 'descripcion'));
+        $ocupat = [];
+        foreach ($reserves as $r) {
+            $hora = substr((string) $r->hora_inici, 0, 2);
+            if ($hora !== '') {
+                $ocupat[(int) $r->pista_id][(int) $hora] = true;
+            }
+        }
+
+        return view('reserves.index', compact('hores', 'pistes', 'dia', 'diaIso', 'diaText', 'temp', 'descripcion', 'ocupat'));
     }
 
     /**

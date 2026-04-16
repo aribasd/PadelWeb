@@ -12,13 +12,16 @@ class Insignia extends Model
 
   use HasFactory;
 
+        protected $table = 'insignies';
+
         protected $fillable = [
         'nom',
-        'dificultats',
+        'dificultat',
+        'perfil_estadistica_id',
     ];
 
-        public function perfil_estadistiques()
+        public function perfil_estadistica()
     {
-        return $this->belongsTo(PerfilEstadistica::class);
+        return $this->belongsTo(PerfilEstadistica::class, 'perfil_estadistica_id');
     }
 }

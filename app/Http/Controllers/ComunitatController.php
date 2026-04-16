@@ -16,7 +16,9 @@ class ComunitatController extends Controller
      */
     public function index()
     {
-        $comunitats = Comunitat::withCount('users')->orderBy('nom')->get();
+        $comunitats = Comunitat::withCount('users')
+            ->orderBy('nom')
+            ->paginate(12);
         $mevesIds = Auth::check()
             ? Auth::user()->comunitats()->pluck('comunitats.id')->all()
             : [];
@@ -37,8 +39,11 @@ class ComunitatController extends Controller
         $user = Auth::user();
         abort_unless($user instanceof User, 403);
 
-        $comunitats = $user->comunitats()->withCount('users')->orderBy('nom')->get();
-        $mevesIds = $comunitats->pluck('id')->all();
+        $comunitats = $user->comunitats()
+            ->withCount('users')
+            ->orderBy('nom')
+            ->paginate(12);
+        $mevesIds = $comunitats->getCollection()->pluck('id')->all();
 
         return view('comunitats.index', [
             'comunitats' => $comunitats,
@@ -116,11 +121,16 @@ class ComunitatController extends Controller
      */
     public function show(string $id)
     {
-        $comunitat = Comunitat::findOrFail($id);
-        $usuaris = $comunitat->users;
+        $comunitat = Comunitat::query()
+            ->findOrFail($id);
+
+        $usuaris = $comunitat->users()
+            ->withCount('perfil_estadistiques')
+            ->orderBy('name')
+            ->paginate(12);
 
         return view('comunitats.show', compact('comunitat', 'usuaris'));
-    }
+    }   
 
     /**
      * Show the form for editing the specified resource.

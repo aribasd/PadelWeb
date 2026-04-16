@@ -3,7 +3,7 @@
 @section('content')
 
 @push('vite-react')
-    @vite(['resources/js/project-showcase-app.jsx'])
+    @vite(['resources/js/react-entry.jsx'])
 @endpush
 
 @include('components.propis.subheader', ['titol' => 'Pistes'])

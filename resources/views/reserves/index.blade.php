@@ -73,15 +73,7 @@
                     <td class="border border-gray-300 p-2 font-semibold bg-gray-100"> {{ $pista->nom }}</td>
                     @foreach($hores as $hora)
                     <td class="border border-gray-300 p-4">
-                        @php
-                        $existeix = $reserves->where('pista_id', $pista->id)
-                        ->filter(function($r) use ($hora) {
-                            $horaText =  sprintf('%02d:00', (int) $hora);
-
-                            return \Carbon\Carbon::parse($r->hora_inici)->format('H:i') === $horaText;
-                        })
-                        ->count() > 0;
-                        @endphp
+                        @php($existeix = isset($ocupat[$pista->id][$hora]))
 
                         @if($existeix)
                         <span class="text-red-500 bg-red-200 p-2 rounded font-bold">Ocupat</span>

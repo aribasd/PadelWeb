@@ -39,12 +39,17 @@ class User extends Authenticatable
 
         public function perfil_estadistiques()
     {
-        return $this->hasOne(PerfilEstadistica::class);
+        return $this->hasOne(PerfilEstadistica::class, 'user_id');
     }
 
     public function comunitats()
     {
         return $this->belongsToMany(Comunitat::class)->withPivot('rol')->withTimestamps();
+    }
+
+    public function missatges()
+    {
+        return $this->hasMany(Missatge::class);
     }
 
 
