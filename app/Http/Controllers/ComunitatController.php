@@ -125,7 +125,6 @@ class ComunitatController extends Controller
             ->findOrFail($id);
 
         $usuaris = $comunitat->users()
-            ->with('perfil_estadistiques') //Porta el perfil_estadistiques de l'usuari.
             ->orderBy('name')
             ->paginate(12);
 

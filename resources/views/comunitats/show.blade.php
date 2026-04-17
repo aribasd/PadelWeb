@@ -66,10 +66,10 @@
                         <tr class="border-t border-slate-100">
                             <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">{{ $usuari->name }}</td>
                             <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">
-                                {{ $usuari->perfil_estadistiques?->nivell ?? '--' }}
+                                '--'
                             </td>
                             <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">
-                                {{ $usuari->perfil_estadistiques?->insignies_count ?? '--' }}
+                                '--' 
                             </td>
                         </tr>
                     @empty
