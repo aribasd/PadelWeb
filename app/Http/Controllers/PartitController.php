@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Partit;
-
+use App\Models\Reserva;
 class PartitController extends Controller
 {
     /**
@@ -13,7 +13,10 @@ class PartitController extends Controller
     public function index()
     {
         $partits = Partit::all();
-        return view('partits.index', compact('partits'));
+
+        $reserves = Reserva::all();
+
+        return view('partits.index', compact('partits', 'reserves'));
     }
 
     /**
@@ -27,23 +30,10 @@ class PartitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request , Reserva $reserva)
     {
-        $request->validate([
-            'nom1' => 'required|string|max:255',
-            'nom2' => 'required|string|max:255',
-            'nom3' => 'required|string|max:255',
-            'nom4' => 'required|string|max:255',
-            'set1' => 'required|boolean',
-            'set2' => 'required|boolean',
-            'set3' => 'required|boolean',
-        ]);
 
-        Partit::create($request->only([
-            'nom1', 'nom2', 'nom3', 'nom4', 'set1', 'set2', 'set3'
-        ]));
-
-        return redirect()->route('partits.index');
+        return redirect()->route('partits.index',compact('partit'));
     }
 
     /**

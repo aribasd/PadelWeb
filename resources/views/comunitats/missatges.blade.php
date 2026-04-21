@@ -47,17 +47,19 @@
                 @endforelse
             </div>
         </div>
-
-    <form class="mt-4" action="{{ route('comunitats.missatges.store', $comunitat) }}" method="POST">
-            @csrf
-            <div class="flex flex-row items-center gap-4">
-                <textarea class="w-full resize-none rounded-full border border-slate-300 p-2" rows="2" name="missatge" id="missatge" placeholder="Escriu un missatge" required></textarea>
-                <button class="rounded-full bg-blue-600 px-6 py-4 font-semibold text-white" type="submit"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                  </svg>
-                  </button>
-            </div>
-        </form>
+@auth
+<form class="mt-4" action="{{ route('comunitats.missatges.store', $comunitat) }}" method="POST">
+    @csrf
+    <div class="flex flex-row items-center gap-4">
+        <textarea class="w-full resize-none rounded-full border border-slate-300 p-2" rows="2" name="missatge" id="missatge" placeholder="Escriu un missatge" required></textarea>
+        <button class="rounded-full bg-blue-600 px-6 py-4 font-semibold text-white" type="submit"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+          </svg>
+          </button>
+    </div>
+</form>
+@endauth
+   
     </div>
 
 @endsection
