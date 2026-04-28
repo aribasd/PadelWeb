@@ -10,7 +10,7 @@
 
             <div class="mx-auto max-w-lg rounded-xl border border-slate-200 bg-gray-100 p-8 shadow-lg">
 
-                <form action="{{ route('pistes.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
+                <form action="{{ isset($comunitat) ? route('comunitats.pistes.store', $comunitat) : route('pistes.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                     @csrf
 
                     <div class="flex flex-col">
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
-                        <a href="{{ route('pistes.index') }}"
+                        <a href="{{ isset($comunitat) ? route('comunitats.show', $comunitat) : route('pistes.index') }}"
                             class="rounded-lg border border-slate-500 bg-slate-100 px-4 py-2 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-200">
                             Cancel·lar
                         </a>

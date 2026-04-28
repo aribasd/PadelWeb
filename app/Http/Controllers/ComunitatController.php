@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comunitat;
 use App\Models\User;
+use App\Services\NivellService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,6 +66,9 @@ class ComunitatController extends Controller
             $user->id => ['rol' => 'usuari'],
         ]);
 
+        // XP per unir-se a una comunitat
+        app(NivellService::class)->awardXp($user, 50);
+
         return back();
     }
 
@@ -97,6 +101,9 @@ class ComunitatController extends Controller
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'descripcio' => 'required|string|max:255',
+            'direccio' => 'nullable|string|max:255',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
             'imatge' => 'required|image|max:5120',
             'rol' => 'required|in:admin,moderador,usuari',
         ]);
@@ -113,7 +120,7 @@ class ComunitatController extends Controller
             ]);
         }
 
-        return redirect()->route('comunitats.index');
+        return redirect()->route('comunitats.show', $comunitat);
     }
 
     /**
@@ -122,13 +129,24 @@ class ComunitatController extends Controller
     public function show(string $id)
     {
         $comunitat = Comunitat::query()
+            ->with('pistes')
             ->findOrFail($id);
 
+        $totalTrofeu10Reserves = $comunitat->users()
+            ->whereHas('perfil_estadistiques.insignies', function ($q) {
+                $q->where('nom', '10 reserves');
+            })
+            ->count();
+
         $usuaris = $comunitat->users()
-            ->orderBy('name')
+            ->leftJoin('perfil_estadistiques', 'perfil_estadistiques.user_id', '=', 'users.id')
+            ->select('users.*')
+            ->with(['perfil_estadistiques.insignies'])
+            ->orderByRaw('COALESCE(perfil_estadistiques.nivell, 1) DESC')
+            ->orderBy('users.name')
             ->paginate(12);
 
-        return view('comunitats.show', compact('comunitat', 'usuaris'));
+        return view('comunitats.show', compact('comunitat', 'usuaris', 'totalTrofeu10Reserves'));
     }   
 
     /**
@@ -147,14 +165,22 @@ class ComunitatController extends Controller
     {
         $request->validate([
             'nom' => 'required|string|max:255',
+            'descripcio' => 'sometimes|string|max:255',
+            'direccio' => 'nullable|string|max:255',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
         ]);
 
         $comunitat = Comunitat::findOrFail($id);
         $comunitat->update($request->only([
             'nom',
+            'descripcio',
+            'direccio',
+            'lat',
+            'lng',
         ]));
 
-        return redirect()->route('comunitats.index');
+        return redirect()->route('comunitats.show', $comunitat);
     }
 
     /**

@@ -58,10 +58,22 @@ Route::get('/galeria', [GaleriaController::class, 'index'])->name('galeria.index
 
 Route::resource('perfils_estadistiques', PerfilEstadisticaController::class);
 
+Route::resource('users', \App\Http\Controllers\UserController::class)->only(['show']);
+
+Route::get('geocoding/search', [\App\Http\Controllers\GeocodingController::class, 'search'])->name('geocoding.search');
+
 Route::middleware('auth')->group(function () {      
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('friendships', [\App\Http\Controllers\FriendshipController::class, 'store'])->name('friendships.store');
+    Route::patch('friendships/{friendship}/accept', [\App\Http\Controllers\FriendshipController::class, 'accept'])->name('friendships.accept');
+    Route::patch('friendships/{friendship}/decline', [\App\Http\Controllers\FriendshipController::class, 'decline'])->name('friendships.decline');
+    Route::delete('friendships/{friendship}', [\App\Http\Controllers\FriendshipController::class, 'destroy'])->name('friendships.destroy');
+
+    Route::get('comunitats/{comunitat}/pistes/create', [\App\Http\Controllers\PistaController::class, 'createForComunitat'])->name('comunitats.pistes.create');
+    Route::post('comunitats/{comunitat}/pistes', [\App\Http\Controllers\PistaController::class, 'storeForComunitat'])->name('comunitats.pistes.store');
 });
 
 require __DIR__.'/auth.php';

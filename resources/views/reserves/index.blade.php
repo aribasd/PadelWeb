@@ -33,6 +33,37 @@
         </div>
     </div>
 
+    <div class="max-w-5xl mx-auto mt-6 rounded-lg border border-slate-200 bg-white p-4">
+        <form method="GET" action="{{ route('reserves.index') }}" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <input type="hidden" name="data" value="{{ $diaIso }}">
+            <div class="flex items-center gap-3">
+                <label for="comunitat_id" class="text-sm font-semibold text-slate-700">Comunitat</label>
+                <select
+                    id="comunitat_id"
+                    name="comunitat_id"
+                    class="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
+                    onchange="this.form.submit()"
+                >
+                    <option value="">Selecciona una comunitat</option>
+                    @foreach($comunitatsUsuari as $c)
+                        <option value="{{ $c->id }}" {{ (int) $comunitatSeleccionadaId === (int) $c->id ? 'selected' : '' }}>
+                            {{ $c->nom }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            @if(!$comunitatsUsuari->count())
+                <p class="text-sm text-slate-600">
+                    Has d’unir-te a una comunitat per poder reservar.
+                    <a href="{{ route('comunitats.index') }}" class="text-blue-700 hover:underline">Veure comunitats</a>
+                </p>
+            @elseif(!$teAcces)
+                <p class="text-sm text-slate-600">Selecciona una comunitat per veure les pistes i reservar.</p>
+            @endif
+        </form>
+    </div>
+
     <div class="flex  items-center justify-center flex-row max-w-5xl mx-auto gap-10 p-2 mt-12  rounded-lg">
         @if($dia->isAfter(now(), 'day')) 
         <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
@@ -57,7 +88,7 @@
         @endif
     </div>
 
-    <div class="max-w-5xl mx-auto overflow-auto  rounded ">
+    <div class="max-w-5xl mx-auto overflow-auto rounded {{ $teAcces ? '' : 'opacity-50 pointer-events-none select-none' }}">
         <table class="table-auto border-collapse border-2 border-gray-300 text-center w-full mx-auto mt-2 ">
             <thead>     
                 <tr>
@@ -74,9 +105,14 @@
                     @foreach($hores as $hora)
                     <td class="border border-gray-300 p-4">
                         @php($existeix = isset($ocupat[$pista->id][$hora]))
+                        @php($tz = config('app.timezone') ?: 'Europe/Madrid')
+                        @php($slot = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $diaIso . ' ' . sprintf('%02d', (int) $hora) . ':00:00', $tz))
+                        @php($esPassat = $slot->lessThanOrEqualTo(\Carbon\Carbon::now($tz)))
 
                         @if($existeix)
                         <span class="text-red-500 bg-red-200 p-2 rounded font-bold">Ocupat</span>
+                        @elseif($esPassat)
+                        <span class="text-slate-400 text-sm">No disponible</span>
                         @else
                         <form action="{{ route('reserves.create') }}" method="GET">
                             <input type="hidden" name="pista_id" value="{{ $pista->id }}">
@@ -91,6 +127,14 @@
                     @endforeach
                 </tr>
                 @endforeach
+
+                @if(!$teAcces)
+                    <tr>
+                        <td colspan="{{ count($hores) + 1 }}" class="border border-gray-300 p-6 text-slate-500">
+                            Selecciona una comunitat (de les teves) per poder reservar.
+                        </td>
+                    </tr>
+                @endif
             </tbody>
         </table>
     </div>

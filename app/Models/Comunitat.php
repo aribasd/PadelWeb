@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Missatge;
+use App\Models\Pista;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,6 +18,9 @@ class Comunitat extends Model
         protected $fillable = [
             'nom',
             'descripcio',
+            'direccio',
+            'lat',
+            'lng',
             'imatge',
             'membres',
             'rol',
@@ -35,6 +39,11 @@ class Comunitat extends Model
     public function missatges()
     {
         return $this->hasMany(Missatge::class);
+    }
+
+    public function pistes()
+    {
+        return $this->hasMany(Pista::class, 'comunitat_id');
     }
 }
     

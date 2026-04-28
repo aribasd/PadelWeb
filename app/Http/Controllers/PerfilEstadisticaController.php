@@ -32,7 +32,7 @@ class PerfilEstadisticaController extends Controller
         $request->validate([
             'partits_jugats' => 'required|integer|min:0',
             'win_rate' => 'required|numeric|min:0|max:100',
-            'nivell' => 'required|integer|min:1|max:10',
+            'nivell' => 'required|integer|min:1|max:100',
             'data_naixament' => 'required|date',
             'foto_perfil' => 'nullable|string',
         ]);
@@ -65,7 +65,7 @@ class PerfilEstadisticaController extends Controller
         $request->validate([
             'partits_jugats' => 'required|integer|min:0',
             'win_rate' => 'required|numeric|min:0|max:100',
-            'nivell' => 'required|integer|min:1|max:10',
+            'nivell' => 'required|integer|min:1|max:100',
             'data_naixament' => 'required|date',
             'foto_perfil' => 'nullable|string',
         ]);

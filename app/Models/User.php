@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Comunitat;
+use App\Models\Friendship;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,7 @@ class User extends Authenticatable
         'password',
         'email_verified_at',
         'password',
+        'avatar_path',
 
     ];
 
@@ -45,6 +47,49 @@ class User extends Authenticatable
     public function comunitats()
     {
         return $this->belongsToMany(Comunitat::class)->withPivot('rol')->withTimestamps();
+    }
+
+    /**
+     * Amics amb sol·licitud acceptada (taula `friendships`).
+     *
+     * @return \Illuminate\Support\Collection<int, User>
+     */
+    public function amicsAcceptats()
+    {
+        $ids = Friendship::query()
+            ->where('status', 'accepted')
+            ->where(function ($q) {
+                $q->where('sender_id', $this->id)
+                    ->orWhere('receiver_id', $this->id);
+            })
+            ->get()
+            ->map(fn (Friendship $f) => $f->otherUserId((int) $this->id))
+            ->unique()
+            ->values();
+
+        if ($ids->isEmpty()) {
+            return collect();
+        }
+
+        return static::query()
+            ->whereIn('id', $ids)
+            ->orderBy('name')
+            ->get();
+    }
+
+    /**
+     * Sol·licituds d’amistat rebudes (pendents d’acceptar).
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<int, Friendship>
+     */
+    public function sollicitudsAmistatPendents()
+    {
+        return Friendship::query()
+            ->where('receiver_id', $this->id)
+            ->where('status', 'pending')
+            ->with('sender')
+            ->orderByDesc('created_at')
+            ->get();
     }
 
     public function missatges()

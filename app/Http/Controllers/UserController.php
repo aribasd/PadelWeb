@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Friendship;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -49,8 +51,17 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        $user = User::query()
+            ->with(['perfil_estadistiques.insignies'])
+            ->findOrFail($id);
+
+        $friendship = null;
+        $auth = Auth::user();
+        if ($auth instanceof User && $auth->id !== $user->id) {
+            $friendship = Friendship::betweenUsers($auth->id, $user->id);
+        }
+
+        return view('users.show', compact('user', 'friendship'));
     }
 
     /**

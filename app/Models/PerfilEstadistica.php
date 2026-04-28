@@ -19,6 +19,8 @@ class PerfilEstadistica extends Model
         'partits_jugats',
         'win_rate',
         'nivell',
+        'experiencia',
+        'user_id',
         'data_naixament',
         'foto_perfil',
     ];

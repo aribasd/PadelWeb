@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Comunitat;
 use App\Models\Pista;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -71,6 +72,13 @@ class PistaController extends Controller
         return view('pistes.create', compact('pista', 'hora' , 'data'));    
     }
 
+    public function createForComunitat(Comunitat $comunitat)
+    {
+        return view('pistes.create', [
+            'comunitat' => $comunitat,
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -91,6 +99,26 @@ class PistaController extends Controller
         Pista::create($validated);
 
         return redirect()->route('pistes.index');
+    }
+
+    public function storeForComunitat(Request $request, Comunitat $comunitat)
+    {
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'doble_vidre' => 'required|boolean',
+            'imatge' => 'nullable|image',
+        ]);
+
+        $validated['activa'] = true;
+        $validated['comunitat_id'] = $comunitat->id;
+
+        if($request->hasFile('imatge')) {
+            $validated['imatge'] = $request->file('imatge')->store('pistes', 'public');
+        }
+
+        Pista::create($validated);
+
+        return redirect()->route('comunitats.show', $comunitat);
     }
 
     /**

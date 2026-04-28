@@ -25,9 +25,42 @@
 
     <div
         class="flex flex-row max-w-6xl bg-gray-200 mx-auto mt-4 border border-gray-300  rounded-lg p-4 justify-start items-center shadow-sm">
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-600">
-            <span class="text-blue-500">Comunitat</span> {{ $comunitat->nom }}
-        </h1>
+        <div class="flex w-full items-center justify-between gap-3">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-600">
+                <span class="text-blue-500">Comunitat</span> {{ $comunitat->nom }}
+            </h1>
+            @auth
+                <a href="{{ route('comunitats.edit', $comunitat) }}"
+                    class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                    Editar
+                </a>
+            @endauth
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto mt-3 rounded-lg border border-gray-300 bg-white p-4 shadow-sm">
+        <div class="flex items-center justify-between gap-3">
+            <h2 class="text-lg font-extrabold tracking-tight text-slate-700">Pistes de la comunitat</h2>
+            @auth
+                <a href="{{ route('comunitats.pistes.create', $comunitat) }}"
+                    class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                    Crear pista
+                </a>
+            @endauth
+        </div>
+
+        @if($comunitat->pistes->count())
+            <ul class="mt-3 space-y-2">
+                @foreach($comunitat->pistes as $pista)
+                    <li class="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
+                        <span class="font-medium text-slate-800">{{ $pista->nom }}</span>
+                        <span class="text-sm text-slate-600">{{ $pista->doble_vidre ? 'Doble vidre' : 'Sense doble vidre' }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        @else
+            <p class="mt-2 text-sm text-slate-600">Encara no hi ha pistes creades per aquesta comunitat.</p>
+        @endif
     </div>
     <div class="grid grid-cols-2 gap-4 max-w-6xl mx-auto mt-3">
         <div class="p-5 border border-gray-300 rounded-lg shadow-sm bg-white">
@@ -35,6 +68,22 @@
             <p class="mt-2 text-slate-600 leading-relaxed">
                 {{ $comunitat->descripcio ?? 'Sense descripció' }}
             </p>
+        </div>
+        <div class="p-5 border border-gray-300 rounded-lg shadow-sm bg-white">
+            <h2 class="text-lg font-bold text-slate-800">Direcció</h2>
+            <p class="mt-2 text-slate-600 leading-relaxed">
+                {{ $comunitat->direccio ?: 'Sense direcció' }}
+            </p>
+            @if($comunitat->lat && $comunitat->lng)
+                <details class="mt-4">
+                    <summary class="cursor-pointer text-sm font-semibold text-blue-700 hover:underline">
+                        Veure mapa
+                    </summary>
+                    <div id="mapa-comunitat" class="mt-3 h-72 w-full overflow-hidden rounded-lg border border-slate-200"></div>
+                </details>
+            @else
+                <p class="mt-3 text-sm text-slate-500">No hi ha coordenades per mostrar el mapa.</p>
+            @endif
         </div>
         <div class="bg-blue-500 border border-gray-300 rounded-lg shadow-sm">
             @if ($comunitat->imatge)
@@ -64,12 +113,17 @@
                 <tbody>
                     @forelse($usuaris as $usuari)
                         <tr class="border-t border-slate-100">
-                            <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">{{ $usuari->name }}</td>
                             <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">
-                                '--'
+                                <a href="{{ route('users.show', $usuari) }}" class="hover:underline">
+                                    {{ $usuari->name }}
+                                </a>
                             </td>
                             <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">
-                                '--' 
+                                @php $perfil = $usuari->perfil_estadistiques; @endphp
+                                {{ $perfil ? ($perfil->nivell ?? 1) : 1 }}
+                            </td>
+                            <td class="w-1/3 px-4 py-2 text-left text-lg text-slate-700">
+                                {{ $perfil ? $perfil->insignies->count() : 0 }}
                             </td>
                         </tr>
                     @empty
@@ -87,41 +141,36 @@
 
         <div class="grid grid-cols-4 gap-2 p-2">
             <div class="aspect-square rounded-lg border border-gray-200 bg-gray-100 p-3">
-                <div class="flex h-full flex-col items-center justify-center gap-2 text-lg font-bold text-slate-500">
-                    <p class="text-center">Trofeu Veterano</p>
+                <div class="flex h-full flex-col items-center justify-center gap-2 text-lg font-bold text-slate-600">
+                    <p class="text-center">Trofeu 10 reserves</p>
                     <span class="text-6xl leading-none">🏆</span>
-                </div>
-            </div>
-
-            <div class="aspect-square rounded-lg border border-gray-200 bg-gray-100 p-3">
-                <div class="flex h-full flex-col items-center justify-center gap-2 text-lg font-bold text-slate-500">
-                    <p class="text-center">Trofeu Veterano</p>
-                    <span class="text-6xl leading-none">🏆</span>
-                </div>
-            </div>
-
-            <div class="aspect-square rounded-lg border border-gray-200 bg-gray-100 p-3">
-                <div class="flex h-full flex-col items-center justify-center gap-2 text-lg font-bold text-slate-500">
-                    <p class="text-center">Trofeu Veterano</p>
-                    <span class="text-6xl leading-none">🏆</span>
-                </div>
-            </div>
-
-            <div class="aspect-square rounded-lg border border-gray-200 bg-gray-100 p-3">
-                <div class="flex h-full flex-col items-center justify-center gap-2 text-lg font-bold text-slate-500">
-                    <p class="text-center">Trofeu Veterano</p>
-                    <span class="text-6xl leading-none">🏆</span>
-                </div>
-            </div>
-
-
-            <div class="aspect-square rounded-lg border border-gray-200 bg-gray-100 p-3">
-                <div class="flex h-full flex-col items-center justify-center gap-2 text-lg font-bold text-slate-500">
-                    <p class="text-center">Trofeu Veterano</p>
-                    <span class="text-6xl leading-none">🏆</span>
+                    <p class="text-sm font-semibold text-slate-500">
+                        Total: <span class="text-slate-700">{{ $totalTrofeu10Reserves }}</span>
+                    </p>
                 </div>
             </div>
 
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @if($comunitat->lat && $comunitat->lng)
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var el = document.getElementById('mapa-comunitat');
+                if (!el) return;
+                var lat = {{ (float) $comunitat->lat }};
+                var lng = {{ (float) $comunitat->lng }};
+                var map = L.map(el).setView([lat, lng], 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; OpenStreetMap',
+                }).addTo(map);
+                L.marker([lat, lng]).addTo(map);
+            });
+        </script>
+    @endif
+@endpush

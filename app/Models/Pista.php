@@ -21,6 +21,7 @@ class Pista extends Model
         'activa',
         'doble_vidre',
         'imatge',
+        'comunitat_id',
     ];
 
     protected $casts = [
@@ -45,6 +46,11 @@ class Pista extends Model
             'editor' => 'Editar',
             'image' => $this->imatge ? asset('storage/'.$this->imatge) : '',
         ];
+    }
+
+    public function comunitat()
+    {
+        return $this->belongsTo(Comunitat::class, 'comunitat_id');
     }
 
 }

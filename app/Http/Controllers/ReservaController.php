@@ -11,6 +11,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Models\PerfilEstadistica;
+use App\Services\NivellService;
+use App\Models\User;
 
 class ReservaController extends Controller
 {
@@ -20,7 +24,30 @@ class ReservaController extends Controller
     public function index(Request $request)
     {
         $hores = range(9, 21);
-        $pistes = Pista::all();
+        $user = Auth::user();
+
+        // Comunitats de l'usuari (per filtrar pistes)
+        $comunitatsUsuari = collect();
+        if ($user instanceof User) {
+            $comunitatsUsuari = $user->comunitats()->orderBy('nom')->get(['comunitats.id', 'comunitats.nom']);
+        }
+
+        $comunitatSeleccionadaId = $request->query('comunitat_id');
+        $comunitatSeleccionadaId = $comunitatSeleccionadaId !== null ? (int) $comunitatSeleccionadaId : null;
+
+        $teAcces = false;
+        if ($user instanceof User && $comunitatSeleccionadaId) {
+            $teAcces = $comunitatsUsuari->pluck('id')->contains($comunitatSeleccionadaId);
+        }
+
+        // Si no hi ha comunitat seleccionada o no hi té accés, no mostrem pistes reservables
+        $pistes = collect();
+        if ($teAcces) {
+            $pistes = Pista::query()
+                ->where('comunitat_id', $comunitatSeleccionadaId)
+                ->orderBy('nom')
+                ->get();
+        }
 
         $dataClima = Cache::remember('clima_barcelona_v2', 1800, function () {
             try {
@@ -78,7 +105,19 @@ class ReservaController extends Controller
             }
         }
 
-        return view('reserves.index', compact('hores', 'pistes', 'dia', 'diaIso', 'diaText', 'temp', 'descripcion', 'ocupat'));
+        return view('reserves.index', compact(
+            'hores',
+            'pistes',
+            'dia',
+            'diaIso',
+            'diaText',
+            'temp',
+            'descripcion',
+            'ocupat',
+            'comunitatsUsuari',
+            'comunitatSeleccionadaId',
+            'teAcces'
+        ));
     }
 
     /**
@@ -118,13 +157,42 @@ class ReservaController extends Controller
             'preu' => 'required|integer|min:0',
         ]);
 
-        Reserva::create($request->only([
+        $reserva = Reserva::create($request->only([
             'pista_id',
             'data',
             'hora_inici',
             'hora_fi',
             'preu',
         ]));
+
+        // XP per reserva
+        $user = Auth::user();
+        if ($user) {
+            app(NivellService::class)->awardXp($user, 25);
+        }
+
+        // Insígnia "10 reserves" (sobre l'esquema existent: Insignia -> PerfilEstadistica)
+        if ($user) {
+            $totalReserves = Reserva::query()->count();
+
+            // TODO: idealment comptar per usuari quan la reserva estigui vinculada a usuari.
+            // De moment, mentre no hi hagi user_id a reserves, fem el check global per poder avançar la feature.
+            if ($totalReserves >= 10) {
+                $perfil = $user->perfil_estadistiques;
+                if ($perfil instanceof PerfilEstadistica) {
+                    $jaLaTe = $perfil->insignies()
+                        ->where('nom', '10 reserves')
+                        ->exists();
+
+                    if (! $jaLaTe) {
+                        $perfil->insignies()->create([
+                            'nom' => '10 reserves',
+                            'dificultat' => 'baixa',
+                        ]);
+                    }
+                }
+            }
+        }
 
         return redirect()->route('reserves.index', ['data' => $request->data]);
     }
