@@ -11,10 +11,13 @@
 <div class="flex-1 bg-white p-5">
 
     <div class="ml-10 mt-5 flex flex-row gap-4">
-        
-        <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
-            <a href="{{  route('pistes.create') }}" class="hover:text-slate-600 text-sm font-medium text-slate-700">Crear Pistes</a>
-        </div>
+        @auth
+            @if((auth()->user()->role ?? 'user') === 'admin')
+                <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
+                    <a href="{{  route('pistes.create') }}" class="hover:text-slate-600 text-sm font-medium text-slate-700">Crear Pistes</a>
+                </div>
+            @endif
+        @endauth
     </div>
 
     <script type="application/json" id="project-showcase-data">@json($projectShowcaseItems)</script>

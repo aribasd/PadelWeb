@@ -14,7 +14,9 @@ class PartitController extends Controller
     {
         $partits = Partit::all();
 
-        $reserves = Reserva::all();
+        $reserves = Reserva::query()
+            ->with(['pistes', 'partits'])
+            ->get();
 
         return view('partits.index', compact('partits', 'reserves'));
     }
@@ -22,18 +24,40 @@ class PartitController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('partits.create');
+        $reservaId = $request->query('reserva_id');
+        $reserva = $reservaId ? Reserva::query()->with('pistes')->findOrFail((int) $reservaId) : null;
+
+        return view('partits.create', compact('reserva'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request , Reserva $reserva)
+    public function store(Request $request)
     {
+        $validated = $request->validate([
+            'reserva_id' => 'required|exists:reserves,id',
+            'nom1' => 'required|string|max:255',
+            'nom2' => 'required|string|max:255',
+            'nom3' => 'required|string|max:255',
+            'nom4' => 'required|string|max:255',
+        ]);
 
-        return redirect()->route('partits.index',compact('partit'));
+        $partit = Partit::query()->create([
+            'reserva_id' => (int) $validated['reserva_id'],
+            'nom1' => $validated['nom1'],
+            'nom2' => $validated['nom2'],
+            'nom3' => $validated['nom3'],
+            'nom4' => $validated['nom4'],
+            // per defecte: encara no s'ha marcat cap resultat
+            'set1' => false,
+            'set2' => false,
+            'set3' => false,
+        ]);
+
+        return redirect()->route('partits.index');
     }
 
     /**

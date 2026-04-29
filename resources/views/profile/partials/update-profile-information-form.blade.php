@@ -31,13 +31,19 @@
                     alt="Foto de perfil de {{ $user->name }}"
                     class="h-16 w-16 rounded-full border border-gray-200 object-cover bg-white"
                 />
-                <input
-                    id="avatar"
-                    name="avatar"
-                    type="file"
-                    accept="image/png,image/jpeg,image/webp"
-                    class="block w-full text-sm text-gray-900 dark:text-gray-100 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700 hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-100 dark:hover:file:bg-gray-600"
-                />
+                @if(($user->role ?? 'user') === 'admin')
+                    <input
+                        id="avatar"
+                        name="avatar"
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp"
+                        class="block w-full text-sm text-gray-900 dark:text-gray-100 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700 hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-100 dark:hover:file:bg-gray-600"
+                    />
+                @else
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Només un administrador pot canviar la foto de perfil.
+                    </p>
+                @endif
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>

@@ -34,6 +34,10 @@ class ProfileController extends Controller
         $user->fill($validated);
 
         if ($request->hasFile('avatar')) {
+            if (($user->role ?? 'user') !== 'admin') {
+                abort(403);
+            }
+
             if ($user->avatar_path) {
                 Storage::disk('public')->delete($user->avatar_path);
             }

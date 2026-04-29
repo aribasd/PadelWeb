@@ -30,7 +30,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::resource('pistes', PistaController::class);
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('pistes', PistaController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+});
+Route::resource('pistes', PistaController::class)->only(['index', 'show']);
 
 
 Route::resource('reserves', ReservaController::class);
@@ -45,7 +48,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('comunitats/{comunitat}/leave', [ComunitatController::class, 'leave'])->name('comunitats.leave');
 });
 
-Route::resource('comunitats', ComunitatController::class);
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('comunitats', ComunitatController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+});
+Route::resource('comunitats', ComunitatController::class)->only(['index', 'show']);
 
 Route::get('comunitats/{comunitat}/missatges', [MissatgeController::class, 'index'])->name('comunitats.missatges');
 Route::middleware('auth')->post('comunitats/{comunitat}/missatges', [MissatgeController::class, 'store'])->name('comunitats.missatges.store');
@@ -72,8 +78,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('friendships/{friendship}/decline', [\App\Http\Controllers\FriendshipController::class, 'decline'])->name('friendships.decline');
     Route::delete('friendships/{friendship}', [\App\Http\Controllers\FriendshipController::class, 'destroy'])->name('friendships.destroy');
 
-    Route::get('comunitats/{comunitat}/pistes/create', [\App\Http\Controllers\PistaController::class, 'createForComunitat'])->name('comunitats.pistes.create');
-    Route::post('comunitats/{comunitat}/pistes', [\App\Http\Controllers\PistaController::class, 'storeForComunitat'])->name('comunitats.pistes.store');
+    Route::middleware('role:admin')->group(function () {
+        Route::get('comunitats/{comunitat}/pistes/create', [\App\Http\Controllers\PistaController::class, 'createForComunitat'])->name('comunitats.pistes.create');
+        Route::post('comunitats/{comunitat}/pistes', [\App\Http\Controllers\PistaController::class, 'storeForComunitat'])->name('comunitats.pistes.store');
+
+        Route::post('/galeria', [GaleriaController::class, 'store'])->name('galeria.store');
+    });
 });
 
 require __DIR__.'/auth.php';

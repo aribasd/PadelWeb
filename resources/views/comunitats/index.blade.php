@@ -94,7 +94,7 @@
 
                 </div>
 
-                <div class="flex flex-row gap-2 p-1 items-center">   
+                <div class="flex flex-row flex-wrap gap-2 p-2 items-center">   
                     @auth
                         @php
                             $jaEsMembre = in_array($comunitat->id, $mevesIds ?? [], true);
@@ -105,22 +105,48 @@
                         @if ($jaEsMembre)
                             <form method="GET" action="{{ route('comunitats.show', $comunitat) }}">
                                 @csrf
-                                <button type="submit" class=" text-white my-2 rounded-lg p-1 bg-slate-400 text-slate-700">
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                >
                                     Veure la Comunitat
                                 </button>
                             </form>
                             <form method="POST" action="{{ route('comunitats.leave', $comunitat) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class=" text-white my-2 rounded-lg shadow-lg bg-gray-500 p-1 text-slate-700">
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-700 shadow-sm transition hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                >
                                     Sortir de la Comunitat
                                 </button>
                             </form>
                         @else
                             <form method="POST" action="{{ route('comunitats.join', $comunitat) }}">
                                 @csrf
-                                <button type="submit" class="my-2 rounded-lg border border-black shadow-lg p-1 bg-green-50 text-slate-700">
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center justify-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700 shadow-sm transition hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                                >
                                     Unir-se a la Comunitat
+                                </button>
+                            </form>
+                        @endif
+
+                        @if((auth()->user()->role ?? 'user') === 'admin')
+                            <form
+                                method="POST"
+                                action="{{ route('comunitats.destroy', $comunitat) }}"
+                                onsubmit="return confirm('Vols eliminar aquesta comunitat?');"
+                            >
+                                @csrf
+                                @method('DELETE')
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center justify-center rounded-lg bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                >
+                                    Eliminar
                                 </button>
                             </form>
                         @endif
@@ -146,12 +172,27 @@
                         Crea la teva primera comunitat. Només t'hi triga uns segons.
                     </p>
 
-                    <a href="{{ route('comunitats.create') }}" class="mt-6 inline-block w-full max-w-xs">
-                        <button type="button"
-                            class="w-full rounded-lg bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700">
-                            Crear comunitat
-                        </button>
-                    </a>
+                    @auth
+                        @if((auth()->user()->role ?? 'user') === 'admin')
+                            <a href="{{ route('comunitats.create') }}" class="mt-6 inline-block w-full max-w-xs">
+                                <button type="button"
+                                    class="w-full rounded-lg bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700">
+                                    Crear comunitat
+                                </button>
+                            </a>
+                        @else
+                            <p class="mt-6 text-sm text-slate-600">
+                                Només un <span class="font-semibold">administrador</span> pot crear comunitats.
+                            </p>
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}" class="mt-6 inline-block w-full max-w-xs">
+                            <button type="button"
+                                class="w-full rounded-lg bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700">
+                                Inicia sessió
+                            </button>
+                        </a>
+                    @endauth
                 </div>
             </div>  
         @endforelse

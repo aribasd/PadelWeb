@@ -22,34 +22,38 @@
                 @csrf
                 @method('patch')
 
-                <label for="avatar" class="group relative inline-block cursor-pointer">
+                <label for="avatar" class="group relative inline-block {{ (($user->role ?? 'user') === 'admin') ? 'cursor-pointer' : 'cursor-default' }}">
                     <img
                         src="{{ $avatarUrl }}"
                         alt="Foto de perfil de {{ $user->name }} (clic per canviar-la)"
-                        title="Clic per canviar la foto"
+                        title="{{ (($user->role ?? 'user') === 'admin') ? 'Clic per canviar la foto' : 'Només un administrador pot canviar la foto' }}"
                         class="h-20 w-20 rounded-full border border-slate-200 object-cover bg-white transition-opacity group-hover:opacity-90"
                     />
-                    <span
-                        class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-full bg-black/35 opacity-0 transition-opacity group-hover:opacity-100"
-                        aria-hidden="true"
-                    >
-                        <svg viewBox="0 0 24 24" class="h-6 w-6 text-white">
-                            <path
-                                fill="currentColor"
-                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92 2.83H5v-.92l8.06-8.06.92.92L5.92 20.08zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"
-                            />
-                        </svg>
-                    </span>
+                    @if(($user->role ?? 'user') === 'admin')
+                        <span
+                            class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-full bg-black/35 opacity-0 transition-opacity group-hover:opacity-100"
+                            aria-hidden="true"
+                        >
+                            <svg viewBox="0 0 24 24" class="h-6 w-6 text-white">
+                                <path
+                                    fill="currentColor"
+                                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92 2.83H5v-.92l8.06-8.06.92.92L5.92 20.08zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"
+                                />
+                            </svg>
+                        </span>
+                    @endif
                 </label>
 
-                <input
-                    id="avatar"
-                    name="avatar"
-                    type="file"
-                    accept="image/png,image/jpeg,image/webp"
-                    class="hidden"
-                    onchange="this.form.submit()"
-                />
+                @if(($user->role ?? 'user') === 'admin')
+                    <input
+                        id="avatar"
+                        name="avatar"
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp"
+                        class="hidden"
+                        onchange="this.form.submit()"
+                    />
+                @endif
             </form>
 
             <div class="w-full min-w-0 sm:w-56 sm:shrink-0">

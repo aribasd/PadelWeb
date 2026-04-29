@@ -8,8 +8,11 @@ class GaleriaController extends Controller
 {
     public function index()
     {
-        // Vista demo amb React + imatges estàtiques; quan vulguis: Galeria::all() i passar URLs a React (JSON)
-        return view('galeria.index');
+        $imatges = Galeria::query()
+            ->latest('id')
+            ->get();
+
+        return view('galeria.index', compact('imatges'));
     }
 
     public function create()
@@ -19,7 +22,7 @@ class GaleriaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'imatge' => 'required|image|max:5120',
         ]);
 

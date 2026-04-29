@@ -22,11 +22,12 @@ class Partit extends Model
         'set1',
         'set2',
         'set3',
+        'reserva_id',
     ];
 
         public function reserves()
     {
-        return $this->belongsTo(Reserva::class);
+        return $this->belongsTo(Reserva::class, 'reserva_id');
     }
 
     public function pistes()

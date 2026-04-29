@@ -30,10 +30,30 @@
                 <span class="text-blue-500">Comunitat</span> {{ $comunitat->nom }}
             </h1>
             @auth
-                <a href="{{ route('comunitats.edit', $comunitat) }}"
-                    class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
-                    Editar
-                </a>
+                @if((auth()->user()->role ?? 'user') === 'admin')
+                    <div class="flex flex-wrap items-center gap-2">
+                        <a href="{{ route('comunitats.edit', $comunitat) }}"
+                            class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                            Editar
+                        </a>
+
+                        <form
+                            method="POST"
+                            action="{{ route('comunitats.destroy', $comunitat) }}"
+                            class="inline"
+                            onsubmit="return confirm('Vols eliminar aquesta comunitat?');"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                type="submit"
+                                class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+                            >
+                                Eliminar
+                            </button>
+                        </form>
+                    </div>
+                @endif
             @endauth
         </div>
     </div>
@@ -42,10 +62,12 @@
         <div class="flex items-center justify-between gap-3">
             <h2 class="text-lg font-extrabold tracking-tight text-slate-700">Pistes de la comunitat</h2>
             @auth
-                <a href="{{ route('comunitats.pistes.create', $comunitat) }}"
-                    class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-                    Crear pista
-                </a>
+                @if((auth()->user()->role ?? 'user') === 'admin')
+                    <a href="{{ route('comunitats.pistes.create', $comunitat) }}"
+                        class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                        Crear pista
+                    </a>
+                @endif
             @endauth
         </div>
 
