@@ -195,6 +195,10 @@
             <p class="mt-2 text-sm text-slate-600">Encara no tens cap insígnia.</p>
         @endif
     </div>
+
+    <div class="mt-6 max-w-3xl mx-auto rounded-lg border border-red-200 bg-white p-6">
+        @include('profile.partials.delete-user-form')
+    </div>
 @endif
 
 @endsection
