@@ -88,9 +88,19 @@
         @endif
     </div>
 
-    <div class="mx-auto mt-4 max-w-5xl px-0 sm:mt-6 sm:px-6 lg:px-8 {{ $teAcces ? '' : 'opacity-50 pointer-events-none select-none' }}">
-        <div class="mx-4 overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 sm:mx-0 sm:p-4">
-            <table class="table-auto min-w-max border-collapse text-center">
+    @if($teAcces && $pistes->isEmpty())
+        <div class="mx-auto mt-4 max-w-5xl px-0 sm:mt-6 sm:px-6 lg:px-8">
+            <div class="mx-4 rounded-xl border border-slate-200 bg-white p-4 text-slate-700 sm:mx-0">
+                <p class="text-sm font-semibold">No hi ha pistes en aquesta comunitat.</p>
+                <p class="mt-1 text-sm text-slate-600">
+                    Un administrador ha de crear pistes abans de poder reservar.
+                </p>
+            </div>
+        </div>
+    @else
+        <div class="mx-auto mt-4 max-w-5xl px-0 sm:mt-6 sm:px-6 lg:px-8 {{ $teAcces ? '' : 'opacity-50 pointer-events-none select-none' }}">
+            <div class="mx-4 overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 sm:mx-0 sm:p-4">
+                <table class="table-auto min-w-max border-collapse text-center">
             <thead>     
                 <tr>
                     <th class="border border-gray-300 bg-gray-200"></th>
@@ -138,7 +148,9 @@
                 @endif
             </tbody>
         </table>
+            </div>
         </div>
     </div>
+    @endif
 </div>
 @endsection

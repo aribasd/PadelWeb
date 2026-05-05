@@ -26,7 +26,11 @@
             />
             <div class="min-w-0 flex-1">
                 <p class="text-xl font-semibold text-slate-800 truncate">{{ $user->name }}</p>
-                <p class="text-sm text-slate-600 truncate">{{ $user->email }}</p>
+                @if(auth()->check() && auth()->id() === $user->id)
+                    <p class="text-sm text-slate-600 truncate">{{ $user->email }}</p>
+                @else
+                    <p class="text-sm text-slate-500">Email ocult</p>
+                @endif
 
                 @auth
                     @if(auth()->id() !== $user->id)
@@ -59,6 +63,12 @@
                                 </form>
                             @elseif($friendship->status === 'accepted')
                                 <span class="text-sm font-medium text-green-700">Sou amics</span>
+                                <a
+                                    href="{{ route('social.missatges', $user) }}"
+                                    class="rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-semibold text-white hover:bg-slate-800"
+                                >
+                                    Enviar missatge
+                                </a>
                                 <form method="post" action="{{ route('friendships.destroy', $friendship) }}" class="inline" onsubmit="return confirm('Eliminar amic?');">
                                     @csrf
                                     @method('DELETE')

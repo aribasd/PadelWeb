@@ -11,6 +11,7 @@ use App\Http\Controllers\ComunitatController;
 use App\Http\Controllers\GaleriaController;
 
 use App\Http\Controllers\MissatgeController;
+use App\Http\Controllers\DirectMessageController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -77,6 +78,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('friendships/{friendship}/accept', [\App\Http\Controllers\FriendshipController::class, 'accept'])->name('friendships.accept');
     Route::patch('friendships/{friendship}/decline', [\App\Http\Controllers\FriendshipController::class, 'decline'])->name('friendships.decline');
     Route::delete('friendships/{friendship}', [\App\Http\Controllers\FriendshipController::class, 'destroy'])->name('friendships.destroy');
+
+    Route::get('social/missatges/{user?}', [DirectMessageController::class, 'index'])->name('social.missatges');
+    Route::post('social/missatges/{user}', [DirectMessageController::class, 'store'])->name('social.missatges.store');
 
     Route::middleware('role:admin')->group(function () {
         Route::get('comunitats/{comunitat}/pistes/create', [\App\Http\Controllers\PistaController::class, 'createForComunitat'])->name('comunitats.pistes.create');
