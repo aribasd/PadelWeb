@@ -27,7 +27,7 @@
                 <div class="absolute inset-0 bg-black/65"></div>
             </div>
 
-            <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+            <div class="relative min-h-screen flex flex-col sm:justify-center items-center px-4 pt-6 sm:px-0 sm:pt-0">
                 <div class="flex flex-col items-center mb-0">
                     <a href="/">
                         <x-application-logo class="w-20 h-20 fill-current text-blue-500" />
@@ -37,7 +37,7 @@
                     </span>
                 </div>
 
-                <div class="w-full sm:max-w-md mt-6 px-6 py-7 bg-black/60 text-white backdrop-blur-xl shadow-xl shadow-black/40 overflow-hidden sm:rounded-2xl ring-1 ring-white/15">
+            <div class="w-full max-w-md mt-6 overflow-hidden rounded-2xl border border-white/10 bg-black/60 px-5 py-6 text-white shadow-xl shadow-black/40 backdrop-blur-xl ring-1 ring-white/25 sm:px-6 sm:py-7">
                     {{ $slot }}
                 </div>
             </div>

@@ -3,8 +3,8 @@
     <a class="flex title-font font-medium items-center md:justify-start justify-center text-white">
       <x-application-logo class="w-10 h-10 fill-current text-white" />
     </a>
-    <p class="text-sm text-white sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-white sm:py-2 sm:mt-0 mt-4">© 2026 SocialPadel —
-      <a href="https://twitter.com/knyttneve" class="text-white ml-1" rel="noopener noreferrer" target="_blank">Adrià Ribas</a>
+    <p class="mt-4 text-sm text-white sm:mt-0 sm:ml-4 sm:border-l-2 sm:border-white sm:py-2 sm:pl-4">
+      © {{ date('Y') }} SocialPadel
     </p>
     <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
       <a class="text-white">

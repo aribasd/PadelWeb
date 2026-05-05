@@ -6,25 +6,25 @@
 
 @include('components.propis.subheader', ['titol' => 'Historial de partits'])
 
-<div class="mt-10 max-w-5xl mx-auto grid gap-4">
+<div class="mx-auto mt-8 grid max-w-5xl gap-3 px-4 sm:mt-10 sm:gap-4 sm:px-6 lg:px-8">
     @forelse($reserves as $reserva)
-    <div class="bg-slate-100 shadow-lg text-slate-500 border border-slate-200 rounded-lg p-4">
-            <div class="grid grid-cols-3 bg-gray-100 min-h-40">
+    <div class="rounded-lg border border-slate-200 bg-slate-100 p-3 text-slate-500 shadow-sm sm:p-4 sm:shadow-lg">
+            <div class="grid grid-cols-1 gap-3 bg-gray-100 p-2 sm:grid-cols-3 sm:gap-0 sm:p-0 sm:min-h-40">
                 <div class="space-y-2">
                     <div>
-                        <p class="text-sm font-semibold text-slate-600">Hora de Joc</p>
-                        <p class="text-sm">
+                        <p class="text-xs font-semibold text-slate-600 sm:text-sm">Hora de Joc</p>
+                        <p class="text-xs sm:text-sm">
                             {{ $reserva->hora_inici }} - {{ $reserva->hora_fi }}
                         </p>
                     </div>
 
                     <div>
-                        <p class="text-sm font-semibold text-slate-600">Pista</p>
-                        <p class="text-sm">{{ $reserva->pistes?->nom ?? ('Pista ' . $reserva->pista_id) }}</p>
+                        <p class="text-xs font-semibold text-slate-600 sm:text-sm">Pista</p>
+                        <p class="text-xs sm:text-sm">{{ $reserva->pistes?->nom ?? ('Pista ' . $reserva->pista_id) }}</p>
                     </div>
                 </div>
                 
-                <div class="flex flex-col justify-center text-4xl items-center">                   
+                <div class="flex flex-col items-center justify-center text-xl sm:text-4xl">                   
                     @if($reserva->partits)
                         @php
                             $inici = \Carbon\Carbon::parse($reserva->data . ' ' . $reserva->hora_inici);
@@ -41,23 +41,23 @@
                                 Partit Finalitzat
                             @endif
                         </h1>
-                        <hr class="w-full border-black">
+                        <hr class="w-full border-black/40">
                     @else
                         <h1>Reserva</h1>
-                        <hr class="w-full border-black">
+                        <hr class="w-full border-black/40">
                     @endif
                 </div>
 
-                <div class="flex justify-end items-start">
+                <div class="flex items-start justify-start sm:justify-end">
                     <div class="text-right">
-                        <p class="text-sm font-semibold text-slate-600">Data</p>
-                        <p class="text-sm">{{ $reserva->data }}</p>
+                        <p class="text-xs font-semibold text-slate-600 sm:text-sm">Data</p>
+                        <p class="text-xs sm:text-sm">{{ $reserva->data }}</p>
                     </div>
                 </div>
             </div>
 
             @if(!$reserva->partits)
-                <div class="mt-4 rounded-lg border border-slate-200 bg-white p-4">
+                <div class="mt-3 rounded-lg border border-slate-200 bg-white p-3 sm:mt-4 sm:p-4">
                     <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                         <div>
                             <p class="text-sm font-semibold text-slate-700">Jugadors (2 vs 2)</p>
@@ -65,23 +65,23 @@
                         </div>
                         <a
                             href="{{ route('partits.create', ['reserva_id' => $reserva->id]) }}"
-                            class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                            class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:px-4 sm:text-sm"
                         >
                             Afegir jugadors
                         </a>
                     </div>
 
-                    <div class="mt-4 grid gap-3 md:grid-cols-3 md:items-center">
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                    <div class="mt-3 grid gap-2 md:mt-4 md:grid-cols-3 md:items-center md:gap-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2 sm:p-3">
                             <p class="text-xs font-semibold text-slate-500">Equip A</p>
-                            <p class="mt-1 text-sm text-slate-600">—</p>
-                            <p class="text-sm text-slate-600">—</p>
+                            <p class="mt-1 text-xs text-slate-600 sm:text-sm">—</p>
+                            <p class="text-xs text-slate-600 sm:text-sm">—</p>
                         </div>
-                        <div class="text-center text-lg font-extrabold text-slate-700">VS</div>
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="text-center text-lg font-extrabold text-slate-700 md:block hidden">VS</div>
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2 sm:p-3">
                             <p class="text-xs font-semibold text-slate-500">Equip B</p>
-                            <p class="mt-1 text-sm text-slate-600">—</p>
-                            <p class="text-sm text-slate-600">—</p>
+                            <p class="mt-1 text-xs text-slate-600 sm:text-sm">—</p>
+                            <p class="text-xs text-slate-600 sm:text-sm">—</p>
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                             <p class="text-sm text-slate-700">{{ $partit->nom2 ?: 'Jugador 2' }}</p>
                         </div>
 
-                        <div class="text-center text-lg font-extrabold text-slate-700">VS</div>
+                        <div class="hidden text-center text-lg font-extrabold text-slate-700 md:block">VS</div>
 
                         <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
                             <p class="text-xs font-semibold text-slate-500">Equip B</p>

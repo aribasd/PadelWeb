@@ -4,7 +4,7 @@
 
     @include('components.propis.subheader', ['titol' => 'Comunitat ' . $comunitat->nom])
 
-    <div class="flex flex-row max-w-6xl mx-auto mt-10 gap-3 justify-start items-center">
+    <div class="mx-auto mt-10 flex max-w-6xl flex-wrap items-center justify-start gap-3 px-4 sm:px-0">
         <a href="{{ route('comunitats.index') }}">
             <div
                 class="flex flex-row p-2 justify-start items-center border border-gray-300 shadow-lg bg-gray-100 hover:text-gray-00 rounded-lg">
@@ -24,7 +24,7 @@
     </div>
 
     <div
-        class="flex flex-row max-w-6xl bg-gray-200 mx-auto mt-4 border border-gray-300  rounded-lg p-4 justify-start items-center shadow-sm">
+        class="mx-auto mt-4 flex max-w-6xl flex-row justify-start rounded-lg border border-gray-300 bg-gray-200 p-4 shadow-sm">
         <div class="flex w-full items-center justify-between gap-3">
             <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-600">
                 <span class="text-blue-500">Comunitat</span> {{ $comunitat->nom }}
@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <div class="max-w-6xl mx-auto mt-3 rounded-lg border border-gray-300 bg-white p-4 shadow-sm">
+    <div class="mx-auto mt-3 max-w-6xl rounded-lg border border-gray-300 bg-white p-4 shadow-sm">
         <div class="flex items-center justify-between gap-3">
             <h2 class="text-lg font-extrabold tracking-tight text-slate-700">Pistes de la comunitat</h2>
             @auth
@@ -84,7 +84,7 @@
             <p class="mt-2 text-sm text-slate-600">Encara no hi ha pistes creades per aquesta comunitat.</p>
         @endif
     </div>
-    <div class="grid grid-cols-2 gap-4 max-w-6xl mx-auto mt-3">
+    <div class="mx-auto mt-3 grid max-w-6xl grid-cols-1 gap-4 px-4 sm:grid-cols-2 sm:px-0">
         <div class="p-5 border border-gray-300 rounded-lg shadow-sm bg-white">
             <h2 class="text-lg font-bold text-slate-800">Descripció</h2>
             <p class="mt-2 text-slate-600 leading-relaxed">
@@ -101,7 +101,7 @@
                     <summary class="cursor-pointer text-sm font-semibold text-blue-700 hover:underline">
                         Veure mapa
                     </summary>
-                    <div id="mapa-comunitat" class="mt-3 h-72 w-full overflow-hidden rounded-lg border border-slate-200"></div>
+                    <div id="mapa-comunitat" class="mt-3 h-56 w-full overflow-hidden rounded-lg border border-slate-200 sm:h-72"></div>
                 </details>
             @else
                 <p class="mt-3 text-sm text-slate-500">No hi ha coordenades per mostrar el mapa.</p>
@@ -117,14 +117,14 @@
         </div>
     </div>
 
-    <div class="max-w-6xl mt-3  mx-auto overflow-hidden rounded-lg border border-gray-300">
+    <div class="mx-auto mt-3 max-w-6xl overflow-hidden rounded-lg border border-gray-300">
         <div class="bg-slate-200 px-4 py-3">
             <h2 class="text-lg font-extrabold tracking-tight text-slate-700">
                 Jugadors de la Comunitat
             </h2>
         </div>
-        <div class="p-2">
-            <table class="w-full  table-fixed">
+        <div class="overflow-x-auto p-2">
+            <table class="min-w-[520px] w-full table-fixed">
                 <thead>
                     <tr>
                         <th class="w-1/3 px-4 py-2 text-left">Nom</th>
@@ -161,7 +161,7 @@
         <h1 class="text-xl md:text-2xl font-extrabold tracking-tight text-slate-600">Insignies de tots els membres de la
             Comunitat</h1>
 
-        <div class="grid grid-cols-4 gap-2 p-2">
+        <div class="grid grid-cols-2 gap-2 p-2 sm:grid-cols-3 lg:grid-cols-4">
             <div class="aspect-square rounded-lg border border-gray-200 bg-gray-100 p-3">
                 <div class="flex h-full flex-col items-center justify-center gap-2 text-lg font-bold text-slate-600">
                     <p class="text-center">Trofeu 10 reserves</p>

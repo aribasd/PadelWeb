@@ -6,9 +6,7 @@
 
     <meta charset="UTF-8">
 
-    {{--
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    --}} {{-- Important Activar quan fem el responsive --}}
 
     <title>Padel Web</title>
 
@@ -32,23 +30,23 @@
 <body class="flex min-h-screen flex-col font-sans antialiased">
 
     <nav class="relative z-50 bg-blue-700 text-white shadow-md">
-        <div class="mx-auto flex max-w-7xl items-center px-2 py-3">
+        <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 sm:px-6 lg:px-8">
 
             <a href="{{ route('inici.index') }}">
                 <h1 class="text-lg font-bold">Social<span class="text-yellow-500">Padel</span></h1>
             </a>
 
-            <div class="flex items-center gap-8 ml-20">
+            <div class="order-3 w-full md:order-none md:w-auto">
+                <div class="flex flex-wrap items-center gap-2 text-xs sm:gap-3 sm:text-sm md:ml-10 md:gap-4 md:text-base lg:ml-20">
                 {{-- <a class="hover:text-blue-200 transition" href="{{ route('pistes.index') }}">Pistes</a>
-                --}} <a class="hover:text-blue-200 transition" href="{{ route('reserves.index') }}">Reserves</a>
-                <a class="hover:text-blue-200 transition" href="{{ route('comunitats.index') }}">Comunitats</a>
-                <a class="hover:text-blue-200 transition" href="{{ route('partits.index') }}">Historial Partits</a>
-                <a class="hover:text-blue-200 transition" href="{{ route('galeria.index') }}">Galeria</a>
-
-
+                --}} <a class="rounded-md px-2 py-1 hover:text-blue-200 transition" href="{{ route('reserves.index') }}">Reserves</a>
+                <a class="rounded-md px-2 py-1 hover:text-blue-200 transition" href="{{ route('comunitats.index') }}">Comunitats</a>
+                <a class="rounded-md px-2 py-1 hover:text-blue-200 transition" href="{{ route('partits.index') }}">Historial Partits</a>
+                <a class="rounded-md px-2 py-1 hover:text-blue-200 transition" href="{{ route('galeria.index') }}">Galeria</a>
+                </div>
             </div>
 
-            <div class="flex gap-5 ml-auto">
+            <div class="order-2 ml-auto flex gap-5 md:order-none">
                 @auth
                     @php
                         $navUser = auth()->user();

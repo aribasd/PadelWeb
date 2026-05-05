@@ -8,7 +8,7 @@
 
     <div class="relative overflow-hidden bg-slate-950">
         <div class="absolute inset-0">
-            <div id="home-carousel" class="relative h-[520px] w-full">
+            <div id="home-carousel" class="relative h-[420px] w-full sm:h-[520px]">
                 <div class="absolute inset-0 transition-opacity duration-700 opacity-100" data-slide="0">
                     <img
                         src="https://images.unsplash.com/photo-1646649853703-7645147474ba?auto=format&fit=crop&w=2400&q=60"
@@ -36,7 +36,7 @@
                     <div class="mx-auto w-full max-w-7xl px-4 py-12">
                         <div class="max-w-2xl">
                             <p class="text-sm font-semibold tracking-wide text-blue-200">SocialPadel</p>
-                            <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+                            <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
                                 Reserva, coneix gent i juga més sovint.
                             </h1>
                             <p class="mt-4 text-base text-slate-200 sm:text-lg">
@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="h-[520px]"></div>
+        <div class="h-[160px] sm:h-[520px]"></div>
     </div>
 
     <div class="mx-auto max-w-7xl px-4 py-12">
@@ -142,18 +142,6 @@
                 @endforelse
             </div>
         </div>
-    </div>
-
-    <div class="mx-auto max-w-7xl px-4 py-12 bg-slate-50">
-        <div class="flex items-end justify-between gap-4">
-            <div>
-                <h2 class="text-2xl font-extrabold tracking-tight text-slate-800">Pistes actives</h2>
-                <p class="mt-1 text-slate-600">Un cop d’ull ràpid a les pistes disponibles.</p>
-            </div>
-        </div>
-
-        <script type="application/json" id="project-showcase-data">@json($projectShowcaseItems)</script>
-        <div id="project-showcase-root" class="w-full" data-heading="Les nostres pistes"></div>
     </div>
 
 @endsection

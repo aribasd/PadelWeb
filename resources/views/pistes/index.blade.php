@@ -10,7 +10,7 @@
 
 <div class="flex-1 bg-white p-5">
 
-    <div class="ml-10 mt-5 flex flex-row gap-4">
+    <div class="ml-0 mt-5 flex flex-row flex-wrap gap-4 sm:ml-10">
         @auth
             @if((auth()->user()->role ?? 'user') === 'admin')
                 <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
@@ -53,7 +53,7 @@
             </div>
 
             @if($pista->imatge)
-            <div class="flex-shrink-0 mr-2 w-72 h-72">
+            <div class="flex-shrink-0 mr-2 w-40 h-40 sm:w-72 sm:h-72">
                 <img src="{{ asset('storage/' . $pista->imatge) }}"
                     alt="{{ $pista->nom }}"
                     class="w-full h-full rounded">

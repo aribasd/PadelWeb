@@ -5,9 +5,9 @@
 
 
 
-<div class="max-w-lg mx-auto mt-12 p-8 bg-gray-300 rounded-xl shadow-lg">
+<div class="mx-auto mt-10 max-w-lg rounded-xl bg-gray-300 p-5 shadow-lg sm:mt-12 sm:p-8">
 
-    <h2 class="text-2xl font-bold mb-4">Confirmar Reserva</h2>
+    <h2 class="mb-4 text-2xl font-bold">Confirmar Reserva</h2>
 
     <p><strong>Pista:</strong> {{ $pista->nom }}</p>
     <p><strong>Data:</strong> {{ $data }}</p>
@@ -23,13 +23,13 @@
         <input type="hidden" name="hora_fi" value="{{ $hora_fi }}">
         <input type="hidden" name="preu" value="{{ $preu }}">
 
-        <button type="submit"
-            class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 rounded-lg">
+    <button type="submit"
+            class="w-full rounded-lg bg-blue-500 py-3 font-bold text-white hover:bg-blue-700">
             Confirmar Reserva
         </button>
     </form>
 
-    <a href="{{ route('reserves.index') }}" class="block mt-4 text-center text-blue-700">Cancelar</a>
+    <a href="{{ route('reserves.index') }}" class="mt-4 block text-center text-blue-700">Cancelar</a>
 
 </div>
 

@@ -20,7 +20,7 @@
     $maxDia = now()->addDays(6);
     @endphp
 
-    <div class="flex justify-end items-center mt-10 mr-20 mx-auto">
+    <div class="mx-auto mt-8 flex max-w-5xl items-center justify-end px-4 sm:mt-10 sm:px-6 lg:px-8">
         <div class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
             @if(!is_null($temp))
                 <span class="font-semibold">{{ round($temp) }}°C</span>
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <div class="max-w-5xl mx-auto mt-6 rounded-lg border border-slate-200 bg-white p-4">
+    <div class="mx-4 mt-6 max-w-5xl rounded-lg border border-slate-200 bg-white p-4 sm:mx-auto sm:px-6">
         <form method="GET" action="{{ route('reserves.index') }}" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <input type="hidden" name="data" value="{{ $diaIso }}">
             <div class="flex items-center gap-3">
@@ -41,7 +41,7 @@
                 <select
                     id="comunitat_id"
                     name="comunitat_id"
-                    class="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
+                    class="w-full max-w-xs rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800"
                     onchange="this.form.submit()"
                 >
                     <option value="">Selecciona una comunitat</option>
@@ -64,7 +64,7 @@
         </form>
     </div>
 
-    <div class="flex  items-center justify-center flex-row max-w-5xl mx-auto gap-10 p-2 mt-12  rounded-lg">
+    <div class="mx-4 mt-8 flex max-w-5xl flex-wrap items-center justify-center gap-4 py-2 sm:mx-auto sm:mt-12 sm:gap-10 sm:px-6 lg:px-8">
         @if($dia->isAfter(now(), 'day')) 
         <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
             <a href="{{ route('reserves.index', ['data' => $dia->copy()->subDay()->format('Y-m-d')]) }}" class="block">
@@ -88,22 +88,23 @@
         @endif
     </div>
 
-    <div class="max-w-5xl mx-auto overflow-auto rounded {{ $teAcces ? '' : 'opacity-50 pointer-events-none select-none' }}">
-        <table class="table-auto border-collapse border-2 border-gray-300 text-center w-full mx-auto mt-2 ">
+    <div class="mx-auto mt-4 max-w-5xl px-0 sm:mt-6 sm:px-6 lg:px-8 {{ $teAcces ? '' : 'opacity-50 pointer-events-none select-none' }}">
+        <div class="mx-4 overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 sm:mx-0 sm:p-4">
+            <table class="table-auto min-w-max border-collapse text-center">
             <thead>     
                 <tr>
-                    <th class="border border-gray-300 text-white bg-gray-200"></th>
+                    <th class="border border-gray-300 bg-gray-200"></th>
                     @foreach($hores as $hora)
-                    <th class="border border-gray-300 p-2 bg-gray-200">{{ $hora }}:00</th>
+                    <th class="border border-gray-300 bg-gray-200 p-2 text-xs font-semibold text-slate-700 sm:text-sm">{{ $hora }}:00</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 @foreach($pistes as $pista)
                 <tr>
-                    <td class="border border-gray-300 p-2 font-semibold bg-gray-100"> {{ $pista->nom }}</td>
+                    <td class="border border-gray-300 bg-gray-100 p-2 text-left text-xs font-semibold text-slate-800 sm:text-sm"> {{ $pista->nom }}</td>
                     @foreach($hores as $hora)
-                    <td class="border border-gray-300 p-4">
+                    <td class="border border-gray-300 p-3 sm:p-4">
                         @php($existeix = isset($ocupat[$pista->id][$hora]))
                         @php($tz = config('app.timezone') ?: 'Europe/Madrid')
                         @php($slot = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $diaIso . ' ' . sprintf('%02d', (int) $hora) . ':00:00', $tz))
@@ -118,7 +119,7 @@
                             <input type="hidden" name="pista_id" value="{{ $pista->id }}">
                             <input type="hidden" name="hora" value="{{ $hora }}:00">
                             <input type="hidden" name="data" value="{{ $diaIso }}">
-                            <button type="submit" class="bg-blue-500 text-white px-9 py-1 rounded hover:bg-blue-600">
+                            <button type="submit" class="rounded bg-blue-500 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-600 sm:px-6 sm:text-sm">
                                 Reservar
                             </button>
                         </form>
@@ -137,6 +138,7 @@
                 @endif
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 @endsection
