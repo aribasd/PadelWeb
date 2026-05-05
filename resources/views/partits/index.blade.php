@@ -101,18 +101,41 @@
                     <div class="mt-2 grid gap-3 md:grid-cols-3 md:items-center">
                         <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
                             <p class="text-xs font-semibold text-slate-500">Equip A</p>
-                            <p class="mt-1 font-semibold text-slate-800">{{ $partit->nom1 }}</p>
-                            <p class="text-sm text-slate-700">{{ $partit->nom2 }}</p>
+                            <p class="mt-1 font-semibold text-slate-800">{{ $partit->nom1 ?: 'Jugador 1' }}</p>
+                            <p class="text-sm text-slate-700">{{ $partit->nom2 ?: 'Jugador 2' }}</p>
                         </div>
 
                         <div class="text-center text-lg font-extrabold text-slate-700">VS</div>
 
                         <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
                             <p class="text-xs font-semibold text-slate-500">Equip B</p>
-                            <p class="mt-1 font-semibold text-slate-800">{{ $partit->nom3 }}</p>
-                            <p class="text-sm text-slate-700">{{ $partit->nom4 }}</p>
+                            <p class="mt-1 font-semibold text-slate-800">{{ $partit->nom3 ?: 'Jugador 3' }}</p>
+                            <p class="text-sm text-slate-700">{{ $partit->nom4 ?: 'Jugador 4' }}</p>
                         </div>
                     </div>
+
+                    @if($finalitzat)
+                        @php
+                            $guanyador = data_get($partit, 'winner_team');
+                        @endphp
+
+                        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
+                            <p class="text-sm font-semibold text-slate-700">Guanyador</p>
+                            @if((int) $guanyador === 1)
+                                <span class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800">
+                                    Equip A
+                                </span>
+                            @elseif((int) $guanyador === 2)
+                                <span class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800">
+                                    Equip B
+                                </span>
+                            @else
+                                <span class="inline-flex items-center rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold text-slate-700">
+                                    Sense guanyador
+                                </span>
+                            @endif
+                        </div>
+                    @endif
 
                     @if($finalitzat)
                         <div class="mt-4">

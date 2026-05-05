@@ -1,6 +1,6 @@
 {
-  "_index-BNWQyzi4.js": {
-    "file": "assets/index-BNWQyzi4.js",
+  "_index-wGRVjvSq.js": {
+    "file": "assets/index-wGRVjvSq.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
@@ -12,7 +12,7 @@
     "name": "jsx-runtime"
   },
   "resources/css/app.css": {
-    "file": "assets/app-B19xI-d4.css",
+    "file": "assets/app-D68G8WsH.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -27,27 +27,27 @@
     "isEntry": true
   },
   "resources/js/react-entry.jsx": {
-    "file": "assets/react-entry-yIE6oJBp.js",
+    "file": "assets/react-entry-iTMWzTIU.js",
     "name": "react-entry",
     "src": "resources/js/react-entry.jsx",
     "isEntry": true,
     "dynamicImports": [
-      "_index-BNWQyzi4.js",
+      "_index-wGRVjvSq.js",
       "resources/js/react/components/Hello.jsx",
-      "_index-BNWQyzi4.js",
+      "_index-wGRVjvSq.js",
       "resources/js/react/components/GalleryStickyScroll.jsx",
-      "_index-BNWQyzi4.js",
+      "_index-wGRVjvSq.js",
       "resources/js/react/components/ProjectShowcase.jsx"
     ]
   },
   "resources/js/react/components/GalleryStickyScroll.jsx": {
-    "file": "assets/GalleryStickyScroll-CS1Rwxre.js",
+    "file": "assets/GalleryStickyScroll--j8mqXfr.js",
     "name": "GalleryStickyScroll",
     "src": "resources/js/react/components/GalleryStickyScroll.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_jsx-runtime-u17CrQMm.js",
-      "_index-BNWQyzi4.js",
+      "_index-wGRVjvSq.js",
       "resources/js/react-entry.jsx"
     ]
   },
@@ -61,13 +61,13 @@
     ]
   },
   "resources/js/react/components/ProjectShowcase.jsx": {
-    "file": "assets/ProjectShowcase-BqFAf3dK.js",
+    "file": "assets/ProjectShowcase-8bnUqi3A.js",
     "name": "ProjectShowcase",
     "src": "resources/js/react/components/ProjectShowcase.jsx",
     "isDynamicEntry": true,
     "imports": [
       "_jsx-runtime-u17CrQMm.js",
-      "_index-BNWQyzi4.js",
+      "_index-wGRVjvSq.js",
       "resources/js/react-entry.jsx"
     ]
   }

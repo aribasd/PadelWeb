@@ -26,13 +26,13 @@
                         <div class="mt-3 space-y-3">
                             <div>
                                 <label class="text-xs font-semibold text-slate-600">Jugador 1</label>
-                                <input name="nom1" value="{{ old('nom1') }}" required
+                                <input name="nom1" value="{{ old('nom1') }}"
                                     class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800">
                                 @error('nom1') <p class="mt-1 text-sm text-red-700">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="text-xs font-semibold text-slate-600">Jugador 2</label>
-                                <input name="nom2" value="{{ old('nom2') }}" required
+                                <input name="nom2" value="{{ old('nom2') }}"
                                     class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800">
                                 @error('nom2') <p class="mt-1 text-sm text-red-700">{{ $message }}</p> @enderror
                             </div>
@@ -44,13 +44,13 @@
                         <div class="mt-3 space-y-3">
                             <div>
                                 <label class="text-xs font-semibold text-slate-600">Jugador 3</label>
-                                <input name="nom3" value="{{ old('nom3') }}" required
+                                <input name="nom3" value="{{ old('nom3') }}"
                                     class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800">
                                 @error('nom3') <p class="mt-1 text-sm text-red-700">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="text-xs font-semibold text-slate-600">Jugador 4</label>
-                                <input name="nom4" value="{{ old('nom4') }}" required
+                                <input name="nom4" value="{{ old('nom4') }}"
                                     class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800">
                                 @error('nom4') <p class="mt-1 text-sm text-red-700">{{ $message }}</p> @enderror
                             </div>

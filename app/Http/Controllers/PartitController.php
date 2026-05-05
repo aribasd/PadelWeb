@@ -39,18 +39,18 @@ class PartitController extends Controller
     {
         $validated = $request->validate([
             'reserva_id' => 'required|exists:reserves,id',
-            'nom1' => 'required|string|max:255',
-            'nom2' => 'required|string|max:255',
-            'nom3' => 'required|string|max:255',
-            'nom4' => 'required|string|max:255',
+            'nom1' => 'nullable|string|max:255',
+            'nom2' => 'nullable|string|max:255',
+            'nom3' => 'nullable|string|max:255',
+            'nom4' => 'nullable|string|max:255',
         ]);
 
         $partit = Partit::query()->create([
             'reserva_id' => (int) $validated['reserva_id'],
-            'nom1' => $validated['nom1'],
-            'nom2' => $validated['nom2'],
-            'nom3' => $validated['nom3'],
-            'nom4' => $validated['nom4'],
+            'nom1' => $validated['nom1'] ?? null,
+            'nom2' => $validated['nom2'] ?? null,
+            'nom3' => $validated['nom3'] ?? null,
+            'nom4' => $validated['nom4'] ?? null,
             // per defecte: encara no s'ha marcat cap resultat
             'set1' => false,
             'set2' => false,
@@ -75,10 +75,10 @@ class PartitController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'nom1' => 'required|string|max:255',
-            'nom2' => 'required|string|max:255',
-            'nom3' => 'required|string|max:255',
-            'nom4' => 'required|string|max:255',
+            'nom1' => 'nullable|string|max:255',
+            'nom2' => 'nullable|string|max:255',
+            'nom3' => 'nullable|string|max:255',
+            'nom4' => 'nullable|string|max:255',
             'set1' => 'required|boolean',
             'set2' => 'required|boolean',
             'set3' => 'required|boolean',

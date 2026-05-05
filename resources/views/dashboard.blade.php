@@ -1,17 +1,19 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.layout')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+@section('content')
+    <div class="mx-auto max-w-5xl px-4 py-10">
+        <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h1 class="text-2xl font-extrabold tracking-tight text-slate-900">Dashboard</h1>
+
+            @if(!($isAdmin ?? false))
+                <div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
+                    No pots entrar al dashboard si no ets <span class="font-semibold">admin</span>.
                 </div>
-            </div>
+            @else
+                <p class="mt-4 text-slate-700">
+                    Estàs connectat.
+                </p>
+            @endif
         </div>
     </div>
-</x-app-layout>
+@endsection

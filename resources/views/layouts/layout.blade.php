@@ -19,22 +19,7 @@
     <!-- Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind necessari per mostrar-ho en el servidor -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                    },
-                },
-            },
-        };
-    </script>
-
-    <!-- daisyUI -->
-    <script type="module" src="https://unpkg.com/cally"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Necessari per React (Vite) en mode dev/HMR --}}
     @viteReactRefresh

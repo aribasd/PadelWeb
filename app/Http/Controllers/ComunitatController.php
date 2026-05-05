@@ -17,9 +17,16 @@ class ComunitatController extends Controller
      */
     public function index()
     {
-        $comunitats = Comunitat::withCount('users')
+        $buscador = request('buscador');
+
+        $comunitats = Comunitat::query()
+            ->withCount('users')
+            ->when($buscador, function ($query) use ($buscador) {
+                $query->where('nom', 'like', "%{$buscador}%");
+            })
             ->orderBy('nom')
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
         $mevesIds = Auth::check()
             ? Auth::user()->comunitats()->pluck('comunitats.id')->all()
             : [];
@@ -29,6 +36,7 @@ class ComunitatController extends Controller
             'subheaderTitol' => 'Comunitats',
             'esLlistaMeves' => false,
             'mevesIds' => $mevesIds,
+            'buscador' => $buscador,
         ]);
     }
 
@@ -40,10 +48,16 @@ class ComunitatController extends Controller
         $user = Auth::user();
         abort_unless($user instanceof User, 403);
 
+        $buscador = request('buscador');
+
         $comunitats = $user->comunitats()
             ->withCount('users')
+            ->when($buscador, function ($query) use ($buscador) {
+                $query->where('nom', 'like', "%{$buscador}%");
+            })
             ->orderBy('nom')
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
         $mevesIds = $comunitats->getCollection()->pluck('id')->all();
 
         return view('comunitats.index', [
@@ -51,6 +65,7 @@ class ComunitatController extends Controller
             'subheaderTitol' => 'Les meves comunitats',
             'esLlistaMeves' => true,
             'mevesIds' => $mevesIds,
+            'buscador' => $buscador,
         ]);
     }
 

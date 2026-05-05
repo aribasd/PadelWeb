@@ -64,6 +64,34 @@
                         les comunitats</button></a>
             @endif
         </div>
+        
+        <form
+            method="GET"
+            action="{{ ($esLlistaMeves ?? false) ? route('comunitats.meves') : route('comunitats.index') }}"
+            class="mt-4 flex w-full items-center gap-2"
+        >
+            <input
+                type="text"
+                name="buscador"
+                value="{{ $buscador ?? request('buscador') }}"
+                placeholder="Buscar comunitat per nom..."
+                class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm text-slate-800 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+            />
+            <button
+                type="submit"
+                class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
+            >
+                Buscar
+            </button>
+            @if(request('buscador'))
+                <a
+                    href="{{ ($esLlistaMeves ?? false) ? route('comunitats.meves') : route('comunitats.index') }}"
+                    class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                >
+                    Netejar
+                </a>
+            @endif
+        </form>
     </div>
 
 
