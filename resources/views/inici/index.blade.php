@@ -18,15 +18,15 @@
                 </div>
                 <div class="absolute inset-0 transition-opacity duration-700 opacity-0" data-slide="1">
                     <img
-                        src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=2400&q=60"
-                        alt="Esport i comunitat"
+                        src="https://plus.unsplash.com/premium_photo-1708692919464-b5608dd10542?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGFkZWwlMjB0ZW5uaXN8ZW58MHx8MHx8fDA%3D"
+                        alt="Partit de pàdel"
                         class="h-full w-full object-cover opacity-80"
                     >
                 </div>
                 <div class="absolute inset-0 transition-opacity duration-700 opacity-0" data-slide="2">
                     <img
-                        src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=2400&q=60"
-                        alt="Jugar amb amics"
+                        src="https://images.unsplash.com/photo-1709587824751-dd30420f5cf3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTU4fHxwYWRlbCUyMHRlbm5pc3xlbnwwfHwwfHx8MA%3D%3D"
+                        alt="Pàdel amb amics"
                         class="h-full w-full object-cover opacity-80"
                     >
                 </div>
