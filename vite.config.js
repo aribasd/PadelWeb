@@ -4,13 +4,13 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
     server: {
-        // Windows: evita lentitud per IPv6/localhost ([::1]).
+        // Windows/Laragon: evitar IPv6/localhost ([::1]) i quadrar amb el vhost .test
         host: '127.0.0.1',
         strictPort: true,
-        // Força que el laravel-vite-plugin escrigui IPv4 a public/hot
-        origin: 'http://127.0.0.1:5173',
+        // Important: quan navegues via http://padelweb.test, el browser ha de veure el mateix host/port
+        origin: 'http://padelweb.test:5173',
         hmr: {
-            host: '127.0.0.1',
+            host: 'padelweb.test',
         },
     },
     plugins: [
@@ -20,10 +20,9 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/react-entry.jsx',
             ],
-            refresh: [
-                'resources/views/**',
-                'routes/**',
-            ],
+            // En Windows/Laragon, mirar tots els Blade provoca recàrregues completes
+            // i fa que l'IDE/terminal se sentin pesats quan edites vistes.
+            refresh: false,
         }),
         react(),
     ],

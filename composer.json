@@ -76,7 +76,19 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "barryvdh/laravel-ide-helper",
+                "blade-ui-kit/blade-icons",
+                "codeat3/blade-phosphor-icons",
+                "laravel/breeze",
+                "laravel/legacy-factories",
+                "laravel/pail",
+                "laravel/sail",
+                "laravel/sentinel",
+                "laravel/telescope",
+                "nunomaduro/collision",
+                "pestphp/pest-plugin-laravel"
+            ]
         }
     },
     "config": {
