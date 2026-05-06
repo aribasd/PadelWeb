@@ -37,7 +37,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::resource('pistes', PistaController::class)->only(['index', 'show']);
 
 
-Route::resource('reserves', ReservaController::class);
+Route::middleware('auth')->group(function () {
+    Route::resource('reserves', ReservaController::class);
+});
 
 
 /* Auth Comunitat */

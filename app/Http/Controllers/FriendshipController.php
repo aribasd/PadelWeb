@@ -28,21 +28,21 @@ class FriendshipController extends Controller
         $existing = Friendship::betweenUsers($sender->id, $receiver->id);
 
         if ($existing) {
-            if ($existing->status === 'accepted') {
+            if ($existing->estat === 'accepted') {
                 return back()->withErrors(['receiver_id' => 'Ja sou amics.']);
             }
-            if ($existing->status === 'pending') {
+            if ($existing->estat === 'pending') {
                 return back()->withErrors(['receiver_id' => 'Ja hi ha una sol·licitud pendent.']);
             }
-            if ($existing->status === 'declined') {
+            if ($existing->estat === 'declined') {
                 $existing->delete();
             }
         }
 
         Friendship::create([
-            'sender_id' => $sender->id,
-            'receiver_id' => $receiver->id,
-            'status' => 'pending',
+            'emissor_id' => $sender->id,
+            'receptor_id' => $receiver->id,
+            'estat' => 'pending',
         ]);
 
         return back();
@@ -53,10 +53,10 @@ class FriendshipController extends Controller
         $user = Auth::user();
         abort_unless($user instanceof User, 403);
 
-        abort_unless($friendship->receiver_id === $user->id, 403);
-        abort_unless($friendship->status === 'pending', 400);
+        abort_unless($friendship->receptor_id === $user->id, 403);
+        abort_unless($friendship->estat === 'pending', 400);
 
-        $friendship->update(['status' => 'accepted']);
+        $friendship->update(['estat' => 'accepted']);
 
         return back();
     }
@@ -66,10 +66,10 @@ class FriendshipController extends Controller
         $user = Auth::user();
         abort_unless($user instanceof User, 403);
 
-        abort_unless($friendship->receiver_id === $user->id, 403);
-        abort_unless($friendship->status === 'pending', 400);
+        abort_unless($friendship->receptor_id === $user->id, 403);
+        abort_unless($friendship->estat === 'pending', 400);
 
-        $friendship->update(['status' => 'declined']);
+        $friendship->update(['estat' => 'declined']);
 
         return back();
     }
@@ -79,7 +79,7 @@ class FriendshipController extends Controller
         $user = Auth::user();
         abort_unless($user instanceof User, 403);
 
-        $involved = $friendship->sender_id === $user->id || $friendship->receiver_id === $user->id;
+        $involved = $friendship->emissor_id === $user->id || $friendship->receptor_id === $user->id;
         abort_unless($involved, 403);
 
         $friendship->delete();

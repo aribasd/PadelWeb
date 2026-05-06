@@ -12,6 +12,17 @@
             </div>
         </a>
 
+        <a href="{{ route('galeria.index', ['comunitat_id' => $comunitat->id]) }}">
+            <div
+                class="flex flex-row p-2 gap-2 justify-start items-center border border-gray-300 shadow-lg hover:text-gray-00 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 8.447 5.5h7.106c.597 0 1.175.224 1.62.675l2.652 2.652c.451.445.675 1.023.675 1.62v7.106c0 .597-.224 1.175-.675 1.62a2.31 2.31 0 0 1-1.62.675H8.447a2.31 2.31 0 0 1-1.62-.675A2.31 2.31 0 0 1 6.15 19.25V8.447c0-.597.224-1.175.677-1.62Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 15.75l2.25-2.25 1.5 1.5 3-3 2.25 2.25" />
+                </svg>
+                <h1>Galeria de la comunitat</h1>
+            </div>
+        </a>
+
         <a href="{{ route('comunitats.missatges', $comunitat) }}">
             <div
                 class="flex flex-row p-2 gap-2 justify-start items-center border border-gray-300 shadow-lg  hover:text-gray-00 rounded-lg">
@@ -74,9 +85,39 @@
         @if($comunitat->pistes->count())
             <ul class="mt-3 space-y-2">
                 @foreach($comunitat->pistes as $pista)
-                    <li class="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-                        <span class="font-medium text-slate-800">{{ $pista->nom }}</span>
-                        <span class="text-sm text-slate-600">{{ $pista->doble_vidre ? 'Doble vidre' : 'Sense doble vidre' }}</span>
+                    <li class="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
+                        <div class="min-w-0">
+                            <span class="block truncate font-medium text-slate-800">{{ $pista->nom }}</span>
+                            <span class="block text-sm text-slate-600">{{ $pista->doble_vidre ? 'Doble vidre' : 'Sense doble vidre' }}</span>
+                        </div>
+
+                        @auth
+                            @if((auth()->user()->role ?? 'user') === 'admin')
+                                <div class="flex shrink-0 items-center gap-2">
+                                    <a
+                                        href="{{ route('pistes.edit', $pista) }}"
+                                        class="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                                    >
+                                        Editar
+                                    </a>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ route('pistes.destroy', $pista) }}"
+                                        onsubmit="return confirm('Vols eliminar aquesta pista?');"
+                                    >
+                                        @csrf
+                                        @method('DELETE')
+                                        <button
+                                            type="submit"
+                                            class="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700"
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
+                        @endauth
                     </li>
                 @endforeach
             </ul>

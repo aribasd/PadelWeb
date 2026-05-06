@@ -1,29 +1,23 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
+import Hello from './react/components/Hello';
+import ProjectShowcase from './react/components/ProjectShowcase';
 
-function mount(id, render) {
+function mount(id, nodeFactory) {
     const el = document.getElementById(id);
     if (!el) return;
-    createRoot(el).render(render(el));
+    const node = nodeFactory(el);
+    createRoot(el).render(node);
 }
 
-mount('react-root', async (el) => {
-    const { default: React } = await import('react');
-    const { default: Hello } = await import('./react/components/Hello');
+mount('react-root', (el) => {
     const title = el.dataset.title ?? undefined;
-    return React.createElement(Hello, { title });
+    return <Hello title={title} />;
 });
 
-mount('galeria-root', async () => {
-    const { default: React } = await import('react');
-    const { default: GalleryStickyScroll } = await import('./react/components/GalleryStickyScroll');
-    return React.createElement(GalleryStickyScroll);
-});
-
-mount('project-showcase-root', async (el) => {
-    const { default: React } = await import('react');
-    const { default: ProjectShowcase } = await import('./react/components/ProjectShowcase');
-
+mount('project-showcase-root', (el) => {
     let projects;
+
     const jsonScript = document.getElementById('project-showcase-data');
     const rawFromScript = jsonScript?.textContent?.trim();
     if (rawFromScript) {
@@ -32,6 +26,7 @@ mount('project-showcase-root', async (el) => {
             if (Array.isArray(parsed)) projects = parsed;
         } catch {}
     }
+
     if (projects === undefined) {
         const raw = el.dataset.projects;
         if (raw) {
@@ -42,9 +37,6 @@ mount('project-showcase-root', async (el) => {
         }
     }
 
-    return React.createElement(ProjectShowcase, {
-        projects,
-        heading: el.dataset.heading || 'Selected Work',
-    });
+    return <ProjectShowcase projects={projects} heading={el.dataset.heading || 'Selected Work'} />;
 });
 

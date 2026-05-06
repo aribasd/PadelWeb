@@ -1,18 +1,6 @@
 {
-  "_index-wGRVjvSq.js": {
-    "file": "assets/index-wGRVjvSq.js",
-    "name": "index",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/react-entry.jsx"
-    ]
-  },
-  "_jsx-runtime-u17CrQMm.js": {
-    "file": "assets/jsx-runtime-u17CrQMm.js",
-    "name": "jsx-runtime"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-D68G8WsH.css",
+    "file": "assets/app--2DodmIG.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -27,48 +15,9 @@
     "isEntry": true
   },
   "resources/js/react-entry.jsx": {
-    "file": "assets/react-entry-iTMWzTIU.js",
+    "file": "assets/react-entry-BYfqYhEG.js",
     "name": "react-entry",
     "src": "resources/js/react-entry.jsx",
-    "isEntry": true,
-    "dynamicImports": [
-      "_index-wGRVjvSq.js",
-      "resources/js/react/components/Hello.jsx",
-      "_index-wGRVjvSq.js",
-      "resources/js/react/components/GalleryStickyScroll.jsx",
-      "_index-wGRVjvSq.js",
-      "resources/js/react/components/ProjectShowcase.jsx"
-    ]
-  },
-  "resources/js/react/components/GalleryStickyScroll.jsx": {
-    "file": "assets/GalleryStickyScroll--j8mqXfr.js",
-    "name": "GalleryStickyScroll",
-    "src": "resources/js/react/components/GalleryStickyScroll.jsx",
-    "isDynamicEntry": true,
-    "imports": [
-      "_jsx-runtime-u17CrQMm.js",
-      "_index-wGRVjvSq.js",
-      "resources/js/react-entry.jsx"
-    ]
-  },
-  "resources/js/react/components/Hello.jsx": {
-    "file": "assets/Hello-3DQ_O4kC.js",
-    "name": "Hello",
-    "src": "resources/js/react/components/Hello.jsx",
-    "isDynamicEntry": true,
-    "imports": [
-      "_jsx-runtime-u17CrQMm.js"
-    ]
-  },
-  "resources/js/react/components/ProjectShowcase.jsx": {
-    "file": "assets/ProjectShowcase-8bnUqi3A.js",
-    "name": "ProjectShowcase",
-    "src": "resources/js/react/components/ProjectShowcase.jsx",
-    "isDynamicEntry": true,
-    "imports": [
-      "_jsx-runtime-u17CrQMm.js",
-      "_index-wGRVjvSq.js",
-      "resources/js/react-entry.jsx"
-    ]
+    "isEntry": true
   }
 }

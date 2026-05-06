@@ -60,29 +60,29 @@
 
                         /** @var \Illuminate\Database\Eloquent\Collection<int,\App\Models\Friendship> $pendingSent */
                         $pendingSent = \App\Models\Friendship::query()
-                            ->where('sender_id', $navUserId)
-                            ->where('status', 'pending')
-                            ->with('receiver')
+                            ->where('emissor_id', $navUserId)
+                            ->where('estat', 'pending')
+                            ->with('receptor')
                             ->orderByDesc('created_at')
                             ->limit(8)
                             ->get();
 
                         /** @var \Illuminate\Database\Eloquent\Collection<int,\App\Models\Friendship> $pendingReceived */
                         $pendingReceived = \App\Models\Friendship::query()
-                            ->where('receiver_id', $navUserId)
-                            ->where('status', 'pending')
-                            ->with('sender')
+                            ->where('receptor_id', $navUserId)
+                            ->where('estat', 'pending')
+                            ->with('emissor')
                             ->orderByDesc('created_at')
                             ->limit(8)
                             ->get();
 
                         /** @var \Illuminate\Database\Eloquent\Collection<int,\App\Models\Friendship> $acceptedFriendships */
                         $acceptedFriendships = \App\Models\Friendship::query()
-                            ->where('status', 'accepted')
+                            ->where('estat', 'accepted')
                             ->where(function ($q) use ($navUserId) {
-                                $q->where('sender_id', $navUserId)->orWhere('receiver_id', $navUserId);
+                                $q->where('emissor_id', $navUserId)->orWhere('receptor_id', $navUserId);
                             })
-                            ->with(['sender', 'receiver'])
+                            ->with(['emissor', 'receptor'])
                             ->orderByDesc('updated_at')
                             ->limit(20)
                             ->get();
@@ -175,8 +175,8 @@
                                         <ul class="mt-2 space-y-2">
                                             @foreach($pendingReceived as $fr)
                                                 <li class="flex items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2">
-                                                    <a href="{{ route('users.show', $fr->sender) }}" class="min-w-0 truncate text-sm font-medium text-slate-800 hover:underline">
-                                                        {{ $fr->sender?->name ?? 'Usuari' }}
+                                                    <a href="{{ route('users.show', $fr->emissor) }}" class="min-w-0 truncate text-sm font-medium text-slate-800 hover:underline">
+                                                        {{ $fr->emissor?->name ?? 'Usuari' }}
                                                     </a>
                                                     <div class="flex shrink-0 gap-2">
                                                         <form method="POST" action="{{ route('friendships.accept', $fr) }}">
@@ -205,8 +205,8 @@
                                         <ul class="mt-2 space-y-2">
                                             @foreach($pendingSent as $fr)
                                                 <li class="flex items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2">
-                                                    <a href="{{ route('users.show', $fr->receiver) }}" class="min-w-0 truncate text-sm font-medium text-slate-800 hover:underline">
-                                                        {{ $fr->receiver?->name ?? 'Usuari' }}
+                                                    <a href="{{ route('users.show', $fr->receptor) }}" class="min-w-0 truncate text-sm font-medium text-slate-800 hover:underline">
+                                                        {{ $fr->receptor?->name ?? 'Usuari' }}
                                                     </a>
                                                     <form method="POST" action="{{ route('friendships.destroy', $fr) }}" onsubmit="return confirm('Vols cancel·lar la sol·licitud?');">
                                                         @csrf
@@ -228,7 +228,7 @@
                                         <ul class="mt-2 space-y-2">
                                             @foreach($acceptedFriendships as $fr)
                                                 @php
-                                                    $other = ((int) $fr->sender_id === $navUserId) ? $fr->receiver : $fr->sender;
+                                                    $other = ((int) $fr->emissor_id === $navUserId) ? $fr->receptor : $fr->emissor;
                                                 @endphp
                                                 <li class="flex items-center justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
                                                     <a href="{{ route('users.show', $other) }}" class="min-w-0 truncate text-sm font-medium text-slate-800 hover:underline">

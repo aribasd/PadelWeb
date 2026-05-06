@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('nom');
             $table->string('descripcio');
-            $table->string('imatge');
+            $table->text('imatge');
             $table->string('membres');
             $table->enum('rol', ['admin', 'moderador', 'usuari'] )->default('usuari');
         });

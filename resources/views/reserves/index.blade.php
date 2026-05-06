@@ -115,13 +115,46 @@
                     <td class="border border-gray-300 bg-gray-100 p-2 text-left text-xs font-semibold text-slate-800 sm:text-sm"> {{ $pista->nom }}</td>
                     @foreach($hores as $hora)
                     <td class="border border-gray-300 p-3 sm:p-4">
-                        @php($existeix = isset($ocupat[$pista->id][$hora]))
+                        @php($slotInfo = $ocupat[$pista->id][$hora] ?? null)
+                        @php($existeix = !is_null($slotInfo))
                         @php($tz = config('app.timezone') ?: 'Europe/Madrid')
                         @php($slot = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $diaIso . ' ' . sprintf('%02d', (int) $hora) . ':00:00', $tz))
                         @php($esPassat = $slot->lessThanOrEqualTo(\Carbon\Carbon::now($tz)))
 
                         @if($existeix)
-                        <span class="text-red-500 bg-red-200 p-2 rounded font-bold">Ocupat</span>
+                            @php($esMeva = ($hasOwner ?? false) && auth()->check() && (int) ($slotInfo['user_id'] ?? 0) === (int) auth()->id())
+
+                            @if($esMeva)
+                                <div class="flex flex-col items-center gap-2">
+                                    <span class="rounded bg-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 sm:text-sm">
+                                        La teva reserva
+                                    </span>
+
+                                    <a
+                                        href="{{ route('reserves.edit', (int) ($slotInfo['id'] ?? 0)) }}"
+                                        class="rounded border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                                    >
+                                        Editar
+                                    </a>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ route('reserves.destroy', (int) ($slotInfo['id'] ?? 0)) }}"
+                                        onsubmit="return confirm('Vols eliminar la teva reserva?');"
+                                    >
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" name="comunitat_id" value="{{ $comunitatSeleccionadaId }}">
+                                        <button type="submit" class="rounded bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            @else
+                                <span class="rounded bg-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 sm:text-sm">
+                                    Ocupat
+                                </span>
+                            @endif
                         @elseif($esPassat)
                         <span class="text-slate-400 text-sm">No disponible</span>
                         @else

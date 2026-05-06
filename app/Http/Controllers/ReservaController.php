@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use App\Models\PerfilEstadistica;
 use App\Services\NivellService;
 use App\Models\User;
@@ -93,16 +94,25 @@ class ReservaController extends Controller
         $diaIso = $dia->format('Y-m-d');
         $diaText = $dia->translatedFormat('l d F Y');
 
+        $hasOwner = Schema::hasColumn('reserves', 'user_id');
+        $select = ['id', 'pista_id', 'hora_inici'];
+        if ($hasOwner) {
+            $select[] = 'user_id';
+        }
+
         $reserves = Reserva::query()
             ->where('data', $diaIso)
-            ->get(['pista_id', 'hora_inici']);
+            ->get($select);
 
         $ocupat = [];
         foreach ($reserves as $r) {
             $hora = substr((string) $r->hora_inici, 0, 2);
-            if ($hora !== '') {
-                $ocupat[(int) $r->pista_id][(int) $hora] = true;
-            }
+            if ($hora === '') continue;
+
+            $ocupat[(int) $r->pista_id][(int) $hora] = [
+                'id' => (int) $r->id,
+                'user_id' => $hasOwner ? (int) ($r->user_id ?? 0) : null,
+            ];
         }
 
         return view('reserves.index', compact(
@@ -114,6 +124,7 @@ class ReservaController extends Controller
             'temp',
             'descripcion',
             'ocupat',
+            'hasOwner',
             'comunitatsUsuari',
             'comunitatSeleccionadaId',
             'teAcces'
@@ -157,13 +168,24 @@ class ReservaController extends Controller
             'preu' => 'required|integer|min:0',
         ]);
 
-        $reserva = Reserva::create($request->only([
+        if (! $request->user()) {
+            abort(403);
+        }
+
+        $data = $request->only([
             'pista_id',
             'data',
             'hora_inici',
             'hora_fi',
             'preu',
-        ]));
+        ]);
+
+        // Si existeix user_id a la taula, guardem el propietari
+        if (Schema::hasColumn('reserves', 'user_id')) {
+            $data['user_id'] = (int) $request->user()->id;
+        }
+
+        $reserva = Reserva::create($data);
 
         // XP per reserva
         $user = Auth::user();
@@ -203,7 +225,20 @@ class ReservaController extends Controller
     public function edit(string $id)
     {
         $reserva = Reserva::findOrFail($id);
-        return view('reserves.edit', compact('reserva'));
+
+        // Només el propietari pot editar (si existeix user_id a DB)
+        if (Schema::hasColumn('reserves', 'user_id')) {
+            abort_unless((int) $reserva->user_id === (int) Auth::id(), 403);
+        }
+
+        $hores = range(9, 21);
+        $comunitatId = Pista::query()->whereKey($reserva->pista_id)->value('comunitat_id');
+
+        return view('reserves.edit', [
+            'reserva' => $reserva,
+            'hores' => $hores,
+            'comunitatId' => $comunitatId,
+        ]);
     }
 
     /**
@@ -215,18 +250,39 @@ class ReservaController extends Controller
             'data' => 'required|date',
             'hora_inici' => 'required|date_format:H:i',
             'hora_fi' => 'required|date_format:H:i|after:hora_inici',
-            'preu' => 'required|integer|min:0',
         ]);
 
         $reserva = Reserva::findOrFail($id);
+
+        // Només el propietari pot editar (si existeix user_id a DB)
+        if (Schema::hasColumn('reserves', 'user_id')) {
+            abort_unless((int) $reserva->user_id === (int) Auth::id(), 403);
+        }
+
+        // Evitar solapament: mateixa pista + mateix dia + mateixa hora
+        $conflict = Reserva::query()
+            ->where('id', '!=', $reserva->id)
+            ->where('pista_id', $reserva->pista_id)
+            ->where('data', $request->input('data'))
+            ->where('hora_inici', $request->input('hora_inici'))
+            ->exists();
+        if ($conflict) {
+            return back()
+                ->withErrors(['hora_inici' => 'Aquesta franja ja està ocupada.'])
+                ->withInput();
+        }
+
         $reserva->update($request->only([
             'data',
             'hora_inici',
             'hora_fi',
-            'preu',
         ]));
 
-        return redirect()->route('reserves.index');
+        $comunitatId = Pista::query()->whereKey($reserva->pista_id)->value('comunitat_id');
+        return redirect()->route('reserves.index', [
+            'data' => $reserva->data,
+            'comunitat_id' => $comunitatId,
+        ]);
     }
 
     /**
@@ -235,8 +291,17 @@ class ReservaController extends Controller
     public function destroy(string $id)
     {
         $reserva = Reserva::findOrFail($id);
+
+        // Si la reserva té propietari, només el propietari la pot eliminar
+        if (Schema::hasColumn('reserves', 'user_id')) {
+            abort_unless((int) $reserva->user_id === (int) Auth::id(), 403);
+        }
+
         $reserva->delete();
 
-        return redirect()->route('reserves.index');
+        return redirect()->route('reserves.index', [
+            'data' => $reserva->data,
+            'comunitat_id' => request('comunitat_id'),
+        ]);
     }
 }

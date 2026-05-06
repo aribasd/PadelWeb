@@ -23,7 +23,7 @@ class DirectMessageController extends Controller
 
         if ($user) {
             $isFriend = Friendship::betweenUsers((int) $me->id, (int) $user->id);
-            abort_unless($isFriend && $isFriend->status === 'accepted', 403);
+            abort_unless($isFriend && $isFriend->estat === 'accepted', 403);
 
             $amicSeleccionat = $user;
 
@@ -53,7 +53,7 @@ class DirectMessageController extends Controller
         abort_unless($me instanceof User, 403);
 
         $isFriend = Friendship::betweenUsers((int) $me->id, (int) $user->id);
-        abort_unless($isFriend && $isFriend->status === 'accepted', 403);
+        abort_unless($isFriend && $isFriend->estat === 'accepted', 403);
 
         $validated = $request->validate([
             'missatge' => ['required', 'string', 'max:500'],

@@ -191,6 +191,10 @@
     @endforelse
 </div>
 
+<div class="mx-auto mt-6 max-w-5xl px-4 sm:px-6 lg:px-8">
+    {{ $reserves->links() }}
+</div>
+
 
 
 @endsection

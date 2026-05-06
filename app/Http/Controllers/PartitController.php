@@ -12,13 +12,14 @@ class PartitController extends Controller
      */
     public function index()
     {
-        $partits = Partit::all();
-
         $reserves = Reserva::query()
             ->with(['pistes', 'partits'])
-            ->get();
+            ->orderByDesc('data')
+            ->orderByDesc('hora_inici')
+            ->paginate(20)
+            ->withQueryString();
 
-        return view('partits.index', compact('partits', 'reserves'));
+        return view('partits.index', compact('reserves'));
     }
 
     /**

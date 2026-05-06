@@ -7,20 +7,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Friendship extends Model
 {
+    protected $table = 'amistats';
+
     protected $fillable = [
-        'sender_id',
-        'receiver_id',
-        'status',
+        'emissor_id',
+        'receptor_id',
+        'estat',
     ];
 
-    public function sender(): BelongsTo
+    public function emissor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'sender_id');
+        return $this->belongsTo(User::class, 'emissor_id');
     }
 
-    public function receiver(): BelongsTo
+    public function receptor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'receiver_id');
+        return $this->belongsTo(User::class, 'receptor_id');
     }
 
     /**
@@ -31,9 +33,9 @@ class Friendship extends Model
         return static::query()
             ->where(function ($q) use ($a, $b) {
                 $q->where(function ($q2) use ($a, $b) {
-                    $q2->where('sender_id', $a)->where('receiver_id', $b);
+                    $q2->where('emissor_id', $a)->where('receptor_id', $b);
                 })->orWhere(function ($q2) use ($a, $b) {
-                    $q2->where('sender_id', $b)->where('receiver_id', $a);
+                    $q2->where('emissor_id', $b)->where('receptor_id', $a);
                 });
             })
             ->first();
@@ -41,6 +43,6 @@ class Friendship extends Model
 
     public function otherUserId(int $userId): int
     {
-        return (int) ($this->sender_id === $userId ? $this->receiver_id : $this->sender_id);
+        return (int) ($this->emissor_id === $userId ? $this->receptor_id : $this->emissor_id);
     }
 }

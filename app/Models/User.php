@@ -50,17 +50,17 @@ class User extends Authenticatable
     }
 
     /**
-     * Amics amb sol·licitud acceptada (taula `friendships`).
+     * Amics amb sol·licitud acceptada (taula `amistats`).
      *
      * @return \Illuminate\Support\Collection<int, User>
      */
     public function amicsAcceptats()
     {
         $ids = Friendship::query()
-            ->where('status', 'accepted')
+            ->where('estat', 'accepted')
             ->where(function ($q) {
-                $q->where('sender_id', $this->id)
-                    ->orWhere('receiver_id', $this->id);
+                $q->where('emissor_id', $this->id)
+                    ->orWhere('receptor_id', $this->id);
             })
             ->get()
             ->map(fn (Friendship $f) => $f->otherUserId((int) $this->id))
@@ -85,9 +85,9 @@ class User extends Authenticatable
     public function sollicitudsAmistatPendents()
     {
         return Friendship::query()
-            ->where('receiver_id', $this->id)
-            ->where('status', 'pending')
-            ->with('sender')
+            ->where('receptor_id', $this->id)
+            ->where('estat', 'pending')
+            ->with('emissor')
             ->orderByDesc('created_at')
             ->get();
     }

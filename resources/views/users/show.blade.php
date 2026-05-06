@@ -43,14 +43,14 @@
                                         Afegir amic
                                     </button>
                                 </form>
-                            @elseif($friendship->status === 'pending' && $friendship->sender_id === auth()->id())
+                            @elseif($friendship->estat === 'pending' && $friendship->emissor_id === auth()->id())
                                 <span class="text-sm text-slate-600">Sol·licitud enviada</span>
                                 <form method="post" action="{{ route('friendships.destroy', $friendship) }}" class="inline" onsubmit="return confirm('Vols cancel·lar la sol·licitud?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-sm text-red-600 hover:underline">Cancel·lar</button>
                                 </form>
-                            @elseif($friendship->status === 'pending' && $friendship->receiver_id === auth()->id())
+                            @elseif($friendship->estat === 'pending' && $friendship->receptor_id === auth()->id())
                                 <form method="post" action="{{ route('friendships.accept', $friendship) }}" class="inline">
                                     @csrf
                                     @method('PATCH')
@@ -61,7 +61,7 @@
                                     @method('PATCH')
                                     <button type="submit" class="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50">Declinar</button>
                                 </form>
-                            @elseif($friendship->status === 'accepted')
+                            @elseif($friendship->estat === 'accepted')
                                 <span class="text-sm font-medium text-green-700">Sou amics</span>
                                 <a
                                     href="{{ route('social.missatges', $user) }}"
@@ -74,7 +74,7 @@
                                     @method('DELETE')
                                     <button type="submit" class="text-sm text-slate-600 hover:underline">Treure amic</button>
                                 </form>
-                            @elseif($friendship->status === 'declined')
+                            @elseif($friendship->estat === 'declined')
                                 <form method="post" action="{{ route('friendships.store') }}" class="inline">
                                     @csrf
                                     <input type="hidden" name="receiver_id" value="{{ $user->id }}" />
