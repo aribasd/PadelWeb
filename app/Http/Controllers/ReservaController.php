@@ -299,6 +299,11 @@ class ReservaController extends Controller
 
         $reserva->delete();
 
+        // Si l'eliminació ve del Historial de partits, hi tornem
+        if (request('redirect_to') === 'partits') {
+            return redirect()->route('partits.index');
+        }
+
         return redirect()->route('reserves.index', [
             'data' => $reserva->data,
             'comunitat_id' => request('comunitat_id'),

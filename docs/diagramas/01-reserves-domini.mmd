@@ -1,0 +1,47 @@
+%% PadelWeb – domini reserves (models Eloquent)
+classDiagram
+  direction LR
+
+  class User {
+    +id
+    +name
+    +email
+    +role
+  }
+
+  class Comunitat {
+    +id
+    +nom
+  }
+
+  class Pista {
+    +id
+    +nom
+    +comunitat_id
+    +activa
+    +doble_vidre
+  }
+
+  class Reserva {
+    +id
+    +user_id
+    +pista_id
+    +data
+    +hora_inici
+    +hora_fi
+    +preu
+  }
+
+  class Partit {
+    +id
+    +reserva_id
+    +winner_team
+  }
+
+  User "1" --> "*" Reserva : reserves()
+  Reserva --> User : belongsTo()
+  Reserva --> Pista : pistes()/belongsTo()
+  Comunitat "1" --> "*" Pista : pistes()
+  Pista --> Comunitat : comunitat()
+  Reserva "1" --> "0..1" Partit : partits()/hasOne
+  Partit --> Reserva : belongsTo(reserva_id)

@@ -1,0 +1,57 @@
+<mxfile host="app.diagrams.net" agent="PadelWeb">
+  <diagram id="com" name="02 Comunitats i missatges">
+    <mxGraphModel dx="1130" dy="507" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="c0" />
+        <mxCell id="c1" parent="c0" />
+        <mxCell id="c_User" parent="c1" style="swimlane;fontStyle=2;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startSize=23;" value="&lt;div&gt;User&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="140" x="160" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="iP8iAsaM0PSsWWi3jaxv-0" parent="c_User" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-style: italic;&quot;&gt;+ id, name …&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="40" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c_Comm" parent="c1" style="swimlane;fontStyle=2;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Comunitat&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="150" x="640" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="iP8iAsaM0PSsWWi3jaxv-3" parent="c_Comm" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-style: italic;&quot;&gt;+ id, nom …&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="45" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c_Msg" parent="c1" style="swimlane;fontStyle=2;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="180" x="360" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="iP8iAsaM0PSsWWi3jaxv-6" parent="c_Msg" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-style: italic;&quot;&gt;&lt;br&gt;&amp;nbsp;+comunitat_id&lt;br&gt;+ user_id&lt;br&gt;+ missatge&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="60" x="60" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="iP8iAsaM0PSsWWi3jaxv-7" parent="c_Msg" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Missatge" vertex="1">
+          <mxGeometry height="20" width="60" x="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c_e1" edge="1" parent="c1" source="c_User" style="endArrow=classic;startArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="c_Comm">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c_e1_lab" connectable="0" parent="c_e1" style="edgeLabel;html=1;align=center;fontSize=10;" value="belongsToMany&#xa;(pivot: rol)" vertex="1">
+          <mxGeometry relative="1" x="-0.2" as="geometry">
+            <mxPoint x="24" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c_e2" edge="1" parent="c1" source="c_Msg" style="endArrow=classic;html=1;" target="c_Comm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c_e2_lab" connectable="0" parent="c_e2" style="edgeLabel;html=1;align=center;fontSize=10;" value="* missatges" vertex="1">
+          <mxGeometry relative="1" x="-0.2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c_e3" edge="1" parent="c1" source="c_Msg" style="endArrow=classic;html=1;" target="c_User">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c_e3_lab" connectable="0" parent="c_e3" style="edgeLabel;html=1;align=center;fontSize=10;" value="* user()" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-40" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

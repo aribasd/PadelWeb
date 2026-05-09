@@ -116,8 +116,8 @@
                     @foreach($hores as $hora)
                     <td class="border border-gray-300 p-3 sm:p-4">
                         @php($slotInfo = $ocupat[$pista->id][$hora] ?? null)
-                        @php($existeix = !is_null($slotInfo))
-                        @php($tz = config('app.timezone') ?: 'Europe/Madrid')
+                        @php($existeix = !is_null($slotInfo))   
+                        @php($tz = 'Europe/Madrid')
                         @php($slot = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $diaIso . ' ' . sprintf('%02d', (int) $hora) . ':00:00', $tz))
                         @php($esPassat = $slot->lessThanOrEqualTo(\Carbon\Carbon::now($tz)))
 

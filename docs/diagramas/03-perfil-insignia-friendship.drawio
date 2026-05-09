@@ -1,0 +1,76 @@
+<mxfile host="app.diagrams.net" agent="PadelWeb">
+  <diagram id="prof" name="03 Perfil, insígnies, amistats">
+    <mxGraphModel dx="1130" dy="507" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="p0" />
+        <mxCell id="p1" parent="p0" />
+        <mxCell id="p_User" parent="p1" style="swimlane;fontStyle=2;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="User" vertex="1">
+          <mxGeometry height="70" width="120" x="80" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="p_Per" parent="p1" style="swimlane;fontStyle=2;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="200" x="40" y="354" as="geometry" />
+        </mxCell>
+        <mxCell id="3BAYyMFY9dohg8LGOh0E-6" parent="p_Per" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-style: italic;&quot;&gt;+ user_id&lt;/span&gt;&lt;br style=&quot;font-style: italic;&quot;&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;+ partits_jugats, nivell…&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="130" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="3BAYyMFY9dohg8LGOh0E-7" parent="p_Per" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="PerfilEstadistica&lt;div&gt;&lt;br style=&quot;font-style: italic;&quot;&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="70" y="6" as="geometry" />
+        </mxCell>
+        <mxCell id="p_Ins" parent="p1" style="swimlane;fontStyle=2;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;startSize=38;" value="Insignia&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="144" width="210" x="430" y="342" as="geometry" />
+        </mxCell>
+        <mxCell id="3BAYyMFY9dohg8LGOh0E-5" parent="p_Ins" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-style: italic;&quot;&gt;+ perfil_estadistica_id&lt;/span&gt;&lt;br style=&quot;font-style: italic;&quot;&gt;&lt;span style=&quot;font-style: italic;&quot;&gt;+ nom&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="140" x="35" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p_Fri" parent="p1" style="swimlane;fontStyle=2;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;br&gt;+ sender_id&lt;br&gt;+ receiver_id&lt;br&gt;+ status" vertex="1">
+          <mxGeometry height="110" width="180" x="610" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="3BAYyMFY9dohg8LGOh0E-0" parent="p_Fri" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Firiendship" vertex="1">
+          <mxGeometry height="30" width="60" x="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p_up" edge="1" parent="p1" source="p_User" style="endArrow=classic;html=1;" target="p_Per">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_up_lab" connectable="0" parent="p_up" style="edgeLabel;html=1;fontSize=10;" value="hasOne perfil_estadistiques" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_pi" edge="1" parent="p1" source="p_Per" style="endArrow=classic;html=1;" target="p_Ins">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_pi_lab" connectable="0" parent="p_pi" style="edgeLabel;html=1;fontSize=10;" value="hasMany insignies" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_fs" edge="1" parent="p1" source="p_Fri" style="endArrow=classic;html=1;dashed=1;" target="p_User">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="220" />
+              <mxPoint x="200" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_fs_lab" connectable="0" parent="p_fs" style="edgeLabel;html=1;fontSize=9;" value="sender : User" vertex="1">
+          <mxGeometry relative="1" x="0.2" as="geometry">
+            <mxPoint x="80" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_fr" edge="1" parent="p1" source="p_Fri" style="endArrow=classic;html=1;dashed=1;" target="p_User">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="250" />
+              <mxPoint x="200" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_fr_lab" connectable="0" parent="p_fr" style="edgeLabel;html=1;fontSize=9;" value="receiver : User" vertex="1">
+          <mxGeometry relative="1" x="0.2" as="geometry">
+            <mxPoint x="90" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

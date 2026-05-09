@@ -20,19 +20,41 @@
 
                 <input type="hidden" name="reserva_id" value="{{ $reserva?->id }}">
 
+                {{-- Llista compartida d'amics acceptats: serveix de suggeriment
+                     per als 4 inputs, però l'usuari pot escriure el nom a mà. --}}
+                <datalist id="amics-list">
+                    @foreach(($amics ?? collect()) as $amic)
+                        <option value="{{ $amic->name }}"></option>
+                    @endforeach
+                </datalist>
+
+                @if(($amics ?? collect())->isEmpty())
+                    <p class="-mt-2 text-xs text-slate-500">
+                        Encara no tens amics acceptats: pots escriure els noms dels jugadors a mà.
+                        Per fer-los servir directament, ves al perfil d'un usuari i envia-li sol·licitud d'amistat.
+                    </p>
+                @else
+                    <p class="-mt-2 text-xs text-slate-500">
+                        Pots <span class="font-semibold">triar un amic</span> de la llista (apareix quan cliques al camp)
+                        o escriure un nom qualsevol a mà.
+                    </p>
+                @endif
+
                 <div class="grid gap-6 md:grid-cols-2">
                     <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
                         <p class="text-sm font-semibold text-slate-700">Equip A</p>
                         <div class="mt-3 space-y-3">
                             <div>
                                 <label class="text-xs font-semibold text-slate-600">Jugador 1</label>
-                                <input name="nom1" value="{{ old('nom1') }}"
+                                <input name="nom1" list="amics-list" value="{{ old('nom1', $reserva?->users?->name) }}"
+                                    placeholder="Nom de l'usuari de la reserva"
                                     class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800">
                                 @error('nom1') <p class="mt-1 text-sm text-red-700">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="text-xs font-semibold text-slate-600">Jugador 2</label>
-                                <input name="nom2" value="{{ old('nom2') }}"
+                                <input name="nom2" list="amics-list" value="{{ old('nom2') }}"
+                                    placeholder="Tria un amic o escriu un nom"
                                     class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800">
                                 @error('nom2') <p class="mt-1 text-sm text-red-700">{{ $message }}</p> @enderror
                             </div>
@@ -44,13 +66,15 @@
                         <div class="mt-3 space-y-3">
                             <div>
                                 <label class="text-xs font-semibold text-slate-600">Jugador 3</label>
-                                <input name="nom3" value="{{ old('nom3') }}"
+                                <input name="nom3" list="amics-list" value="{{ old('nom3') }}"
+                                    placeholder="Tria un amic o escriu un nom"
                                     class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800">
                                 @error('nom3') <p class="mt-1 text-sm text-red-700">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="text-xs font-semibold text-slate-600">Jugador 4</label>
-                                <input name="nom4" value="{{ old('nom4') }}"
+                                <input name="nom4" list="amics-list" value="{{ old('nom4') }}"
+                                    placeholder="Tria un amic o escriu un nom"
                                     class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800">
                                 @error('nom4') <p class="mt-1 text-sm text-red-700">{{ $message }}</p> @enderror
                             </div>

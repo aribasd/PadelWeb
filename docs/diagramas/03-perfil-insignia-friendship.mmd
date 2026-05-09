@@ -1,0 +1,37 @@
+%% PadelWeb – perfil estadístiques, insígnies i amistats
+classDiagram
+  direction TB
+
+  class User {
+    +id
+    +name
+  }
+
+  class PerfilEstadistica {
+    +id
+    +user_id
+    +partits_jugats
+    +win_rate
+    +nivell
+    +experiencia
+  }
+
+  class Insignia {
+    +id
+    +perfil_estadistica_id
+    +nom
+    +dificultat
+  }
+
+  class Friendship {
+    +id
+    +sender_id
+    +receiver_id
+    +status
+  }
+
+  User "1" --> "0..1" PerfilEstadistica : perfil_estadistiques()
+  PerfilEstadistica "1" --> "*" Insignia : insignies()
+
+  Friendship --> User : sender
+  Friendship --> User : receiver

@@ -1,0 +1,25 @@
+%% PadelWeb – comunitats i missatges
+classDiagram
+  direction TB
+
+  class User {
+    +id
+    +name
+  }
+
+  class Comunitat {
+    +id
+    +nom
+    +descripcio
+  }
+
+  class Missatge {
+    +id
+    +comunitat_id
+    +user_id
+    +missatge
+  }
+
+  User --> Comunitat : belongsToMany (pivot)
+  Comunitat "1" --> "*" Missatge : missatges()
+  User "1" --> "*" Missatge : missatges()

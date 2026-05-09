@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-05-03T00:00:00.000Z" agent="PadelWeb" version="24.7.8" type="device">
+  <diagram id="reserves" name="01 Domini reserves">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="r0"/>
+        <mxCell id="r1" parent="r0"/>
+
+        <mxCell id="r_User" value="«model»&#xa;User&#xa;&#xa;+ id&#xa;+ name&#xa;+ email&#xa;+ role" style="swimlane;fontStyle=2;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="r1">
+          <mxGeometry x="40" y="200" width="160" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="r_Com" value="«model»&#xa;Comunitat&#xa;&#xa;+ id&#xa;+ nom&#xa;+ descripcio" style="swimlane;fontStyle=2;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="r1">
+          <mxGeometry x="560" y="40" width="170" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="r_Pis" value="«model»&#xa;Pista&#xa;&#xa;+ id&#xa;+ nom&#xa;+ comunitat_id&#xa;+ activa&#xa;+ doble_vidre" style="swimlane;fontStyle=2;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="r1">
+          <mxGeometry x="520" y="240" width="180" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="r_Res" value="«model»&#xa;Reserva&#xa;&#xa;+ id&#xa;+ user_id&#xa;+ pista_id&#xa;+ data&#xa;+ hora_inici / hora_fi&#xa;+ preu" style="swimlane;fontStyle=2;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="r1">
+          <mxGeometry x="280" y="200" width="180" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="r_Par" value="«model»&#xa;Partit&#xa;&#xa;+ id&#xa;+ reserva_id&#xa;… sets / guanyador" style="swimlane;fontStyle=2;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeParentMax=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="r1">
+          <mxGeometry x="292" y="400" width="156" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_ue" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="r1" source="r_User" target="r_Res">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_ue_lab" value="1 — * reserves()" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="e_ue">
+          <mxGeometry x="-0.1" relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_rp" style="endArrow=classic;html=1;exitX=1;exitY=0.35;entryX=0;entryY=0.35;" edge="1" parent="r1" source="r_Res" target="r_Pis">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_rp_lab" value="belongsTo Pista" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="e_rp">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-10" y="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_pc" style="endArrow=classic;html=1;exitX=0.5;exitY=0;entryX=0.75;entryY=1;" edge="1" parent="r1" source="r_Pis" target="r_Com">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_pc_lab" value="comunitat_id" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="e_pc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_rpar" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="r1" source="r_Res" target="r_Par">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_rpar_lab" value="0..1 Partit&#xa;(hasOne al codi)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="e_rpar">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e_pr" style="endArrow=classic;dashed=1;html=1;exitX=0;exitY=0.5;entryX=0.85;entryY=1;" edge="1" parent="r1" source="r_Par" target="r_Res">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="455"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_pr_lab" value="belongsTo" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="e_pr">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-20" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

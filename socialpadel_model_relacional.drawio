@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" agent="Cursor">
+  <diagram id="socialpadel-er" name="SocialPadel BD">
+    <mxGraphModel dx="937" dy="534" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="users" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;users&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;name&lt;br&gt;email (UQ)&lt;br&gt;password&lt;br&gt;role&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="165" width="250" x="70" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="perfil" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;perfil_estadistiques&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;user_id (FK)&lt;br&gt;partits_jugats&lt;br&gt;win_rate&lt;br&gt;nivell&lt;br&gt;experiencia&lt;br&gt;data_naixament&lt;br&gt;foto_perfil&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="215" width="250" x="70" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="insignies" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;insignies&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;perfil_estadistica_id (FK, null)&lt;br&gt;nom&lt;br&gt;dificultat&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="135" width="250" x="70" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="amistats" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;amistats&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;emissor_id (FK)&lt;br&gt;receptor_id (FK)&lt;br&gt;estat&lt;br&gt;UQ(emissor_id, receptor_id)&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="145" width="250" x="70" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="missatges_privats" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;missatges_privats&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;emissor_id (FK)&lt;br&gt;receptor_id (FK)&lt;br&gt;missatge&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="135" width="260" x="390" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="comunitat_user" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;comunitat_user (pivot)&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;comunitat_id (FK)&lt;br&gt;user_id (FK)&lt;br&gt;rol&lt;br&gt;UQ(comunitat_id, user_id)&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="155" width="280" x="440" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="missatges" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;missatges&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;comunitat_id (FK)&lt;br&gt;user_id (FK)&lt;br&gt;missatge&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="135" width="260" x="440" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="reserves" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;reserves&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;user_id (FK, null)&lt;br&gt;pista_id (FK)&lt;br&gt;data&lt;br&gt;hora_inici&lt;br&gt;hora_fi&lt;br&gt;preu&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="185" width="260" x="450" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="partits" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;partits&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;reserva_id (FK, null)&lt;br&gt;nom1, nom2&lt;br&gt;nom3, nom4&lt;br&gt;set1, set2, set3&lt;br&gt;rating (null)&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="165" width="260" x="450" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="comunitats" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;comunitats&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;nom&lt;br&gt;descripcio&lt;br&gt;direccio&lt;br&gt;lat&lt;br&gt;lng&lt;br&gt;imatge&lt;br&gt;membres&lt;br&gt;rol&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="225" width="280" x="920" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="pistes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;pistes&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;comunitat_id (FK, null)&lt;br&gt;nom&lt;br&gt;activa&lt;br&gt;doble_vidre&lt;br&gt;imatge&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="165" width="260" x="930" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="galeria" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=8;fontSize=12;" value="&lt;b&gt;galeria&lt;/b&gt;&lt;hr&gt;id (PK)&lt;br&gt;comunitat_id (FK, null)&lt;br&gt;imatge&lt;br&gt;created_at, updated_at" vertex="1">
+          <mxGeometry height="125" width="260" x="1310" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e_users_perfil" edge="1" parent="1" source="users" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="perfil" value="1:1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_perfil_insignies" edge="1" parent="1" source="perfil" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="insignies" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_users_amistats_emissor" edge="1" parent="1" source="users" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="amistats" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_users_mpriv_emissor" edge="1" parent="1" source="users" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="missatges_privats" value="1:N&amp;nbsp;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_users_comunitat_user" edge="1" parent="1" source="users" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="comunitat_user" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_comunitats_comunitat_user" edge="1" parent="1" source="comunitats" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="comunitat_user" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_users_missatges" edge="1" parent="1" source="users" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="missatges" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_comunitats_missatges" edge="1" parent="1" source="comunitats" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="missatges" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_comunitats_pistes" edge="1" parent="1" source="comunitats" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="pistes" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_comunitats_galeria" edge="1" parent="1" source="comunitats" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="galeria" value="1:N">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1100" y="485" as="sourcePoint" />
+            <mxPoint x="1100" y="840" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_pistes_reserves" edge="1" parent="1" source="pistes" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="reserves" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_users_reserves" edge="1" parent="1" source="users" style="endArrow=block;html=1;rounded=0;orthogonalLoop=1;jettySize=auto;" target="reserves" value="1:N">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_reserves_partits" edge="1" parent="1" source="reserves" style="endArrow=block;html=1;rounded=0;dashed=1;orthogonalLoop=1;jettySize=auto;" target="partits" value="1:1 opcional">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

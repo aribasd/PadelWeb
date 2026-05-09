@@ -6,8 +6,26 @@
 
 @include('components.propis.subheader', ['titol' => 'Historial de partits'])
 
-<div class="mx-auto mt-8 grid max-w-5xl gap-3 px-4 sm:mt-10 sm:gap-4 sm:px-6 lg:px-8">
+<div class="mx-auto mt-6 max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div class="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-amber-800 sm:p-4">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-0.5 size-5 shrink-0">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.008v.008H12v-.008Zm9-3.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <p class="text-sm">
+            <span class="font-semibold">Avís:</span>
+            si elimines una <span class="font-semibold">reserva</span> des d’aquesta pantalla,
+            també s’eliminarà el <span class="font-semibold">partit</span> que hi tingui associat.
+            Si només vols treure el partit i mantenir la reserva, fes servir el botó
+            <span class="font-semibold">“Eliminar partit”</span>.
+        </p>
+    </div>
+</div>
+
+<div class="mx-auto mt-6 grid max-w-5xl gap-3 px-4 sm:mt-8 sm:gap-4 sm:px-6 lg:px-8">
     @forelse($reserves as $reserva)
+    @php
+        $esMevaReserva = auth()->check() && (int) ($reserva->user_id ?? 0) === (int) auth()->id();
+    @endphp
     <div class="rounded-lg border border-slate-200 bg-slate-100 p-3 text-slate-500 shadow-sm sm:p-4 sm:shadow-lg">
             <div class="grid grid-cols-1 gap-3 bg-gray-100 p-2 sm:grid-cols-3 sm:gap-0 sm:p-0 sm:min-h-40">
                 <div class="space-y-2">
@@ -63,18 +81,38 @@
                             <p class="text-sm font-semibold text-slate-700">Jugadors (2 vs 2)</p>
                             <p class="mt-1 text-xs text-slate-500">Encara no hi ha partit creat per aquesta reserva.</p>
                         </div>
-                        <a
-                            href="{{ route('partits.create', ['reserva_id' => $reserva->id]) }}"
-                            class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:px-4 sm:text-sm"
-                        >
-                            Afegir jugadors
-                        </a>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <a
+                                href="{{ route('partits.create', ['reserva_id' => $reserva->id]) }}"
+                                class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:px-4 sm:text-sm"
+                            >
+                                Afegir jugadors
+                            </a>
+
+                            @if($esMevaReserva)
+                                <form
+                                    method="POST"
+                                    action="{{ route('reserves.destroy', $reserva) }}"
+                                    onsubmit="return confirm('Vols eliminar aquesta reserva?');"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="redirect_to" value="partits">
+                                    <button
+                                        type="submit"
+                                        class="inline-flex items-center justify-center rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-red-700 sm:px-4 sm:text-sm"
+                                    >
+                                        Eliminar reserva
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="mt-3 grid gap-2 md:mt-4 md:grid-cols-3 md:items-center md:gap-3">
                         <div class="rounded-lg border border-slate-200 bg-slate-50 p-2 sm:p-3">
                             <p class="text-xs font-semibold text-slate-500">Equip A</p>
-                            <p class="mt-1 text-xs text-slate-600 sm:text-sm">—</p>
+                            <p class="mt-1 text-xs font-semibold text-slate-700 sm:text-sm">{{ $reserva->users?->name ?? '—' }}</p>
                             <p class="text-xs text-slate-600 sm:text-sm">—</p>
                         </div>
                         <div class="text-center text-lg font-extrabold text-slate-700 md:block hidden">VS</div>
@@ -97,11 +135,48 @@
                 @endphp
 
                 <div class="mt-4 rounded-lg border border-slate-200 bg-white p-4">
-                    <p class="text-sm font-semibold text-slate-700">Jugadors</p>
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <p class="text-sm font-semibold text-slate-700">Jugadors</p>
+
+                        @if($esMevaReserva)
+                            <div class="flex flex-wrap items-center gap-2">
+                                <form
+                                    method="POST"
+                                    action="{{ route('partits.destroy', $partit) }}"
+                                    onsubmit="return confirm('Vols eliminar el partit? La reserva es mantindrà.');"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        type="submit"
+                                        class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 shadow-sm transition hover:bg-red-100"
+                                    >
+                                        Eliminar partit
+                                    </button>
+                                </form>
+
+                                <form
+                                    method="POST"
+                                    action="{{ route('reserves.destroy', $reserva) }}"
+                                    onsubmit="return confirm('Vols eliminar aquesta reserva? També s’eliminarà el partit.');"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="redirect_to" value="partits">
+                                    <button
+                                        type="submit"
+                                        class="inline-flex items-center justify-center rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-red-700"
+                                    >
+                                        Eliminar reserva
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
+                    </div>
                     <div class="mt-2 grid gap-3 md:grid-cols-3 md:items-center">
                         <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
                             <p class="text-xs font-semibold text-slate-500">Equip A</p>
-                            <p class="mt-1 font-semibold text-slate-800">{{ $partit->nom1 ?: 'Jugador 1' }}</p>
+                            <p class="mt-1 font-semibold text-slate-800">{{ $partit->nom1 ?: ($reserva->users?->name ?? 'Jugador 1') }}</p>
                             <p class="text-sm text-slate-700">{{ $partit->nom2 ?: 'Jugador 2' }}</p>
                         </div>
 
