@@ -40,9 +40,6 @@ class ComunitatController extends Controller
         ]);
     }
 
-    /**
-     * Comunitats on l'usuari autenticat és membre (taula pivot comunitat_user).
-     */
     public function meves()
     {
         $user = Auth::user();
@@ -69,9 +66,6 @@ class ComunitatController extends Controller
         ]);
     }
 
-    /**
-     * L'usuari autenticat s'uneix a una comunitat.
-     */
     public function join(Request $request, Comunitat $comunitat)
     {
         $user = $request->user();
@@ -81,15 +75,11 @@ class ComunitatController extends Controller
             $user->id => ['rol' => 'usuari'],
         ]);
 
-        // XP per unir-se a una comunitat
         app(NivellService::class)->awardXp($user, 50);
 
         return back();
     }
 
-    /**
-     * L'usuari autenticat surt d'una comunitat.
-     */
     public function leave(Request $request, Comunitat $comunitat)
     {
         $user = $request->user();

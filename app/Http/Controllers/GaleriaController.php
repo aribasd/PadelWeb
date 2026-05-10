@@ -20,11 +20,17 @@ class GaleriaController extends Controller
         $uploadComunitats = collect();
         $authUser = Auth::user();
         if ($authUser) {
-            $uploadComunitats = $authUser
-                ->comunitats()
-                ->wherePivot('rol', 'admin')
-                ->orderBy('nom')
-                ->get(['comunitats.id', 'nom']);
+            $isGlobalAdmin = ($authUser->role ?? 'user') === 'admin';
+
+            if ($isGlobalAdmin) {
+                $uploadComunitats = $comunitats;
+            } else {
+                $uploadComunitats = $authUser
+                    ->comunitats()
+                    ->wherePivot('rol', 'admin')
+                    ->orderBy('nom')
+                    ->get(['comunitats.id', 'nom']);
+            }
         }
 
         $imatges = Galeria::query()
@@ -53,12 +59,15 @@ class GaleriaController extends Controller
             abort(403);
         }
 
-        $isCommunityAdmin = $user->comunitats()
-            ->whereKey($validated['comunitat_id'])
-            ->wherePivot('rol', 'admin')
-            ->exists();
-        if (!$isCommunityAdmin) {
-            abort(403, 'Només els admins d’aquesta comunitat poden pujar fotos.');
+        $isGlobalAdmin = ($user->role ?? 'user') === 'admin';
+        if (!$isGlobalAdmin) {
+            $isCommunityAdmin = $user->comunitats()
+                ->whereKey($validated['comunitat_id'])
+                ->wherePivot('rol', 'admin')
+                ->exists();
+            if (!$isCommunityAdmin) {
+                abort(403, 'Només els admins d’aquesta comunitat poden pujar fotos.');
+            }
         }
 
         $validated['imatge'] = $request->file('imatge')->store('galeria', 'public');

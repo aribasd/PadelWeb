@@ -34,9 +34,6 @@ class PartitController extends Controller
             ? Reserva::query()->with(['pistes', 'users'])->findOrFail((int) $reservaId)
             : null;
 
-        // Llista d'amics acceptats per omplir els suggeriments dels camps
-        // de jugadors. Es manté com a "datalist" perquè l'usuari pugui triar
-        // un amic o, si vol, escriure un nom a mà.
         $amics = collect();
         $user = Auth::user();
         if ($user instanceof \App\Models\User) {
@@ -113,7 +110,6 @@ class PartitController extends Controller
     {
         $partit = Partit::with('reserves')->findOrFail($id);
 
-        // Només el propietari de la reserva pot eliminar el partit (si tenim user_id)
         if (Schema::hasColumn('reserves', 'user_id')) {
             $ownerId = (int) ($partit->reserves->user_id ?? 0);
             abort_unless($ownerId === (int) Auth::id(), 403);

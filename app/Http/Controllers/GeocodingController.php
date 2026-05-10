@@ -15,7 +15,6 @@ class GeocodingController extends Controller
         }
 
         $resp = Http::withHeaders([
-            // Nominatim requereix identificació; adapta-ho si vols.
             'User-Agent' => 'PadelWeb/1.0 (local dev)',
             'Accept' => 'application/json',
         ])->get('https://nominatim.openstreetmap.org/search', [

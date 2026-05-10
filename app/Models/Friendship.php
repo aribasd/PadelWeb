@@ -25,9 +25,6 @@ class Friendship extends Model
         return $this->belongsTo(User::class, 'receptor_id');
     }
 
-    /**
-     * Qualsevol fila entre els dos usuaris (en qualsevol sentit).
-     */
     public static function betweenUsers(int $a, int $b): ?self
     {
         return static::query()

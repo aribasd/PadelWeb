@@ -21,7 +21,6 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Necessari per React (Vite) en mode dev/HMR --}}
     @viteReactRefresh
     @stack('vite-react')
 
@@ -291,12 +290,6 @@
     </main>
 
     @include('components.propis.footer')
-
-    {{-- Estaves carregant els entrypoints de React amb @stack('vite-react') al final del
-
-    <body>.
-        En mode desenvolupament, React amb Vite necessita que es carregui abans
-        el preamble de React Refresh (@viteReactRefresh) perquè el HMR i React funcionin correctament. --}}
 
         @stack('scripts')
 

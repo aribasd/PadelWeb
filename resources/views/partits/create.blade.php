@@ -20,8 +20,6 @@
 
                 <input type="hidden" name="reserva_id" value="{{ $reserva?->id }}">
 
-                {{-- Llista compartida d'amics acceptats: serveix de suggeriment
-                     per als 4 inputs, però l'usuari pot escriure el nom a mà. --}}
                 <datalist id="amics-list">
                     @foreach(($amics ?? collect()) as $amic)
                         <option value="{{ $amic->name }}"></option>

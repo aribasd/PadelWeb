@@ -49,11 +49,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Comunitat::class)->withPivot('rol')->withTimestamps();
     }
 
-    /**
-     * Amics amb sol·licitud acceptada (taula `amistats`).
-     *
-     * @return \Illuminate\Support\Collection<int, User>
-     */
     public function amicsAcceptats()
     {
         $ids = Friendship::query()
@@ -77,11 +72,6 @@ class User extends Authenticatable
             ->get();
     }
 
-    /**
-     * Sol·licituds d’amistat rebudes (pendents d’acceptar).
-     *
-     * @return \Illuminate\Database\Eloquent\Collection<int, Friendship>
-     */
     public function sollicitudsAmistatPendents()
     {
         return Friendship::query()
