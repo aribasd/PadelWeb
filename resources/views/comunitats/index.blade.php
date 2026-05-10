@@ -25,20 +25,20 @@
                     actives o crea la teva pròpia per organitzar partits i esdeveniments fàcilment.
                 </p>
 
-                <div class="mt-4 flex gap-4 sm:mt-6">
-                    <button type="submit"
-                    class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                    Crear comunitat
-                </button>
+                <div class="mt-4 flex flex-wrap gap-4 sm:mt-6">
+                    @auth
+                        @if((auth()->user()->role ?? 'user') === 'admin')
+                            <a href="{{ route('comunitats.create') }}"
+                                class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                Crear comunitat
+                            </a>
+                        @endif
+                    @endauth
 
-                 {{--    <a class="inline-block rounded border border-gray-200 px-5 py-3 font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
-                        href="#">
-                        Learn More
-                    </a> --}}
-
-                    <a href="{{ route('comunitats.meves') }}"><button type="button"
-                        class="inline-block rounded border border-gray-200 px-5 py-3 font-medium rounded-lg  text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white">Les
-                        meves comunitats</button></a>
+                    <a href="{{ route('comunitats.meves') }}"
+                        class="inline-flex items-center justify-center rounded-lg border border-gray-200 px-5 py-3 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white">
+                        Les meves comunitats
+                    </a>
                 </div>
             </div>
         </div>

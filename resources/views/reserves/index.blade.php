@@ -21,7 +21,13 @@
     @endphp
 
     <div class="mx-auto mt-8 flex max-w-5xl items-center justify-end px-4 sm:mt-10 sm:px-6 lg:px-8">
-        <div class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+        <div class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-slate-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+            </svg>
+            <span class="font-semibold text-slate-800">Barcelona</span>
+            <span class="text-slate-300">·</span>
             @if(!is_null($temp))
                 <span class="font-semibold">{{ round($temp) }}°C</span>
                 @if(!empty($descripcion))
@@ -65,9 +71,12 @@
     </div>
 
     <div class="mx-4 mt-8 flex max-w-5xl flex-wrap items-center justify-center gap-4 py-2 sm:mx-auto sm:mt-12 sm:gap-10 sm:px-6 lg:px-8">
-        @if($dia->isAfter(now(), 'day')) 
+        @if($dia->isAfter(now(), 'day'))
         <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
-            <a href="{{ route('reserves.index', ['data' => $dia->copy()->subDay()->format('Y-m-d')]) }}" class="block">
+            <a href="{{ route('reserves.index', array_filter([
+                    'data' => $dia->copy()->subDay()->format('Y-m-d'),
+                    'comunitat_id' => $comunitatSeleccionadaId,
+                ])) }}" class="block">
              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
              </svg>
@@ -77,12 +86,15 @@
         <div class="flex items-center justify-center rounded-lg p-2 items-center">
             <p>{{ $diaText }}</p>
         </div>
-        @if($dia->lessThan($maxDia)) 
+        @if($dia->lessThan($maxDia))
         <div class="flex justify-center items-center hover:text-blue-500 border border-slate-200 bg-slate-100 p-2 rounded-lg transition">
-            <a href="{{ route('reserves.index', ['data' => $dia->copy()->addDay()->format('Y-m-d')]) }}" class="block">
+            <a href="{{ route('reserves.index', array_filter([
+                    'data' => $dia->copy()->addDay()->format('Y-m-d'),
+                    'comunitat_id' => $comunitatSeleccionadaId,
+                ])) }}" class="block">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                  </svg>         
+                  </svg>
             </a>
         </div>
         @endif
