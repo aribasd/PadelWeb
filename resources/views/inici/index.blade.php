@@ -123,16 +123,11 @@
                 @forelse($comunitats as $c)
                     <a href="{{ route('comunitats.show', $c) }}" class="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                         <div class="h-36 w-full bg-slate-200 sm:h-44">
-                            @if($c->imatge ?? null)
-                                @php
-                                    $src = \Illuminate\Support\Str::startsWith($c->imatge, ['http://', 'https://'])
-                                        ? $c->imatge
-                                        : asset('storage/' . $c->imatge);
-                                @endphp
-                                <img src="{{ $src }}" alt="{{ $c->nom }}" class="h-full w-full object-cover transition group-hover:scale-[1.02]">
-                            @else
-                                <div class="flex h-full w-full items-center justify-center text-sm text-slate-500">Sense imatge</div>
-                            @endif
+                            <x-community-image
+                                :src="$c->imatge ?? null"
+                                :alt="$c->nom"
+                                class="h-full w-full object-cover transition group-hover:scale-[1.02]"
+                            />
                         </div>
                         <div class="p-4">
                             <p class="font-semibold text-slate-800">{{ $c->nom }}</p>

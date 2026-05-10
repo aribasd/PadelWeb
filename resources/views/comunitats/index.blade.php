@@ -101,17 +101,7 @@
             <div
                 class="flex flex-col overflow-hidden rounded-lg  border-1  border-gray-300 bg-gray-50 shadow-sm shadow-slate-500">
                 <div class="h-44 w-full bg-slate-200 sm:h-52">
-                    @if ($comunitat->imatge)
-                        @php
-                            $src = \Illuminate\Support\Str::startsWith($comunitat->imatge, ['http://', 'https://'])
-                                ? $comunitat->imatge
-                                : asset('storage/' . $comunitat->imatge);
-                        @endphp
-                        <img src="{{ $src }}" alt="{{ $comunitat->nom }}"
-                            class="h-full w-full object-cover">
-                    @else
-                        <div class="flex h-full w-full items-center justify-center text-sm text-slate-500">Sense imatge</div>
-                    @endif
+                    <x-community-image :src="$comunitat->imatge" :alt="$comunitat->nom" />
                 </div>
                 <div class="flex flex-row items-center p-1 justify-between">
                     <p class="p-1 text-lg font-semibold">Comunitat <span class="font-normal">{{ $comunitat->nom }}</span></p>

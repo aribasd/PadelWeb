@@ -149,25 +149,13 @@
             @endif
         </div>
         <div class="overflow-hidden rounded-lg border border-gray-300 bg-blue-500 shadow-sm">
-            @if ($comunitat->imatge)
-                @php
-                    $src = \Illuminate\Support\Str::startsWith($comunitat->imatge, ['http://', 'https://'])
-                        ? $comunitat->imatge
-                        : asset('storage/' . $comunitat->imatge);
-                @endphp
-                <div class="h-48 w-full bg-slate-200 sm:h-56 lg:h-64">
-                    <img
-                        src="{{ $src }}"
-                        alt="{{ $comunitat->nom }}"
-                        class="h-full w-full object-cover"
-                        loading="lazy"
-                    >
-                </div>
-            @else
-                <div class="flex h-48 w-full items-center justify-center bg-slate-200 text-sm text-slate-500 sm:h-56 lg:h-64">
-                    Sense imatge
-                </div>
-            @endif
+            <div class="h-48 w-full bg-slate-200 sm:h-56 lg:h-64">
+                <x-community-image
+                    :src="$comunitat->imatge"
+                    :alt="$comunitat->nom"
+                    loading="lazy"
+                />
+            </div>
         </div>
     </div>
 
