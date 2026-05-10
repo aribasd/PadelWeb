@@ -15,63 +15,52 @@ use App\Http\Controllers\DirectMessageController;
 
 use Illuminate\Support\Facades\Route;
 
-
-
-Route::get('/test', function () {
-    return view('test');
-});
-
-
 Route::get('/', function () {
-    return view('welcome');
+    return auth()->check()
+        ? redirect()->route('inici.index')
+        : redirect()->route('login');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('pistes', PistaController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
-});
-Route::resource('pistes', PistaController::class)->only(['index', 'show']);
-
 
 Route::middleware('auth')->group(function () {
+    Route::get('/test', function () {
+        return view('test');
+    });
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware('verified')->name('dashboard');
+
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('pistes', PistaController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+    });
+    Route::resource('pistes', PistaController::class)->only(['index', 'show']);
+
     Route::resource('reserves', ReservaController::class);
-});
 
+    Route::get('comunitats/meves', [ComunitatController::class, 'meves'])->name('comunitats.meves');
 
-/* Auth Comunitat */
-
-Route::middleware('auth')->get('comunitats/meves', [ComunitatController::class, 'meves'])->name('comunitats.meves');
-
-Route::middleware('auth')->group(function () {
     Route::post('comunitats/{comunitat}/join', [ComunitatController::class, 'join'])->name('comunitats.join');
     Route::delete('comunitats/{comunitat}/leave', [ComunitatController::class, 'leave'])->name('comunitats.leave');
-});
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('comunitats', ComunitatController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
-});
-Route::resource('comunitats', ComunitatController::class)->only(['index', 'show']);
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('comunitats', ComunitatController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+    });
+    Route::resource('comunitats', ComunitatController::class)->only(['index', 'show']);
 
-Route::get('comunitats/{comunitat}/missatges', [MissatgeController::class, 'index'])->name('comunitats.missatges');
-Route::middleware('auth')->post('comunitats/{comunitat}/missatges', [MissatgeController::class, 'store'])->name('comunitats.missatges.store');
+    Route::get('comunitats/{comunitat}/missatges', [MissatgeController::class, 'index'])->name('comunitats.missatges');
+    Route::post('comunitats/{comunitat}/missatges', [MissatgeController::class, 'store'])->name('comunitats.missatges.store');
 
-Route::resource('inici', IniciController::class);
+    Route::resource('inici', IniciController::class);
+    Route::resource('partits', PartitController::class);
 
-Route::resource('partits', PartitController::class);
+    Route::get('/galeria', [GaleriaController::class, 'index'])->name('galeria.index');
 
-Route::get('/galeria', [GaleriaController::class, 'index'])->name('galeria.index');
+    Route::resource('perfils_estadistiques', PerfilEstadisticaController::class);
 
-Route::resource('perfils_estadistiques', PerfilEstadisticaController::class);
+    Route::resource('users', \App\Http\Controllers\UserController::class)->only(['show']);
 
-Route::resource('users', \App\Http\Controllers\UserController::class)->only(['show']);
+    Route::get('geocoding/search', [\App\Http\Controllers\GeocodingController::class, 'search'])->name('geocoding.search');
 
-Route::get('geocoding/search', [\App\Http\Controllers\GeocodingController::class, 'search'])->name('geocoding.search');
-
-Route::middleware('auth')->group(function () {      
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
